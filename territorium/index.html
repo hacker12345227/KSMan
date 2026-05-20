@@ -13,27 +13,27 @@
 .terr-header {
   position: relative;
   padding: 7rem 3rem 5rem;
-  border-bottom: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--red-border);
   overflow: hidden;
 }
 .terr-header-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 30% 60%, rgba(201,168,76,0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.02) 0%, transparent 50%),
-    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px),
-    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px);
+    radial-gradient(ellipse at 30% 60%, rgba(180,30,30,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(180,30,30,0.02) 0%, transparent 50%),
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(180,30,30,0.01) 60px, rgba(180,30,30,0.01) 61px),
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(180,30,30,0.01) 60px, rgba(180,30,30,0.01) 61px);
 }
 .terr-header-inner { position: relative; z-index: 1; max-width: 700px; }
 .terr-page-label {
   font-size: 8px; letter-spacing: 7px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
   font-family: var(--font-serif); margin-bottom: 1.4rem;
   display: flex; align-items: center; gap: 1rem;
 }
 .terr-page-label::before {
   content: ''; display: block;
-  width: 32px; height: 0.5px; background: var(--gold-dim);
+  width: 32px; height: 0.5px; background: var(--red-dim);
 }
 .terr-header h1 {
   font-family: var(--font-display);
@@ -53,24 +53,24 @@
 }
 .terr-coord {
   font-family: var(--font-display); font-size: 10px;
-  letter-spacing: 3px; color: rgba(201,168,76,0.15); font-weight: 700;
+  letter-spacing: 3px; color: rgba(180,30,30,0.15); font-weight: 700;
 }
 
 /* ── STATUS BALK ─────────────────────────────────────────── */
 .status-bar {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  border-bottom: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--red-border);
 }
 .status-cell {
   padding: 1.8rem 2rem;
-  border-right: 0.5px solid rgba(201,168,76,0.12);
+  border-right: 0.5px solid rgba(180,30,30,0.12);
   display: flex; align-items: center; gap: 1rem;
 }
 .status-cell:last-child { border-right: none; }
 .status-indicator { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.status-indicator.groen { background: var(--gold); animation: goldPulse 2.5s ease infinite; }
+.status-indicator.groen { background: var(--red); animation: redPulse 2.5s ease infinite; }
 .status-indicator.rood  { background: #c05050; animation: redPulse 1.8s ease infinite; }
-.status-indicator.grijs { background: rgba(201,168,76,0.25); }
+.status-indicator.grijs { background: rgba(180,30,30,0.25); }
 @keyframes redPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
 .status-label {
   font-size: 8px; letter-spacing: 4px;
@@ -79,14 +79,14 @@
 }
 .status-val {
   font-family: var(--font-display); font-size: 20px;
-  font-weight: 700; color: var(--gold); line-height: 1;
+  font-weight: 700; color: var(--red); line-height: 1;
 }
 .status-val.rood { color: #c05050; }
 
 /* ── KAART SECTIE ────────────────────────────────────────── */
 .map-section {
   padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
 }
 
 .map-wrapper {
@@ -94,7 +94,7 @@
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 1px;
-  background: rgba(201,168,76,0.1);
+  background: rgba(180,30,30,0.1);
 }
 /* ── GTA MAP CONTAINER ────────────────────────────────────── */
 .map-visual {
@@ -109,10 +109,8 @@
   inset: 0;
   width: 100%;
   height: 100%;
-
   object-fit: contain;
   object-position: center center;
-
   opacity: 0.45;
   filter: sepia(0.3) hue-rotate(10deg) saturate(0.7) brightness(0.6);
   transition: opacity 0.3s;
@@ -123,14 +121,14 @@
   opacity: 0.45;
 }
 
-/* Goud overlay op de kaart */
+/* Rood overlay op de kaart */
 .map-gold-overlay {
   position: absolute;
   inset: 0;
   background:
     radial-gradient(
       ellipse at 50% 60%,
-      rgba(201,168,76,0.06) 0%,
+      rgba(180,30,30,0.06) 0%,
       transparent 65%
     );
   pointer-events: none;
@@ -144,27 +142,20 @@
   left: 0;
   right: 0;
   height: 1px;
-
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(201,168,76,0.25),
+    rgba(180,30,30,0.25),
     transparent
   );
-
   animation: mapScan 5s linear infinite;
   z-index: 2;
   pointer-events: none;
 }
 
 @keyframes mapScan {
-  0% {
-    top: 0%;
-  }
-
-  100% {
-    top: 100%;
-  }
+  0% { top: 0%; }
+  100% { top: 100%; }
 }
 
 /* Grid overlay op kaart */
@@ -173,18 +164,13 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-
   background-image:
-    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-
+    linear-gradient(rgba(180,30,30,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,30,30,0.04) 1px, transparent 1px);
   background-size: 50px 50px;
 }
 
 /* ── ZONE PINS ────────────────────────────────────────────── */
-/* Posities gebaseerd op echte GTA 5 kaart locaties
-   Kaart referentie: noord = boven, zeegebied = links-onder
-   Los Santos = midden-rechts-onder kwadrant */
 .map-zone-pin {
   position: absolute; z-index: 5;
   transform: translate(-50%, -50%);
@@ -193,7 +179,7 @@
 .zone-pin-ring {
   position: absolute; inset: -8px;
   border-radius: 50%;
-  border: 0.5px solid rgba(201,168,76,0.2);
+  border: 0.5px solid rgba(180,30,30,0.2);
   animation: pinPulse 2.5s ease infinite;
 }
 @keyframes pinPulse {
@@ -204,8 +190,8 @@
 
 .zone-pin-core {
   width: 10px; height: 10px; border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 8px rgba(201,168,76,0.6);
+  background: var(--red);
+  box-shadow: 0 0 8px rgba(180,30,30,0.6);
   position: relative; z-index: 1;
   transition: transform 0.2s;
 }
@@ -223,7 +209,7 @@
   position: absolute; bottom: calc(100% + 8px); left: 50%;
   transform: translateX(-50%);
   background: rgba(10,10,10,0.92);
-  border: 0.5px solid var(--gold-border);
+  border: 0.5px solid var(--red-border);
   padding: 4px 10px; white-space: nowrap;
   font-size: 8px; letter-spacing: 3px;
   color: var(--text-muted); text-transform: uppercase;
@@ -241,8 +227,8 @@
   transition: all 0.3s;
 }
 .zone-territory.controlled {
-  border-color: rgba(201,168,76,0.3);
-  background: rgba(201,168,76,0.06);
+  border-color: rgba(180,30,30,0.3);
+  background: rgba(180,30,30,0.06);
 }
 .zone-territory.contested {
   border-color: rgba(192,80,80,0.4);
@@ -259,17 +245,17 @@
   display: flex; flex-direction: column; gap: 5px;
   z-index: 6;
   background: rgba(10,10,10,0.7);
-  border: 0.5px solid rgba(201,168,76,0.12);
+  border: 0.5px solid rgba(180,30,30,0.12);
   padding: 10px 14px;
 }
 .map-legend-title {
   font-size: 7px; letter-spacing: 4px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
   margin-bottom: 4px;
 }
 .map-legend-item { display: flex; align-items: center; gap: 7px; }
 .map-legend-dot { width: 6px; height: 6px; border-radius: 50%; }
-.map-legend-dot.c { background: var(--gold); }
+.map-legend-dot.c { background: var(--red); }
 .map-legend-dot.b { background: #c05050; }
 .map-legend-dot.n { background: rgba(255,255,255,0.2); }
 .map-legend-text { font-size: 7px; letter-spacing: 3px; color: var(--text-ghost); text-transform: uppercase; }
@@ -286,23 +272,23 @@
 .map-panel { background: var(--bg-lift); display: flex; flex-direction: column; }
 .map-panel-header {
   padding: 1.5rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.1);
+  border-bottom: 0.5px solid rgba(180,30,30,0.1);
 }
 .map-panel-title {
   font-size: 8px; letter-spacing: 5px;
-  color: var(--gold-dim); text-transform: uppercase; margin-bottom: 4px;
+  color: var(--red-dim); text-transform: uppercase; margin-bottom: 4px;
 }
 .map-panel-sub { font-size: 11px; color: var(--text-dim); font-style: italic; }
 .zone-list { flex: 1; overflow-y: auto; }
 .zone-entry {
   padding: 1.1rem 1.5rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.07);
+  border-bottom: 0.5px solid rgba(180,30,30,0.07);
   cursor: pointer; transition: background 0.2s;
   display: flex; align-items: flex-start; gap: 1rem;
 }
-.zone-entry:hover { background: rgba(201,168,76,0.04); }
+.zone-entry:hover { background: rgba(180,30,30,0.04); }
 .zone-entry-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-.zone-entry-dot.c { background: var(--gold); }
+.zone-entry-dot.c { background: var(--red); }
 .zone-entry-dot.b { background: #c05050; animation: redPulse 1.8s ease infinite; }
 .zone-entry-dot.n { background: rgba(255,255,255,0.15); }
 .zone-entry-name {
@@ -310,16 +296,16 @@
   font-weight: 700; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 2px;
 }
 .zone-entry-status { font-size: 7px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 3px; }
-.zone-entry-status.c { color: var(--gold-dim); }
+.zone-entry-status.c { color: var(--red-dim); }
 .zone-entry-status.b { color: #c05050; }
 .zone-entry-status.n { color: rgba(255,255,255,0.2); }
 .zone-entry-desc { font-size: 11px; color: var(--text-dim); font-style: italic; line-height: 1.4; }
 
 /* ── ZONE CARDS ──────────────────────────────────────────── */
-.zones-section { padding: 5rem 3rem; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+.zones-section { padding: 5rem 3rem; border-bottom: 0.5px solid rgba(180,30,30,0.08); }
 .zones-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: rgba(201,168,76,0.1); margin-top: 2.5rem;
+  gap: 1px; background: rgba(180,30,30,0.1); margin-top: 2.5rem;
 }
 .zone-card {
   background: var(--bg); padding: 2.2rem 2rem;
@@ -327,11 +313,11 @@
 }
 .zone-card:hover { background: var(--bg-raise); }
 .zone-card-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-.zone-card-bar.controlled { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.zone-card-bar.controlled { background: linear-gradient(90deg, transparent, var(--red), transparent); }
 .zone-card-bar.contested  { background: linear-gradient(90deg, transparent, #c05050, transparent); }
 .zone-card-num {
   font-family: var(--font-display); font-size: 11px;
-  letter-spacing: 4px; color: rgba(201,168,76,0.15); margin-bottom: 1rem;
+  letter-spacing: 4px; color: rgba(180,30,30,0.15); margin-bottom: 1rem;
 }
 .zone-card-name {
   font-family: var(--font-display); font-size: 20px;
@@ -341,10 +327,10 @@
   font-size: 7px; letter-spacing: 5px; text-transform: uppercase;
   display: flex; align-items: center; gap: 6px; margin-bottom: 1rem;
 }
-.zone-card-status.controlled { color: var(--gold-dim); }
+.zone-card-status.controlled { color: var(--red-dim); }
 .zone-card-status.contested  { color: #c05050; }
 .zone-card-status-dot { width: 4px; height: 4px; border-radius: 50%; }
-.controlled .zone-card-status-dot { background: var(--gold); }
+.controlled .zone-card-status-dot { background: var(--red); }
 .contested  .zone-card-status-dot { background: #c05050; }
 .zone-card-desc {
   font-size: 13px; color: var(--text-dim);
@@ -353,13 +339,13 @@
 .zone-card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .zone-tag {
   font-size: 7px; letter-spacing: 3px; text-transform: uppercase;
-  border: 0.5px solid rgba(201,168,76,0.12); color: var(--text-ghost); padding: 3px 8px;
+  border: 0.5px solid rgba(180,30,30,0.12); color: var(--text-ghost); padding: 3px 8px;
 }
 
 /* ── GEVAARZONE ──────────────────────────────────────────── */
 .danger-section {
   background: var(--bg-lift); padding: 4rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
 }
 .danger-inner {
   border: 0.5px solid rgba(192,80,80,0.25); padding: 2.5rem;
@@ -386,7 +372,7 @@
 }
 .terr-statement-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(180,30,30,0.03) 0%, transparent 65%);
 }
 .terr-statement blockquote {
   font-family: var(--font-display);
@@ -397,13 +383,27 @@
 }
 .terr-statement blockquote::before {
   content: '❝'; display: block;
-  font-size: 28px; color: var(--gold-border); margin-bottom: 1rem;
+  font-size: 28px; color: var(--red-border); margin-bottom: 1rem;
 }
 .terr-statement cite {
   display: block; margin-top: 1.5rem;
   font-size: 8px; letter-spacing: 5px;
   color: var(--text-ghost); text-transform: uppercase;
   font-style: normal; font-family: var(--font-serif);
+}
+
+/* ── RED VARIABLE OVERRIDES ──────────────────────────────── */
+:root {
+  --red:        #c91e1e;
+  --red-dark:   #8b1010;
+  --red-dim:    #a01818;
+  --red-border: rgba(180,30,30,0.25);
+  --red-abyss:  rgba(180,30,30,0.12);
+  --gold:        var(--red);
+  --gold-dark:   var(--red-dark);
+  --gold-dim:    var(--red-dim);
+  --gold-border: var(--red-border);
+  --gold-abyss:  var(--red-abyss);
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
@@ -415,7 +415,7 @@
 @media (max-width: 768px) {
   .status-bar { grid-template-columns: 1fr 1fr; }
   .status-cell:nth-child(2) { border-right: none; }
-  .status-cell:nth-child(3) { border-top: 0.5px solid rgba(201,168,76,0.12); }
+  .status-cell:nth-child(3) { border-top: 0.5px solid rgba(180,30,30,0.12); }
   .zones-grid { grid-template-columns: 1fr; }
   .danger-inner { grid-template-columns: 1fr; gap: 1rem; }
   .map-visual { min-height: 400px; }
@@ -425,7 +425,7 @@
   .terr-header-coords { display: none; }
   .map-section, .zones-section, .danger-section, .terr-statement { padding-left: 1.5rem; padding-right: 1.5rem; }
   .status-bar { grid-template-columns: 1fr; }
-  .status-cell { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.1); }
+  .status-cell { border-right: none; border-bottom: 0.5px solid rgba(180,30,30,0.1); }
 }
 </style>
 </head>
@@ -511,27 +511,23 @@
 
         <!-- Echte GTA 5 satellietkaart -->
         <img
-  class="map-img"
-  id="gtaMapImg"
-  src="https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV-HD-MAP-satellite.jpg"
-  alt="GTA 5 Los Santos kaart"
-/>
+          class="map-img"
+          id="gtaMapImg"
+          src="https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV-HD-MAP-satellite.jpg"
+          alt="GTA 5 Los Santos kaart"
+        />
         <!-- Overlays -->
         <div class="map-gold-overlay"></div>
         <div class="map-grid-overlay"></div>
         <div class="map-scan-line"></div>
 
         <!-- Stadsgebied labels -->
-        <div class="map-city-label" style="top:52%;left:55%;font-size:10px;color:rgba(201,168,76,0.2);">LOS SANTOS</div>
-        <div class="map-city-label" style="top:18%;left:40%;font-size:8px;color:rgba(201,168,76,0.12);">BLAINE COUNTY</div>
-        <div class="map-city-label" style="top:72%;left:30%;font-size:8px;color:rgba(201,168,76,0.12);">PALOMINO</div>
-
-
-
-
+        <div class="map-city-label" style="top:52%;left:55%;font-size:10px;color:rgba(180,30,30,0.2);">LOS SANTOS</div>
+        <div class="map-city-label" style="top:18%;left:40%;font-size:8px;color:rgba(180,30,30,0.12);">BLAINE COUNTY</div>
+        <div class="map-city-label" style="top:72%;left:30%;font-size:8px;color:rgba(180,30,30,0.12);">PALOMINO</div>
 
         <!-- Crown center glow -->
-        <div style="position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);font-size:24px;color:rgba(201,168,76,0.1);animation:goldPulse 3s ease infinite;pointer-events:none;z-index:3;">♛</div>
+        <div style="position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);font-size:24px;color:rgba(180,30,30,0.1);animation:redPulse 3s ease infinite;pointer-events:none;z-index:3;">✠</div>
 
         <!-- Legenda -->
         <div class="map-legend">
@@ -679,7 +675,7 @@ const img = document.getElementById('gtaMapImg');
 img.addEventListener('error', () => {
   img.style.display = 'none';
   document.getElementById('mapVisual').style.background =
-    '#0a0c08 repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(201,168,76,0.02) 40px,rgba(201,168,76,0.02) 41px)';
+    '#0a0c08 repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(180,30,30,0.02) 40px,rgba(180,30,30,0.02) 41px)';
 });
 
 // Scroll fade-in
