@@ -45,8 +45,8 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(180,30,30,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180,30,30,0.03) 1px, transparent 1px);
       background-size: 64px 64px;
       animation: fadeIn 2s ease both;
     }
@@ -60,8 +60,8 @@
           -45deg,
           transparent,
           transparent 120px,
-          rgba(201,168,76,0.018) 120px,
-          rgba(201,168,76,0.018) 121px
+          rgba(180,30,30,0.018) 120px,
+          rgba(180,30,30,0.018) 121px
         );
     }
 
@@ -72,7 +72,7 @@
       transform: translate(-50%, -50%);
       width: 600px;
       height: 600px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(180,30,30,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -88,7 +88,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(180,30,30,0.15), transparent);
       animation: scanline 6s linear infinite;
     }
 
@@ -96,7 +96,7 @@
 
     .hero-crown {
       font-size: 42px;
-      color: var(--gold);
+      color: var(--red);
       margin-bottom: 1.8rem;
       animation: crownDrop 1s cubic-bezier(.22,1,.36,1) both;
       display: block;
@@ -106,7 +106,7 @@
     .hero-eyebrow {
       font-size: 9px;
       letter-spacing: 8px;
-      color: var(--gold-dark);
+      color: var(--red-dark);
       text-transform: uppercase;
       font-family: var(--font-serif);
       margin-bottom: 1.2rem;
@@ -129,7 +129,7 @@
     .hero-divider {
       width: 64px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
       margin: 2rem auto;
       animation: fadeIn 1s ease both;
       animation-delay: 0.5s;
@@ -152,14 +152,14 @@
       align-items: center;
       gap: 0;
       margin-top: 4rem;
-      border: 0.5px solid var(--gold-border);
+      border: 0.5px solid var(--red-border);
       animation: fadeUp 0.9s ease both;
       animation-delay: 0.7s;
     }
     .hero-stat {
       padding: 1.2rem 2.4rem;
       text-align: center;
-      border-right: 0.5px solid var(--gold-border);
+      border-right: 0.5px solid var(--red-border);
       flex: 1;
     }
     .hero-stat:last-child { border-right: none; }
@@ -167,7 +167,7 @@
       font-family: var(--font-display);
       font-size: 28px;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--red);
       line-height: 1;
       display: block;
     }
@@ -208,20 +208,20 @@
     .hero-scroll span {
       font-size: 7px;
       letter-spacing: 4px;
-      color: var(--gold-abyss);
+      color: var(--red-abyss);
       text-transform: uppercase;
     }
     .scroll-line {
       width: 0.5px;
       height: 40px;
-      background: linear-gradient(to bottom, var(--gold-border), transparent);
-      animation: goldPulse 2s ease infinite;
+      background: linear-gradient(to bottom, var(--red-border), transparent);
+      animation: redPulse 2s ease infinite;
     }
 
     /* ── MANIFESTO STRIP ────────────────────────────────────────── */
     .manifesto-strip {
-      border-top: 0.5px solid var(--gold-border);
-      border-bottom: 0.5px solid var(--gold-border);
+      border-top: 0.5px solid var(--red-border);
+      border-bottom: 0.5px solid var(--red-border);
       background: var(--bg-lift);
       overflow: hidden;
       white-space: nowrap;
@@ -245,11 +245,11 @@
     .intro-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      border-bottom: 0.5px solid rgba(180,30,30,0.08);
     }
     .intro-left {
       padding: 5rem 3rem;
-      border-right: 0.5px solid rgba(201,168,76,0.08);
+      border-right: 0.5px solid rgba(180,30,30,0.08);
     }
     .intro-right {
       padding: 5rem 3rem;
@@ -261,7 +261,7 @@
       font-family: var(--font-display);
       font-size: 120px;
       font-weight: 900;
-      color: rgba(201,168,76,0.05);
+      color: rgba(180,30,30,0.05);
       line-height: 1;
       margin-bottom: -0.3em;
       user-select: none;
@@ -293,13 +293,13 @@
       align-items: center;
       gap: 1.2rem;
       padding: 1.1rem 0;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      border-bottom: 0.5px solid rgba(180,30,30,0.08);
     }
     .pillar:last-child { border-bottom: none; }
     .pillar-dot {
       width: 4px;
       height: 4px;
-      background: var(--gold);
+      background: var(--red);
       flex-shrink: 0;
     }
     .pillar-text {
@@ -320,17 +320,17 @@
     .rep-section {
       background: var(--bg-lift);
       padding: 5rem 3rem;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      border-bottom: 0.5px solid rgba(180,30,30,0.08);
     }
     .rep-numbers {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      border: 0.5px solid var(--gold-border);
+      border: 0.5px solid var(--red-border);
       margin-top: 2.5rem;
     }
     .rep-num-cell {
       padding: 2rem 1.5rem;
-      border-right: 0.5px solid var(--gold-border);
+      border-right: 0.5px solid var(--red-border);
       text-align: center;
     }
     .rep-num-cell:last-child { border-right: none; }
@@ -338,7 +338,7 @@
       font-family: var(--font-display);
       font-size: 44px;
       font-weight: 900;
-      color: var(--gold);
+      color: var(--red);
       display: block;
       line-height: 1;
     }
@@ -355,20 +355,20 @@
       margin-top: 2.5rem;
       font-size: 9px;
       letter-spacing: 4px;
-      color: var(--gold-dim);
+      color: var(--red-dim);
       text-decoration: none;
       text-transform: uppercase;
-      border-bottom: 0.5px solid var(--gold-border);
+      border-bottom: 0.5px solid var(--red-border);
       padding-bottom: 2px;
       transition: color 0.2s;
     }
-    .rep-cta:hover { color: var(--gold); }
+    .rep-cta:hover { color: var(--red); }
 
     /* ── SECTION: STATEMENT ─────────────────────────────────────── */
     .statement-section {
       padding: 6rem 3rem;
       text-align: center;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      border-bottom: 0.5px solid rgba(180,30,30,0.08);
       position: relative;
       overflow: hidden;
     }
@@ -376,7 +376,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+        radial-gradient(ellipse at center, rgba(180,30,30,0.03) 0%, transparent 65%);
       pointer-events: none;
     }
     .statement-quote {
@@ -394,7 +394,7 @@
       content: '❝';
       display: block;
       font-size: 32px;
-      color: var(--gold-border);
+      color: var(--red-border);
       margin-bottom: 1rem;
     }
     .statement-attr {
@@ -411,14 +411,14 @@
     /* ── SECTION: MEDIA PREVIEW ─────────────────────────────────── */
     .media-section {
       padding: 5rem 3rem;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      border-bottom: 0.5px solid rgba(180,30,30,0.08);
     }
     .media-preview-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       grid-template-rows: 200px 200px;
       gap: 1px;
-      background: var(--gold-border);
+      background: var(--red-border);
       margin-top: 2.5rem;
     }
     .media-cell {
@@ -436,7 +436,7 @@
     .media-cell.span-col { grid-row: span 2; }
     .media-cell-icon {
       font-size: 28px;
-      color: rgba(201,168,76,0.2);
+      color: rgba(180,30,30,0.2);
       line-height: 1;
     }
     .media-cell-tag {
@@ -450,20 +450,20 @@
       margin-top: 2rem;
       font-size: 9px;
       letter-spacing: 4px;
-      color: var(--gold-dim);
+      color: var(--red-dim);
       text-decoration: none;
       text-transform: uppercase;
-      border-bottom: 0.5px solid var(--gold-border);
+      border-bottom: 0.5px solid var(--red-border);
       padding-bottom: 2px;
       transition: color 0.2s;
     }
-    .media-all-link:hover { color: var(--gold); }
+    .media-all-link:hover { color: var(--red); }
 
     /* ── SECTION: WARNING TICKER ────────────────────────────────── */
     .warning-section {
-      background: rgba(201,168,76,0.04);
-      border-top: 0.5px solid var(--gold-border);
-      border-bottom: 0.5px solid var(--gold-border);
+      background: rgba(180,30,30,0.04);
+      border-top: 0.5px solid var(--red-border);
+      border-bottom: 0.5px solid var(--red-border);
       padding: 2.5rem 3rem;
       text-align: center;
     }
@@ -483,15 +483,38 @@
       text-transform: uppercase;
     }
 
+    /* ── RED CSS VARIABLE OVERRIDES ─────────────────────────────── */
+    :root {
+      --red:        #c91e1e;
+      --red-dark:   #8b1010;
+      --red-dim:    #a01818;
+      --red-border: rgba(180,30,30,0.25);
+      --red-abyss:  rgba(180,30,30,0.12);
+    }
+
+    /* override any gold vars used in style.css */
+    :root {
+      --gold:        var(--red);
+      --gold-dark:   var(--red-dark);
+      --gold-dim:    var(--red-dim);
+      --gold-border: var(--red-border);
+      --gold-abyss:  var(--red-abyss);
+    }
+
+    @keyframes redPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+
     @media (max-width: 768px) {
       .intro-section { grid-template-columns: 1fr; }
-      .intro-left { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+      .intro-left { border-right: none; border-bottom: 0.5px solid rgba(180,30,30,0.08); }
       .rep-numbers { grid-template-columns: 1fr 1fr; }
       .rep-num-cell:nth-child(2) { border-right: none; }
       .media-preview-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 160px); }
       .media-cell.span-col { grid-row: span 1; }
       .hero-stats { flex-direction: column; gap: 0; }
-      .hero-stat { border-right: none; border-bottom: 0.5px solid var(--gold-border); }
+      .hero-stat { border-right: none; border-bottom: 0.5px solid var(--red-border); }
       .hero-stat:last-child { border-bottom: none; }
     }
   </style>
@@ -522,7 +545,7 @@
       <div class="hero-scan"></div>
 
       <div class="hero-content">
-        <span class="hero-crown">♛</span>
+        <span class="hero-crown">☩</span>
         <p class="hero-eyebrow">Est. — Classified &nbsp;·&nbsp; Actieve Operaties</p>
         <h1 class="hero-title">LA FAMILIA DE FUEGO</h1>
         <div class="hero-divider"></div>
@@ -565,25 +588,25 @@
     <div class="manifesto-strip">
       <div class="manifesto-ticker">
         &nbsp;&nbsp;&nbsp;&nbsp;No faces. No names. Just power.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Loyalty is proven, not earned.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Silence is strength.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Respect is not requested. It is taken.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         The city bends. We do not.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         No faces. No names. Just power.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Loyalty is proven, not earned.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Silence is strength.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         Respect is not requested. It is taken.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
         The city bends. We do not.
-        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;☩&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
 
@@ -707,7 +730,7 @@
     <!-- WARNING -->
     <section class="warning-section">
       <p class="warning-text">"La Familia De Fuego heeft vergroote operaties."</p>
-      <p class="warning-sub">Onrechtmatig betreden van terrein heeft gevolgen. &nbsp;·&nbsp; De stad veranderd &nbsp;·&nbsp; <a href="/nieuws" style="color:inherit;text-decoration:none;border-bottom:0.5px solid var(--gold-border);">Lees alle statements →</a></p>
+      <p class="warning-sub">Onrechtmatig betreden van terrein heeft gevolgen. &nbsp;·&nbsp; De stad veranderd &nbsp;·&nbsp; <a href="/nieuws" style="color:inherit;text-decoration:none;border-bottom:0.5px solid var(--red-border);">Lees alle statements →</a></p>
     </section>
 
   </main>
