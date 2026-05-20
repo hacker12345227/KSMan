@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LA FAMILIA DE FUEGO — Nieuws</title>
+<meta name="description" content="The city is changing. La Familia De Fuego has expanded operations." />
+<link rel="stylesheet" href="../style.css" />
+<style>
+
+/* ── PAGINA HEADER ───────────────────────────────────────── */
+.news-header {
+  position: relative;
+  padding: 7rem 3rem 5rem;
+  border-bottom: 0.5px solid var(--gold-border);
+  overflow: hidden;
+}
+.news-header-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.04) 0%, transparent 55%),
+    repeating-linear-gradient(
+      0deg, transparent, transparent 48px,
+      rgba(201,168,76,0.012) 48px, rgba(201,168,76,0.012) 49px
+    );
+}
+.news-header-inner { position: relative; z-index: 1; max-width: 700px; }
+.news-page-label {
+  font-size: 8px; letter-spacing: 7px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.news-page-label::before {
+  content: ''; display: block;
+  width: 32px; height: 0.5px; background: var(--gold-dim);
+}
+.news-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 6px; line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.news-header-sub {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.8; max-width: 500px;
+}
+.news-header-stamp {
+  position: absolute; right: 3rem; bottom: 3rem;
+  font-family: var(--font-display); font-size: 120px;
+  font-weight: 900; color: rgba(201,168,76,0.03);
+  line-height: 1; user-select: none; letter-spacing: -4px;
+}
+
+/* ── BREAKING BALK ───────────────────────────────────────── */
+.breaking-bar {
+  background: rgba(192,80,80,0.06);
+  border-bottom: 0.5px solid rgba(192,80,80,0.25);
+  padding: 0.9rem 3rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  overflow: hidden;
+}
+.breaking-label {
+  font-size: 7px; letter-spacing: 5px;
+  color: #c05050; text-transform: uppercase;
+  flex-shrink: 0; font-family: var(--font-serif);
+  border: 0.5px solid rgba(192,80,80,0.3);
+  padding: 3px 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.breaking-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: #c05050; animation: redPulse 1.4s ease infinite;
+}
+@keyframes redPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+.breaking-ticker {
+  font-size: 9px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  white-space: nowrap; overflow: hidden;
+  animation: breakingScroll 22s linear infinite;
+}
+@keyframes breakingScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── UITGELICHT BERICHT ──────────────────────────────────── */
+.featured-news {
+  padding: 3rem 3rem 0;
+}
+.featured-article {
+  display: grid; grid-template-columns: 1fr 380px;
+  background: var(--bg-raise);
+  border: 0.5px solid var(--gold-border);
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s;
+}
+.featured-article:hover { border-color: var(--gold); }
+.featured-article::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.featured-article-body { padding: 3rem; }
+.featured-meta {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+.featured-tag {
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--gold); text-transform: uppercase;
+  border: 0.5px solid var(--gold-border);
+  padding: 3px 10px;
+}
+.featured-tag.urgent {
+  color: #c05050; border-color: rgba(192,80,80,0.3);
+}
+.featured-date {
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+.featured-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 2px; line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.featured-excerpt {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.9;
+  max-width: 520px; margin-bottom: 2rem;
+}
+.featured-read-more {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--gold-dim); text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px;
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--gold-border);
+  padding-bottom: 2px; transition: color 0.2s;
+}
+.featured-read-more:hover { color: var(--gold); }
+.featured-article-visual {
+  background: var(--bg-high);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; padding: 3rem;
+  border-left: 0.5px solid rgba(201,168,76,0.1);
+  position: relative; overflow: hidden;
+}
+.featured-article-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%);
+}
+.featured-visual-icon {
+  font-size: 56px; color: rgba(201,168,76,0.1);
+  position: relative; z-index: 1;
+}
+.featured-visual-label {
+  font-size: 8px; letter-spacing: 4px;
+  color: rgba(201,168,76,0.2); text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+
+/* ── NIEUWS FILTER ───────────────────────────────────────── */
+.news-filter {
+  padding: 2rem 3rem;
+  display: flex; align-items: center;
+  gap: 0; border-bottom: 0.5px solid rgba(201,168,76,0.1);
+  overflow-x: auto; margin-top: 1px;
+}
+.news-filter-tab {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 0.5px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap; background: none;
+  font-family: var(--font-serif);
+}
+.news-filter-tab:hover { color: var(--text-muted); }
+.news-filter-tab.actief {
+  color: var(--gold); border-color: var(--gold-border);
+  background: rgba(201,168,76,0.04);
+}
+
+/* ── BERICHTEN GRID ──────────────────────────────────────── */
+.news-grid-section { padding: 1px 3rem 4rem; }
+.news-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(201,168,76,0.08);
+  margin-top: 1px;
+}
+.news-card {
+  background: var(--bg);
+  padding: 2.2rem 2rem;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+  display: flex; flex-direction: column;
+}
+.news-card:hover { background: var(--bg-raise); }
+.news-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0), transparent);
+  transition: background 0.3s;
+}
+.news-card:hover::after {
+  background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+}
+
+/* Categorie kleurcodering linkerbalk */
+.news-card-bar {
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 1.5px;
+}
+.news-card-bar.verklaring  { background: linear-gradient(to bottom, var(--gold), transparent); }
+.news-card-bar.waarschuwing{ background: linear-gradient(to bottom, #c05050, transparent); }
+.news-card-bar.operatie    { background: linear-gradient(to bottom, #6080c0, transparent); }
+.news-card-bar.territorium { background: linear-gradient(to bottom, var(--gold-dim), transparent); }
+
+.news-card-meta {
+  display: flex; align-items: center;
+  gap: 0.8rem; margin-bottom: 1.2rem;
+}
+.news-cat {
+  font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; padding: 2px 8px;
+  border: 0.5px solid;
+}
+.news-cat.verklaring  { color: var(--gold-dim);  border-color: rgba(201,168,76,0.2); }
+.news-cat.waarschuwing{ color: #c05050;           border-color: rgba(192,80,80,0.25); }
+.news-cat.operatie    { color: #6080c0;           border-color: rgba(96,128,192,0.25); }
+.news-cat.territorium { color: var(--gold-dim);  border-color: rgba(201,168,76,0.2); }
+.news-card-date {
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--text-ghost); text-transform: uppercase;
+  margin-left: auto;
+}
+
+.news-card-title {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--text); letter-spacing: 1px;
+  line-height: 1.25; margin-bottom: 0.8rem;
+}
+.news-card-body {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.75;
+  flex: 1; margin-bottom: 1.5rem;
+}
+.news-card-footer {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 0.5px solid rgba(201,168,76,0.07);
+}
+.news-card-ref {
+  font-size: 7px; letter-spacing: 3px;
+  color: rgba(201,168,76,0.2); text-transform: uppercase;
+}
+.news-card-icon { font-size: 14px; color: rgba(201,168,76,0.15); }
+
+/* ── OFFICIËLE STATEMENTS ────────────────────────────────── */
+.statements-section {
+  background: var(--bg-lift);
+  padding: 5rem 3rem;
+  border-top: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.statements-list {
+  display: flex; flex-direction: column; gap: 1px;
+  background: rgba(201,168,76,0.08);
+  margin-top: 2.5rem;
+}
+.statement-row {
+  background: var(--bg);
+  padding: 2rem 2.5rem;
+  display: grid; grid-template-columns: 180px 1fr auto;
+  align-items: center; gap: 2rem;
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.statement-row:hover { background: var(--bg-raise); }
+.statement-row::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1.5px;
+  background: linear-gradient(to bottom, var(--gold-border), transparent);
+  opacity: 0; transition: opacity 0.25s;
+}
+.statement-row:hover::before { opacity: 1; }
+.statement-row-date {
+  font-size: 9px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+.statement-row-text {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 400;
+  font-style: italic; color: var(--text-muted);
+  letter-spacing: 0.5px; line-height: 1.4;
+}
+.statement-row-text strong {
+  color: var(--gold); font-weight: 700; font-style: normal;
+}
+.statement-row-tag {
+  font-size: 7px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  border: 0.5px solid rgba(201,168,76,0.12);
+  padding: 3px 10px; flex-shrink: 0;
+}
+.statement-row-tag.aktief {
+  color: var(--gold-dim); border-color: var(--gold-border);
+}
+.statement-row-tag.waarschuwing {
+  color: #c05050; border-color: rgba(192,80,80,0.25);
+}
+
+/* ── TRANSMISSIE SECTIE ──────────────────────────────────── */
+.transmission-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+  align-items: center;
+}
+.transmission-left .section-title { margin-bottom: 1rem; }
+.transmission-body {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.9; margin-bottom: 2rem;
+}
+/* Terminal stijl bericht */
+.transmission-right {
+  border: 0.5px solid rgba(201,168,76,0.2);
+  padding: 2rem;
+  background: rgba(201,168,76,0.02);
+  position: relative; font-family: 'Courier New', monospace;
+}
+.transmission-right::before {
+  content: 'INKOMENDE TRANSMISSIE';
+  position: absolute; top: -6px; left: 1.2rem;
+  background: var(--bg); padding: 0 8px;
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif);
+}
+.transmission-line {
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--text-ghost); line-height: 2;
+  display: block;
+}
+.transmission-line.active { color: var(--gold-dim); }
+.transmission-line.danger { color: #c05050; }
+.transmission-cursor {
+  display: inline-block; width: 8px; height: 14px;
+  background: var(--gold); vertical-align: middle;
+  animation: blink 1.2s step-end infinite; margin-left: 3px;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── ARCHIEF TICKER ──────────────────────────────────────── */
+.archief-strip {
+  border-top: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--gold-border);
+  background: var(--bg-lift);
+  overflow: hidden; white-space: nowrap;
+  padding: 0.8rem 0;
+}
+.archief-ticker {
+  display: inline-block;
+  animation: ticker 40s linear infinite;
+  font-size: 9px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-family: var(--font-serif);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SLOTQUOTE ───────────────────────────────────────────── */
+.news-closing {
+  padding: 6rem 3rem; text-align: center;
+  position: relative; overflow: hidden;
+}
+.news-closing-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+}
+.news-closing blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 400; font-style: italic;
+  color: var(--text-muted); max-width: 680px;
+  margin: 0 auto; line-height: 1.6; position: relative;
+}
+.news-closing blockquote::before {
+  content: '❝'; display: block; font-size: 28px;
+  color: var(--gold-border); margin-bottom: 1rem;
+}
+.news-closing cite {
+  display: block; margin-top: 1.5rem;
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-style: normal; font-family: var(--font-serif);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .news-grid { grid-template-columns: 1fr 1fr; }
+  .featured-article { grid-template-columns: 1fr; }
+  .featured-article-visual { display: none; }
+  .transmission-section { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 768px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .statement-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .statement-row-tag { width: fit-content; }
+}
+@media (max-width: 600px) {
+  .news-header { padding: 5rem 1.5rem 3rem; }
+  .breaking-bar { padding: 0.8rem 1.5rem; }
+  .featured-news,
+  .news-grid-section,
+  .statements-section,
+  .transmission-section,
+  .news-closing { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .news-filter { padding: 1.2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ks-nav">
+  <a href="../" class="ks-logo">LA FAMILIA DE FUEGO<span>Est. — Classified</span></a>
+  <div class="ks-nav-links">
+    <a href="../">Home</a>
+    <a href="../reputation/">Reputatie</a>
+    <a href="../media/">Media</a>
+    <a href="../territory/">Territorium</a>
+    <a href="../manifest/">Manifest</a>
+    <a href="../news/" class="active">Nieuws</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="ks-page">
+
+  <!-- HEADER -->
+  <header class="news-header">
+    <div class="news-header-bg"></div>
+    <div class="news-header-inner">
+      <div class="news-page-label">La Familia De Fuego &nbsp;·&nbsp; Publieke statements</div>
+      <h1>NIEUWS</h1>
+      <p class="news-header-sub">
+        Geen persconferenties. Geen woordvoerders. Geen vragen.<br>
+        Wat hier staat, is wat wij willen dat de stad weet.
+      </p>
+    </div>
+    <div class="news-header-stamp">NWS</div>
+  </header>
+
+  <!-- BREAKING BALK -->
+  <div class="breaking-bar">
+    <div class="breaking-label">
+      <div class="breaking-dot"></div>
+      Actief
+    </div>
+    <div class="breaking-ticker">
+      &nbsp;&nbsp;&nbsp;La Familia De Fuego heeft operaties uitgebreid &nbsp;·&nbsp; Betreden van onze zones heeft gevolgen &nbsp;·&nbsp; De stad verandert &nbsp;·&nbsp; Leiderschap onbekend &nbsp;·&nbsp; Geen reactie op externe vragen &nbsp;·&nbsp; Warehouse District — situatie onder controle &nbsp;·&nbsp; La Familia De Fuego heeft operaties uitgebreid &nbsp;·&nbsp; Betreden van onze zones heeft gevolgen &nbsp;·&nbsp; De stad verandert &nbsp;·&nbsp; Leiderschap onbekend &nbsp;·&nbsp; Geen reactie op externe vragen &nbsp;·&nbsp; Warehouse District — situatie onder controle &nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <!-- UITGELICHT BERICHT -->
+  <section class="featured-news">
+    <div class="featured-article">
+      <div class="featured-article-body">
+        <div class="featured-meta">
+          <span class="featured-tag urgent">Urgent</span>
+          <span class="featured-tag">Verklaring</span>
+          <span class="featured-date">Meest recent</span>
+        </div>
+        <h2 class="featured-title">La Familia De Fuego heeft operaties uitgebreid naar nieuwe zones.</h2>
+        <p class="featured-excerpt">
+          De stad heeft gemerkt. De stad heeft niets gezegd — want er valt niets te zeggen
+          dat het verschil maakt. Onze aanwezigheid spreekt voor zich.
+          Nieuwe zones zijn opgenomen. Bestaande zones zijn versterkt.
+          Dit is geen aankondiging. Dit is een mededeling.
+        </p>
+        <a href="#" class="featured-read-more">Volledige verklaring →</a>
+      </div>
+      <div class="featured-article-visual">
+        <span class="featured-visual-icon">♛</span>
+        <span class="featured-visual-label">Geclassificeerde bron</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER TABS -->
+  <div class="news-filter">
+    <button class="news-filter-tab actief">Alles</button>
+    <button class="news-filter-tab">Verklaringen</button>
+    <button class="news-filter-tab">Waarschuwingen</button>
+    <button class="news-filter-tab">Operaties</button>
+    <button class="news-filter-tab">Territorium</button>
+  </div>
+
+  <!-- NIEUWS GRID -->
+  <section class="news-grid-section">
+    <div class="news-grid">
+
+      <div class="news-card">
+        <div class="news-card-bar waarschuwing"></div>
+        <div class="news-card-meta">
+          <span class="news-cat waarschuwing">Waarschuwing</span>
+          <span class="news-card-date">Recent</span>
+        </div>
+        <h3 class="news-card-title">Betreden van onze zones heeft gevolgen.</h3>
+        <p class="news-card-body">
+          Meerdere incidenten van ongeautoriseerde aanwezigheid zijn genoteerd.
+          Dit bericht dient als enige en laatste waarschuwing.
+          Verdere incidenten worden op een andere manier beantwoord.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-WARN-001</span>
+          <span class="news-card-icon">⚠</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar territorium"></div>
+        <div class="news-card-meta">
+          <span class="news-cat territorium">Territorium</span>
+          <span class="news-card-date">Recent</span>
+        </div>
+        <h3 class="news-card-title">Southside volledig onder La Familia De Fuego controle.</h3>
+        <p class="news-card-body">
+          Het voormalig betwiste gebied in het zuiden van de stad is officieel opgenomen.
+          Eerdere eigenaren hebben de consequenties geaccepteerd.
+          De orde is hersteld. Onze orde.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-TERR-004</span>
+          <span class="news-card-icon">◈</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar verklaring"></div>
+        <div class="news-card-meta">
+          <span class="news-cat verklaring">Verklaring</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">"The city is changing." — Officiële mededeling.</h3>
+        <p class="news-card-body">
+          Wat begon als fluisteren in de straten is nu onmiskenbaar.
+          Los Santos beweegt niet meer op haar eigen ritme.
+          Er is een nieuwe toon. Die toon komen van ons.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-DECL-007</span>
+          <span class="news-card-icon">♛</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar operatie"></div>
+        <div class="news-card-meta">
+          <span class="news-cat operatie">Operatie</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Nachtoperatie — details geclassificeerd.</h3>
+        <p class="news-card-body">
+          Er heeft een operatie plaatsgevonden. Details worden niet vrijgegeven.
+          Betrokkenen weten wat er is gebeurd. Dat is voldoende.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-OPS-███</span>
+          <span class="news-card-icon">◉</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar waarschuwing"></div>
+        <div class="news-card-meta">
+          <span class="news-cat waarschuwing">Waarschuwing</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Externe bendes: jullie positie is genoteerd.</h3>
+        <p class="news-card-body">
+          Wij zijn op de hoogte van pogingen om voet aan de grond te krijgen
+          in gebieden die niet van jullie zijn. Pogingen die doorgaan,
+          krijgen een antwoord dat geen ruimte laat voor misverstanden.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-WARN-002</span>
+          <span class="news-card-icon">⚠</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar verklaring"></div>
+        <div class="news-card-meta">
+          <span class="news-cat verklaring">Verklaring</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Vierde rival crew ontbonden. Geen commentaar.</h3>
+        <p class="news-card-body">
+          Een organisatie die actief was in onze zones bestaat niet meer.
+          Dit was het vierde geval. Het zal niet het laatste zijn
+          als anderen dezelfde keuze maken.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-DECL-003</span>
+          <span class="news-card-icon">♛</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar territorium"></div>
+        <div class="news-card-meta">
+          <span class="news-cat territorium">Territorium</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Sandy Shores: Blaine County buitenpost operationeel.</h3>
+        <p class="news-card-body">
+          Onze aanwezigheid is niet meer beperkt tot Los Santos.
+          Blaine County heeft een nieuwe speler. Die speler draagt geen gezicht.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-TERR-006</span>
+          <span class="news-card-icon">◈</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar operatie"></div>
+        <div class="news-card-meta">
+          <span class="news-cat operatie">Operatie</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Konvooi — route onbevestigd. Operatie geslaagd.</h3>
+        <p class="news-card-body">
+          Meerdere voertuigen. Gecoördineerde beweging.
+          Geen gezichten bevestigd. Geen vragen beantwoord.
+          Resultaat: zoals gepland.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-OPS-009</span>
+          <span class="news-card-icon">◉</span>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-bar verklaring"></div>
+        <div class="news-card-meta">
+          <span class="news-cat verklaring">Verklaring</span>
+          <span class="news-card-date">Eerder</span>
+        </div>
+        <h3 class="news-card-title">Aan de politie: wij zijn op de hoogte van jullie interesse.</h3>
+        <p class="news-card-body">
+          Surveillance is genoteerd. Patrouilles zijn geregistreerd.
+          Wij passen onze operaties dienovereenkomstig aan.
+          Jullie hebben nog niets gevonden. Dat verandert niet.
+        </p>
+        <div class="news-card-footer">
+          <span class="news-card-ref">KGS-DECL-011</span>
+          <span class="news-card-icon">♛</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OFFICIËLE STATEMENTS -->
+  <section class="statements-section">
+    <div class="section-label">Officieel</div>
+    <div class="section-title">Publieke statements.</div>
+    <div class="gold-line"></div>
+
+    <div class="statements-list">
+      <div class="statement-row">
+        <span class="statement-row-date">Meest recent</span>
+        <p class="statement-row-text"><strong>"La Familia De Fuego has expanded operations."</strong> — De stad is op de hoogte gebracht.</p>
+        <span class="statement-row-tag aktief">Actief</span>
+      </div>
+      <div class="statement-row">
+        <span class="statement-row-date">Recent</span>
+        <p class="statement-row-text">"Trespassing has consequences." — Dit geldt voor iedereen. Geen uitzonderingen.</p>
+        <span class="statement-row-tag waarschuwing">Waarschuwing</span>
+      </div>
+      <div class="statement-row">
+        <span class="statement-row-date">Recent</span>
+        <p class="statement-row-text">"The city is changing." — Wie het niet ziet, kijkt niet goed genoeg.</p>
+        <span class="statement-row-tag aktief">Verklaring</span>
+      </div>
+      <div class="statement-row">
+        <span class="statement-row-date">Eerder</span>
+        <p class="statement-row-text">"We were here before you noticed." — En wij blijven nadat jullie vergeten zijn.</p>
+        <span class="statement-row-tag">Archief</span>
+      </div>
+      <div class="statement-row">
+        <span class="statement-row-date">Eerder</span>
+        <p class="statement-row-text">"No faces. No names. No arrests." — Status ongewijzigd.</p>
+        <span class="statement-row-tag">Archief</span>
+      </div>
+      <div class="statement-row">
+        <span class="statement-row-date">Eerder</span>
+        <p class="statement-row-text">"Four organisations. Zero survivors." — Wie het probeert, kent de uitkomst.</p>
+        <span class="statement-row-tag waarschuwing">Waarschuwing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSMISSIE -->
+  <section class="transmission-section">
+    <div class="transmission-left">
+      <div class="section-label">Inkomend signaal</div>
+      <div class="section-title">Actieve transmissie.</div>
+      <div class="gold-line"></div>
+      <p class="transmission-body">
+        Niet alles wat La Familia De Fuego communiceert is openbaar.
+        Wat je hier ziet, is het topje. Het meeste beweegt
+        in kanalen die jij niet bereikt — en nooit zal bereiken.
+        Wat er wél uitkomt, is bewust. Elke letter.
+      </p>
+    </div>
+    <div class="transmission-right">
+      <span class="transmission-line">// LA FAMILIA DE FUEGO SECURE CHANNEL</span>
+      <span class="transmission-line">// ENCRYPTIE: ACTIEF</span>
+      <span class="transmission-line">&nbsp;</span>
+      <span class="transmission-line active">&gt; STATUS: OPERATIONEEL</span>
+      <span class="transmission-line active">&gt; ZONES ACTIEF: 12</span>
+      <span class="transmission-line danger">&gt; BEDREIGING NIVEAU: KRITIEK</span>
+      <span class="transmission-line">&nbsp;</span>
+      <span class="transmission-line">&gt; LAATSTE BERICHT:</span>
+      <span class="transmission-line active">&gt; "The city bends. We do not."</span>
+      <span class="transmission-line">&nbsp;</span>
+      <span class="transmission-line">&gt; VOLGENDE TRANSMISSIE: ████████<span class="transmission-cursor"></span></span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="archief-strip">
+    <div class="archief-ticker">
+      &nbsp;&nbsp;&nbsp;&nbsp;La Familia De Fuego heeft operaties uitgebreid
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Betreden heeft gevolgen
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      De stad verandert
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Vier crews ontbonden — geen commentaar
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Leiderschap onbekend — altijd
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Geen gezichten. Geen namen. Geen arrestaties.
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      La Familia De Fuego heeft operaties uitgebreid
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Betreden heeft gevolgen
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      De stad verandert
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Vier crews ontbonden — geen commentaar
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Leiderschap onbekend — altijd
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Geen gezichten. Geen namen. Geen arrestaties.
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <!-- SLOTQUOTE -->
+  <section class="news-closing">
+    <div class="news-closing-bg"></div>
+    <blockquote>
+      "We don't make announcements.<br>
+      We make facts."
+      <cite>— La Familia De Fuego, publieke communicatie — eenrichtingsverkeer</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<footer class="ks-footer">
+  <span class="ks-footer-logo">La Familia De Fuego</span>
+  <span class="ks-footer-sub">No faces. No names. Just power.</span>
+</footer>
+
+<script>
+// Filter tabs
+document.querySelectorAll('.news-filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.news-filter-tab').forEach(t => t.classList.remove('actief'));
+    tab.classList.add('actief');
+  });
+});
+
+// Scroll fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.06 });
+
+document.querySelectorAll(
+  '.featured-news, .statements-section, .transmission-section, .news-closing'
+).forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+  observer.observe(el);
+});
+
+// Nieuws cards stagger
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.news-card').forEach((card, i) => {
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, i * 80);
+      });
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.04 });
+
+const grid = document.querySelector('.news-grid');
+if (grid) {
+  grid.querySelectorAll('.news-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(16px)';
+    card.style.transition = 'opacity 0.65s ease, transform 0.65s ease, background 0.25s';
+  });
+  cardObserver.observe(grid);
+}
+
+// Statements inschuiven
+const stObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.statement-row').forEach((row, i) => {
+        setTimeout(() => {
+          row.style.opacity = '1';
+          row.style.transform = 'translateX(0)';
+        }, i * 100);
+      });
+      stObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+const stList = document.querySelector('.statements-list');
+if (stList) {
+  stList.querySelectorAll('.statement-row').forEach(row => {
+    row.style.opacity = '0';
+    row.style.transform = 'translateX(-16px)';
+    row.style.transition = 'opacity 0.7s ease, transform 0.7s ease, background 0.2s';
+  });
+  stObserver.observe(stList);
+}
+</script>
+</body>
+</html>
