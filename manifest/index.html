@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KINGSMAN — Manifest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: #b89640;
+      --gold-dark: #8a7040;
+      --gold-deeper: #5a4a2a;
+      --gold-abyss: #3a2e18;
+      --gold-ghost: rgba(201,168,76,0.06);
+      --gold-subtle: rgba(201,168,76,0.15);
+      --gold-border: rgba(201,168,76,0.26);
+      --gold-border-strong: rgba(201,168,76,0.55);
+
+      --bg: #0a0a0a;
+      --bg-lift: #0d0d0d;
+      --bg-raise: #0f0f0f;
+      --bg-high: #131313;
+
+      --text:       #f0e6c8;
+      --text-muted: #c8a85c;
+      --text-dim:   #a08848;
+      --text-ghost: #78683a;
+
+      --danger: rgba(139,0,0,0.15);
+      --danger-border: rgba(139,0,0,0.4);
+      --danger-text: #c05050;
+
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-display: 'Playfair Display', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      cursor: default;
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+    /* ─── SELECTION ────────────────────────────────────────────────────── */
+    ::selection { background: var(--gold-subtle); color: var(--gold); }
+
+    /* ─── NAV ──────────────────────────────────────────────────────────── */
+    .ks-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(10,10,10,0.9);
+      border-bottom: 0.5px solid var(--gold-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .ks-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .ks-logo span {
+      display: block;
+      font-size: 8px;
+      letter-spacing: 7px;
+      font-weight: 300;
+      color: var(--text-ghost);
+      margin-top: 3px;
+      font-family: var(--font-serif);
+    }
+
+    .ks-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+    }
+    .ks-nav-links a {
+      color: var(--text-ghost);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.25s;
+      font-family: var(--font-serif);
+    }
+    .ks-nav-links a:hover,
+    .ks-nav-links a.active { color: var(--gold); }
+
+    /* ─── PAGE WRAPPER ─────────────────────────────────────────────────── */
+    .ks-page { padding-top: 64px; min-height: 100vh; }
+
+    /* ─── SECTION ──────────────────────────────────────────────────────── */
+    .section {
+      padding: 4rem 3rem;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 6px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      line-height: 1.1;
+    }
+    .gold-line {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ─── BADGE ────────────────────────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      border: 0.5px solid var(--gold-border);
+      padding: 3px 10px;
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+    }
+
+    /* ─── RULE ─────────────────────────────────────────────────────────── */
+    .rule {
+      width: 100%;
+      height: 0.5px;
+      background: var(--gold-border);
+      margin: 2rem 0;
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────────────────── */
+    .ks-footer {
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .ks-footer-logo {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--text-ghost);
+      letter-spacing: 5px;
+    }
+    .ks-footer-sub {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    /* ─── ANIMATIONS ───────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes goldPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes glitch {
+      0%, 100% { clip-path: inset(0 0 98% 0); transform: translate(0); }
+      20% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 1px); }
+      40% { clip-path: inset(70% 0 10% 0); transform: translate(3px, -1px); }
+      60% { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 2px); }
+      80% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
+    }
+
+    .anim-fade-up { animation: fadeUp 0.8s cubic-bezier(.22,1,.36,1) both; }
+    .anim-fade-in { animation: fadeIn 1s ease both; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.6s; }
+    .delay-5 { animation-delay: 0.75s; }
+    .delay-6 { animation-delay: 0.9s; }
+    .delay-7 { animation-delay: 1.05s; }
+    .delay-8 { animation-delay: 1.2s; }
+
+    /* ─── MANIFEST HERO ─────────────────────────────────────────────────── */
+    .manifest-hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 3rem 5rem;
+      overflow: hidden;
+    }
+
+    .manifest-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(201,168,76,0.012) 3px,
+          rgba(201,168,76,0.012) 4px
+        );
+      pointer-events: none;
+    }
+
+    /* Scanline effect */
+    .manifest-hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.03), transparent);
+      animation: scanline 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .manifest-roman {
+      font-family: var(--font-serif);
+      font-size: 9px;
+      letter-spacing: 8px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .manifest-crown {
+      font-size: 28px;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+      display: block;
+      animation: goldPulse 4s ease-in-out infinite;
+    }
+
+    .manifest-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 12px;
+      text-transform: uppercase;
+      line-height: 1;
+      position: relative;
+    }
+
+    .manifest-hero-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      color: var(--gold);
+      opacity: 0;
+      animation: glitch 6s ease-in-out infinite;
+      animation-delay: 3s;
+    }
+
+    .manifest-hero-sub {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    .manifest-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem auto;
+      width: fit-content;
+    }
+    .manifest-divider-line {
+      width: 80px;
+      height: 0.5px;
+      background: var(--gold-border-strong);
+    }
+    .manifest-divider-diamond {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .manifest-opening {
+      font-family: var(--font-display);
+      font-size: clamp(15px, 2.2vw, 19px);
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* ─── TENET SECTION ─────────────────────────────────────────────────── */
+    .tenets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gold-border);
+      margin-top: 3rem;
+    }
+
+    .tenet-cell {
+      background: var(--bg);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+    .tenet-cell:hover {
+      background: var(--bg-high);
+    }
+
+    .tenet-cell::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.5s cubic-bezier(.22,1,.36,1);
+    }
+    .tenet-cell:hover::before { height: 100%; }
+
+    .tenet-number {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold-ghost);
+      line-height: 1;
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      transition: color 0.4s;
+    }
+    .tenet-cell:hover .tenet-number {
+      color: rgba(201,168,76,0.12);
+    }
+
+    .tenet-icon {
+      font-size: 22px;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+      display: block;
+    }
+
+    .tenet-word {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .tenet-nl {
+      font-size: 9px;
+      letter-spacing: 5px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      font-family: var(--font-serif);
+    }
+
+    .tenet-desc {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* ─── CODE SECTION ──────────────────────────────────────────────────── */
+    .code-section {
+      padding: 5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      border: 0.5px solid rgba(201,168,76,0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .code-section::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      border: 0.5px solid rgba(201,168,76,0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .code-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .code-statements {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .code-statement {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 2.2rem 0;
+      border-bottom: 0.5px solid rgba(201,168,76,0.07);
+      position: relative;
+      cursor: default;
+      transition: padding-left 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    .code-statement:hover {
+      padding-left: 1rem;
+    }
+
+    .code-index {
+      font-family: var(--font-serif);
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--text-ghost);
+      min-width: 28px;
+      padding-top: 5px;
+      font-style: italic;
+    }
+
+    .code-content { flex: 1; }
+
+    .code-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+      transition: color 0.3s;
+    }
+    .code-statement:hover .code-title { color: var(--gold); }
+
+    .code-body {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.9;
+      max-width: 560px;
+      font-style: italic;
+    }
+
+    .code-marker {
+      width: 1px;
+      align-self: stretch;
+      background: rgba(201,168,76,0.0);
+      transition: background 0.4s;
+      flex-shrink: 0;
+    }
+    .code-statement:hover .code-marker {
+      background: var(--gold);
+    }
+
+    /* ─── QUOTE BLOCKS ─────────────────────────────────────────────────── */
+    .quotes-section {
+      padding: 5rem 3rem;
+      background: var(--bg-lift);
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--gold-border);
+      margin-top: 3rem;
+    }
+
+    .quote-block {
+      background: var(--bg-lift);
+      padding: 3.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+    .quote-block:hover { background: var(--bg-high); }
+
+    .quote-block::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 2rem;
+      font-family: var(--font-display);
+      font-size: 120px;
+      color: rgba(201,168,76,0.04);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.4s;
+    }
+    .quote-block:hover::before {
+      color: rgba(201,168,76,0.07);
+    }
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-attribution {
+      font-size: 8px;
+      letter-spacing: 4px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+    }
+
+    /* ─── WARNING BANNER ───────────────────────────────────────────────── */
+    .warning-banner {
+      margin: 0 3rem 3rem;
+      border: 0.5px solid var(--danger-border);
+      background: var(--danger);
+      padding: 1.8rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .warning-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--danger-text);
+      opacity: 0.5;
+    }
+
+    .warning-icon {
+      font-size: 18px;
+      opacity: 0.7;
+      flex-shrink: 0;
+      animation: goldPulse 2.5s ease-in-out infinite;
+    }
+
+    .warning-text {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--danger-text);
+      text-transform: uppercase;
+      line-height: 1.8;
+    }
+    .warning-text strong {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 5px;
+      opacity: 0.6;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ─── SEAL SECTION ──────────────────────────────────────────────────── */
+    .seal-section {
+      padding: 6rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .seal-outer {
+      width: 180px;
+      height: 180px;
+      border: 0.5px solid var(--gold-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .seal-outer::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 0.5px solid rgba(201,168,76,0.15);
+      border-radius: 50%;
+    }
+    .seal-outer::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 0.5px dashed rgba(201,168,76,0.1);
+      border-radius: 50%;
+    }
+
+    .seal-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .seal-ks {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 6px;
+      line-height: 1;
+      opacity: 0.85;
+    }
+
+    .seal-year {
+      font-size: 8px;
+      letter-spacing: 5px;
+      color: var(--text-ghost);
+      font-family: var(--font-serif);
+      margin-top: 4px;
+    }
+
+    .seal-closing {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 3vw, 28px);
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .seal-sub {
+      font-size: 9px;
+      letter-spacing: 5px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────────────────── */
+    .ks-footer {
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .ks-footer-logo {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--text-ghost);
+      letter-spacing: 5px;
+    }
+    .ks-footer-sub {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .ks-nav { padding: 1rem 1.5rem; }
+      .ks-nav-links { gap: 1.2rem; }
+      .ks-nav-links a { font-size: 8px; letter-spacing: 2px; }
+      .section { padding: 3rem 1.5rem; }
+      .code-section { padding: 3rem 1.5rem; }
+      .quotes-section { padding: 3rem 1.5rem; }
+      .seal-section { padding: 4rem 1.5rem; }
+      .warning-banner { margin: 0 1.5rem 2rem; padding: 1.4rem 1.5rem; gap: 1rem; }
+      .tenets-grid { grid-template-columns: 1fr; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .tenet-cell { padding: 2rem 1.5rem; }
+      .quote-block { padding: 2.5rem 1.5rem; }
+      .code-statement { gap: 1rem; }
+      .ks-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="ks-nav">
+    <a href="index.html" class="ks-logo">
+      Kingsman
+      <span>Organization</span>
+    </a>
+    <div class="ks-nav-links">
+      <a href="index.html">Home</a>
+      <a href="reputation.html">Reputatie</a>
+      <a href="media.html">Media</a>
+      <a href="territory.html">Territorium</a>
+      <a href="manifest.html" class="active">Manifest</a>
+      <a href="news.html">Nieuws</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <main class="ks-page">
+
+    <!-- HERO -->
+    <section class="manifest-hero">
+      <p class="manifest-roman anim-fade-in">Kingsman — De Code</p>
+      <span class="manifest-crown anim-fade-in delay-1">♦</span>
+      <h1 class="manifest-hero-title anim-fade-up delay-2" data-text="MANIFEST">MANIFEST</h1>
+      <p class="manifest-hero-sub anim-fade-up delay-3">Filosofie · Wet · Orde</p>
+      <div class="manifest-divider anim-fade-in delay-4">
+        <div class="manifest-divider-line"></div>
+        <div class="manifest-divider-diamond"></div>
+        <div class="manifest-divider-line"></div>
+      </div>
+      <p class="manifest-opening anim-fade-up delay-5">
+        Wij zijn niet gebouwd op regels. Wij zijn gebouwd op principes.<br>
+        Principes die niet worden opgelegd — maar worden geleefd.
+      </p>
+    </section>
+
+    <!-- TENETS -->
+    <section class="section">
+      <p class="section-label anim-fade-in">Onze grondslagen</p>
+      <h2 class="section-title anim-fade-up delay-1">De Vijf Pijlers</h2>
+      <div class="gold-line anim-fade-in delay-2"></div>
+
+      <div class="tenets-grid">
+
+        <div class="tenet-cell anim-fade-up delay-1">
+          <span class="tenet-number">I</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">Loyalty</div>
+          <div class="tenet-nl">Loyaliteit</div>
+          <p class="tenet-desc">
+            Je bent geen lid van een groep. Je bent onderdeel van iets groters. Loyaliteit is geen keuze — het is je enige optie.
+          </p>
+        </div>
+
+        <div class="tenet-cell anim-fade-up delay-2">
+          <span class="tenet-number">II</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">Silence</div>
+          <div class="tenet-nl">Stilte</div>
+          <p class="tenet-desc">
+            Macht fluistert. Namen worden niet uitgesproken. Gezichten worden niet getoond. Wat niet gezegd wordt, kan niet worden gebruikt.
+          </p>
+        </div>
+
+        <div class="tenet-cell anim-fade-up delay-3">
+          <span class="tenet-number">III</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">Respect</div>
+          <div class="tenet-nl">Respect</div>
+          <p class="tenet-desc">
+            Respect wordt niet gevraagd. Het wordt verdiend door aanwezigheid, en afgedwongen door reputatie. Niet meer. Niet minder.
+          </p>
+        </div>
+
+        <div class="tenet-cell anim-fade-up delay-4">
+          <span class="tenet-number">IV</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">Power</div>
+          <div class="tenet-nl">Macht</div>
+          <p class="tenet-desc">
+            Macht is geen doel — het is een gevolg. Van discipline, keuzes en het weigeren te buigen voor druk van buitenaf.
+          </p>
+        </div>
+
+        <div class="tenet-cell anim-fade-up delay-5">
+          <span class="tenet-number">V</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">No Weakness</div>
+          <div class="tenet-nl">Geen Zwakte</div>
+          <p class="tenet-desc">
+            Emotie is menselijk. Zwakte is een keuze. Kingsman erkent fouten, maar laat ze niet de toekomst bepalen.
+          </p>
+        </div>
+
+        <div class="tenet-cell anim-fade-up delay-6">
+          <span class="tenet-number">∞</span>
+          <span class="tenet-icon">⬛</span>
+          <div class="tenet-word">The Code</div>
+          <div class="tenet-nl">De Code</div>
+          <p class="tenet-desc">
+            Al het bovenstaande is één. Wie de code breekt, breekt de organisatie. En wie de organisatie breekt, wordt herinnerd als een voorbeeld.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DE CODE — DETAILED STATEMENTS -->
+    <section class="code-section">
+      <div class="code-inner">
+        <p class="section-label anim-fade-in">Geldende wet</p>
+        <h2 class="section-title anim-fade-up delay-1">De Interne Wet</h2>
+        <div class="gold-line anim-fade-in delay-2"></div>
+
+        <div class="code-statements">
+
+          <div class="code-statement anim-fade-up delay-2">
+            <span class="code-index">01</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Organisatie boven alles</div>
+              <p class="code-body">De belangen van Kingsman staan altijd boven persoonlijke ambities. Individuele beslissingen worden genomen met het collectief in gedachten. Wie alleen speelt, staat alleen.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-3">
+            <span class="code-index">02</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Identiteit blijft verborgen</div>
+              <p class="code-body">Namen, gezichten en rollen worden nooit publiekelijk bevestigd. Wat de buitenwereld niet weet, kan hen niet bereiken. Anonimiteit is geen schaamte — het is strategie.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-4">
+            <span class="code-index">03</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Interne conflicten blijven intern</div>
+              <p class="code-body">Meningsverschillen worden opgelost achter gesloten deuren. Geen vuile was naar buiten. Zwakte toon je niet aan vijanden — en zeker niet aan toeschouwers.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-5">
+            <span class="code-index">04</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Woord is wet</div>
+              <p class="code-body">Een belofte gedaan is een belofte gehouden. Wie zijn woord breekt, verliest zijn positie. Vertrouwen wordt jarenlang opgebouwd en in seconden vernietigd. Kies je woorden zorgvuldig.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-6">
+            <span class="code-index">05</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Respect wordt gehandhaafd</div>
+              <p class="code-body">Disrespect blijft niet onbeantwoord — door wie het ook komt. Niet uit wraak, maar als signaal: er zijn gevolgen voor wie de grenzen van Kingsman negeert.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-7">
+            <span class="code-index">06</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">Geduld is een wapen</div>
+              <p class="code-body">Kingsman reageert niet impulsief. Elke actie wordt overwogen. De sterkste zet is soms geen zet — tot het moment daar is. Dan is het definitief.</p>
+            </div>
+          </div>
+
+          <div class="code-statement anim-fade-up delay-8">
+            <span class="code-index">07</span>
+            <div class="code-marker"></div>
+            <div class="code-content">
+              <div class="code-title">De code vervalt nooit</div>
+              <p class="code-body">Deze wet geldt altijd — actief of niet, in tijden van rust of conflict. Kingsman is geen functie. Het is een mentaliteit die niet uitgeschakeld wordt.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- QUOTES -->
+    <section class="quotes-section">
+      <p class="section-label anim-fade-in">Kingsman spreekt</p>
+      <h2 class="section-title anim-fade-up delay-1">Statements</h2>
+      <div class="gold-line anim-fade-in delay-2"></div>
+
+      <div class="quotes-grid">
+
+        <div class="quote-block anim-fade-up delay-2">
+          <p class="quote-text">"Respect isn't requested. It's taken."</p>
+          <span class="quote-attribution">— Kingsman Doctrine</span>
+        </div>
+
+        <div class="quote-block anim-fade-up delay-3">
+          <p class="quote-text">"No faces. No names. Just power."</p>
+          <span class="quote-attribution">— Kingsman Doctrine</span>
+        </div>
+
+        <div class="quote-block anim-fade-up delay-4">
+          <p class="quote-text">"Wij werden niet gevreesd door luid te zijn. Maar door altijd aanwezig te zijn."</p>
+          <span class="quote-attribution">— Interne overdracht</span>
+        </div>
+
+        <div class="quote-block anim-fade-up delay-5">
+          <p class="quote-text">"Loyaliteit is geen emotie. Het is een standaard waaraan alles gemeten wordt."</p>
+          <span class="quote-attribution">— Interne overdracht</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WARNING -->
+    <div class="warning-banner anim-fade-in">
+      <span class="warning-icon">⚠</span>
+      <p class="warning-text">
+        <strong>Officiële mededeling — Kingsman</strong>
+        Deze code is niet openbaar gepubliceerd als uitnodiging. Het is een verklaring. Wie dit leest als een zwakte, begrijpt niets. Wie dit leest als een waarschuwing — begrijpt precies genoeg.
+      </p>
+    </div>
+
+    <!-- SEAL / CLOSING -->
+    <section class="seal-section">
+      <div class="seal-outer anim-fade-in delay-1">
+        <div class="seal-inner">
+          <div class="seal-ks">KS</div>
+          <div class="seal-year">Est. — — —</div>
+        </div>
+      </div>
+      <p class="seal-closing anim-fade-up delay-2">
+        "Wij zijn niet de luidste kracht in de stad.<br>Maar wij zijn wel de reden dat het stil is."
+      </p>
+      <span class="seal-sub anim-fade-in delay-3">Kingsman — De organisatie die niet bestaat</span>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="ks-footer">
+    <span class="ks-footer-logo">Kingsman</span>
+    <span class="ks-footer-sub">Geen gezichten. Geen namen. Alleen macht.</span>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll-triggered animations
+    const animEls = document.querySelectorAll('.anim-fade-up, .anim-fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    animEls.forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+
+    // Glitch title on idle
+    const heroTitle = document.querySelector('.manifest-hero-title');
+    if (heroTitle) {
+      setInterval(() => {
+        heroTitle.classList.add('glitching');
+        setTimeout(() => heroTitle.classList.remove('glitching'), 600);
+      }, 7000);
+    }
+  </script>
+
+</body>
+</html>
