@@ -4,32 +4,35 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold: #c9a84c;
-  --gold-dim: #b89640;        /* slightly brighter than original #8a7040 */
-  --gold-dark: #8a7040;       /* was #5a4a2a — now readable as a muted gold */
-  --gold-deeper: #5a4a2a;     /* was #3a2e18 */
-  --gold-abyss: #3a2e18;      /* was #2a2010 */
-  --gold-ghost: rgba(201,168,76,0.06);
-  --gold-subtle: rgba(201,168,76,0.15);
-  --gold-border: rgba(201,168,76,0.26);
-  --gold-border-strong: rgba(201,168,76,0.55);
+  /* ── ROOD PALET (vervangt goud) ── */
+  --gold:               #c03030;   /* was #c9a84c — nu levendig rood */
+  --gold-dim:           #a82828;   /* was #b89640 — gedempte rood */
+  --gold-dark:          #7a1e1e;   /* was #8a7040 — donker rood */
+  --gold-deeper:        #4a1212;   /* was #5a4a2a */
+  --gold-abyss:         #2e0a0a;   /* was #3a2e18 */
+  --gold-ghost:         rgba(192,48,48,0.06);
+  --gold-subtle:        rgba(192,48,48,0.15);
+  --gold-border:        rgba(192,48,48,0.26);
+  --gold-border-strong: rgba(192,48,48,0.55);
 
-  --bg: #0a0a0a;
+  /* ── ACHTERGRONDEN ── */
+  --bg:      #0a0a0a;
   --bg-lift: #0d0d0d;
-  --bg-raise: #0f0f0f;
+  --bg-raise:#0f0f0f;
   --bg-high: #131313;
 
-  /* ── TEXT COLOURS — all significantly brightened ── */
-  --text:       #f0e6c8;   /* was #e8d5a0 — warm ivory, max contrast */
-  --text-muted: #c8a85c;   /* was #8a7040 — now clearly readable gold-tan */
-  --text-dim:   #a08848;   /* was #5a4a2a — body copy, legible */
-  --text-ghost: #78683a;   /* was #3a2e18 — labels, subtle but visible */
+  /* ── TEKST ── */
+  --text:       #f0e0e0;   /* warm wit met rode tint */
+  --text-muted: #c87070;   /* leesbaar gedempt rood */
+  --text-dim:   #965050;   /* body copy */
+  --text-ghost: #6e3838;   /* labels, subtiel maar zichtbaar */
 
-  --danger: rgba(139,0,0,0.15);
-  --danger-border: rgba(139,0,0,0.4);
-  --danger-text: #c05050;  /* was #8b3030 — brighter red for readability */
+  /* ── DANGER (iets feller dan de hoofdkleur) ── */
+  --danger:        rgba(160,0,0,0.15);
+  --danger-border: rgba(160,0,0,0.4);
+  --danger-text:   #e05050;
 
-  --font-serif: 'Cormorant Garamond', serif;
+  --font-serif:   'Cormorant Garamond', serif;
   --font-display: 'Playfair Display', serif;
 }
 
@@ -83,7 +86,7 @@ body {
   font-size: 8px;
   letter-spacing: 7px;
   font-weight: 300;
-  color: var(--text-ghost);   /* was --gold-dark; now uses the brighter ghost */
+  color: var(--text-ghost);
   margin-top: 3px;
   font-family: var(--font-serif);
 }
@@ -94,7 +97,7 @@ body {
   gap: 2.2rem;
 }
 .ks-nav-links a {
-  color: var(--text-ghost);   /* was --gold-dark */
+  color: var(--text-ghost);
   font-size: 9px;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -111,12 +114,12 @@ body {
 /* ─── SECTION ──────────────────────────────────────────────────── */
 .section {
   padding: 4rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(192,48,48,0.08);
 }
 .section-label {
   font-size: 9px;
   letter-spacing: 6px;
-  color: var(--text-ghost);   /* was --text-ghost (now brighter) */
+  color: var(--text-ghost);
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
@@ -169,18 +172,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 0.5px solid rgba(201,168,76,0.08);
+  border-top: 0.5px solid rgba(192,48,48,0.08);
 }
 .ks-footer-logo {
   font-family: var(--font-display);
   font-size: 13px;
-  color: var(--text-ghost);   /* was --text-ghost (now brighter) */
+  color: var(--text-ghost);
   letter-spacing: 5px;
 }
 .ks-footer-sub {
   font-size: 9px;
   letter-spacing: 3px;
-  color: var(--text-dim);     /* was --gold-abyss — now more readable */
+  color: var(--text-dim);
   text-transform: uppercase;
   font-style: italic;
 }
@@ -188,23 +191,23 @@ body {
 /* ─── ANIMATIONS ───────────────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 @keyframes scanline {
-  0% { transform: translateY(-100%); }
+  0%   { transform: translateY(-100%); }
   100% { transform: translateY(100vh); }
 }
 @keyframes goldPulse {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  50%       { opacity: 1; }
 }
 @keyframes crownDrop {
   from { opacity: 0; transform: translateY(-30px) scale(0.85); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .anim-fade-up { animation: fadeUp 0.8s cubic-bezier(.22,1,.36,1) both; }
