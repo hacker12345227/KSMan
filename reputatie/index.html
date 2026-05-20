@@ -8,32 +8,46 @@
 <link rel="stylesheet" href="../style.css" />
 <link rel="icon" href="../favicon.ico">
 <style>
+/* ── RED VARIABLE OVERRIDES ──────────────────────────────── */
+:root {
+  --red:        #c91e1e;
+  --red-dark:   #8b1010;
+  --red-dim:    #a01818;
+  --red-border: rgba(180,30,30,0.25);
+  --red-abyss:  rgba(180,30,30,0.12);
+  --gold:        var(--red);
+  --gold-dark:   var(--red-dark);
+  --gold-dim:    var(--red-dim);
+  --gold-border: var(--red-border);
+  --gold-abyss:  var(--red-abyss);
+}
+
 /* ── PAGE HEADER ─────────────────────────────────────────── */
 .rep-header {
   position: relative;
   padding: 7rem 3rem 5rem;
-  border-bottom: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--red-border);
   overflow: hidden;
 }
 .rep-header-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 50%, rgba(180,30,30,0.04) 0%, transparent 60%),
     repeating-linear-gradient(
       -45deg, transparent, transparent 80px,
-      rgba(201,168,76,0.012) 80px, rgba(201,168,76,0.012) 81px
+      rgba(180,30,30,0.012) 80px, rgba(180,30,30,0.012) 81px
     );
 }
 .rep-header-inner { position: relative; z-index: 1; max-width: 700px; }
 .rep-page-label {
   font-size: 8px; letter-spacing: 7px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
   font-family: var(--font-serif); margin-bottom: 1.4rem;
   display: flex; align-items: center; gap: 1rem;
 }
 .rep-page-label::before {
   content: ''; display: block;
-  width: 32px; height: 0.5px; background: var(--gold-dim);
+  width: 32px; height: 0.5px; background: var(--red-dim);
 }
 .rep-header h1 {
   font-family: var(--font-display);
@@ -50,15 +64,15 @@
 .rep-header-corner {
   position: absolute; right: 3rem; bottom: 3rem;
   font-family: var(--font-display); font-size: 120px;
-  font-weight: 900; color: rgba(201,168,76,0.03);
+  font-weight: 900; color: rgba(180,30,30,0.03);
   line-height: 1; user-select: none; z-index: 0;
   letter-spacing: -4px;
 }
 
 /* ── CLASSIFICATION BAR ──────────────────────────────────── */
 .classif-bar {
-  background: rgba(201,168,76,0.04);
-  border-bottom: 0.5px solid var(--gold-border);
+  background: rgba(180,30,30,0.04);
+  border-bottom: 0.5px solid var(--red-border);
   padding: 0.9rem 3rem;
   display: flex; align-items: center; gap: 2rem;
   overflow-x: auto;
@@ -69,8 +83,8 @@
 }
 .classif-dot {
   width: 5px; height: 5px;
-  background: var(--gold); border-radius: 50%;
-  animation: goldPulse 2.5s ease infinite;
+  background: var(--red); border-radius: 50%;
+  animation: redPulse 2.5s ease infinite;
 }
 .classif-dot.red {
   background: #c05050;
@@ -88,27 +102,27 @@
 .stats-section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-bottom: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--red-border);
 }
 .stat-cell {
   padding: 3.5rem 2rem;
-  border-right: 0.5px solid rgba(201,168,76,0.12);
+  border-right: 0.5px solid rgba(180,30,30,0.12);
   text-align: center;
   position: relative; overflow: hidden;
   transition: background 0.3s;
 }
 .stat-cell:last-child { border-right: none; }
-.stat-cell:hover { background: rgba(201,168,76,0.02); }
+.stat-cell:hover { background: rgba(180,30,30,0.02); }
 .stat-cell::before {
   content: attr(data-index);
   position: absolute; top: 1rem; left: 1.2rem;
   font-size: 9px; letter-spacing: 2px;
-  color: rgba(201,168,76,0.15); font-family: var(--font-display);
+  color: rgba(180,30,30,0.15); font-family: var(--font-display);
 }
 .stat-number {
   font-family: var(--font-display);
   font-size: 56px; font-weight: 900;
-  color: var(--gold); line-height: 1;
+  color: var(--red); line-height: 1;
   display: block; margin-bottom: 0.6rem;
 }
 .stat-number.redacted {
@@ -127,7 +141,7 @@
 /* ── THREAT LEVEL ────────────────────────────────────────── */
 .threat-section {
   padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
   display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem;
   align-items: center;
 }
@@ -148,12 +162,12 @@
   color: var(--text-muted); text-transform: uppercase;
 }
 .threat-bar-track {
-  height: 2px; background: rgba(201,168,76,0.1);
+  height: 2px; background: rgba(180,30,30,0.1);
   position: relative;
 }
 .threat-bar-fill {
   position: absolute; left: 0; top: 0; bottom: 0;
-  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  background: linear-gradient(90deg, var(--red-dim), var(--red));
   transition: width 1.2s cubic-bezier(.22,1,.36,1);
 }
 .threat-bar-fill.danger {
@@ -166,7 +180,7 @@
 }
 
 .threat-right {
-  border: 0.5px solid var(--gold-border);
+  border: 0.5px solid var(--red-border);
   padding: 2.5rem;
   position: relative;
 }
@@ -175,14 +189,14 @@
   position: absolute; top: -6px; left: 1.5rem;
   background: var(--bg); padding: 0 8px;
   font-size: 7px; letter-spacing: 5px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
 }
 .threat-level-display {
   display: flex; align-items: center;
   gap: 1.5rem; margin-bottom: 2rem;
 }
 .threat-crown {
-  font-size: 48px; color: var(--gold);
+  font-size: 48px; color: var(--red);
   line-height: 1;
 }
 .threat-level-text { flex: 1; }
@@ -194,7 +208,7 @@
 }
 .threat-level-sub {
   font-size: 9px; letter-spacing: 4px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
 }
 .threat-tags {
   display: flex; flex-wrap: wrap; gap: 0.6rem;
@@ -202,11 +216,11 @@
 .threat-tag {
   font-size: 8px; letter-spacing: 3px;
   color: var(--text-ghost); text-transform: uppercase;
-  border: 0.5px solid rgba(201,168,76,0.15);
+  border: 0.5px solid rgba(180,30,30,0.15);
   padding: 4px 10px;
 }
 .threat-tag.active {
-  color: var(--gold); border-color: var(--gold-border);
+  color: var(--red); border-color: var(--red-border);
 }
 .threat-tag.danger-tag {
   color: #c05050; border-color: rgba(192,80,80,0.3);
@@ -215,33 +229,33 @@
 /* ── TIMELINE ────────────────────────────────────────────── */
 .timeline-section {
   padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
 }
 .timeline { margin-top: 2.5rem; position: relative; }
 .timeline::before {
   content: '';
   position: absolute; left: 0; top: 0; bottom: 0;
-  width: 0.5px; background: linear-gradient(to bottom, var(--gold-border), transparent);
+  width: 0.5px; background: linear-gradient(to bottom, var(--red-border), transparent);
 }
 .timeline-entry {
   display: grid;
   grid-template-columns: 200px 1fr;
   gap: 2.5rem; padding: 2rem 0 2rem 0;
-  border-bottom: 0.5px solid rgba(201,168,76,0.06);
+  border-bottom: 0.5px solid rgba(180,30,30,0.06);
   position: relative; margin-left: 0;
 }
 .timeline-entry::before {
   content: '';
   position: absolute; left: -3px; top: 2.6rem;
   width: 7px; height: 7px;
-  background: var(--gold); border-radius: 50%;
-  box-shadow: 0 0 10px rgba(201,168,76,0.4);
+  background: var(--red); border-radius: 50%;
+  box-shadow: 0 0 10px rgba(180,30,30,0.4);
 }
 .timeline-entry:last-child { border-bottom: none; }
 .timeline-date-col { padding-left: 1.5rem; }
 .timeline-date {
   font-family: var(--font-display); font-size: 12px;
-  font-weight: 700; color: var(--gold-dim);
+  font-weight: 700; color: var(--red-dim);
   letter-spacing: 3px; display: block; margin-bottom: 4px;
 }
 .timeline-phase {
@@ -263,7 +277,7 @@
 .timeline-tag {
   font-size: 7px; letter-spacing: 3px;
   color: var(--text-ghost); text-transform: uppercase;
-  border: 0.5px solid rgba(201,168,76,0.12);
+  border: 0.5px solid rgba(180,30,30,0.12);
   padding: 3px 8px;
 }
 
@@ -271,11 +285,11 @@
 .territory-strip {
   background: var(--bg-lift);
   padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
 }
 .territory-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: rgba(201,168,76,0.1);
+  gap: 1px; background: rgba(180,30,30,0.1);
   margin-top: 2.5rem;
 }
 .territory-cell {
@@ -289,7 +303,7 @@
   content: '';
   position: absolute; top: 0; left: 0;
   width: 2px; height: 0;
-  background: var(--gold);
+  background: var(--red);
   transition: height 0.35s ease;
 }
 .territory-cell:hover::after { height: 100%; }
@@ -300,13 +314,13 @@
 }
 .territory-status {
   font-size: 8px; letter-spacing: 4px;
-  color: var(--gold-dim); text-transform: uppercase;
+  color: var(--red-dim); text-transform: uppercase;
   display: flex; align-items: center; gap: 6px;
   margin-bottom: 0.8rem;
 }
 .territory-status-dot {
   width: 4px; height: 4px; border-radius: 50%;
-  background: var(--gold);
+  background: var(--red);
 }
 .territory-status-dot.contested { background: #c05050; }
 .territory-desc {
@@ -317,11 +331,11 @@
 /* ── RIVAL CREWS ─────────────────────────────────────────── */
 .rivals-section {
   padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(180,30,30,0.08);
 }
 .rivals-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px; background: rgba(201,168,76,0.1);
+  gap: 1px; background: rgba(180,30,30,0.1);
   margin-top: 2.5rem;
 }
 .rival-cell {
@@ -333,7 +347,7 @@
 .rival-cell:hover { background: var(--bg-lift); }
 .rival-id {
   font-family: var(--font-display); font-size: 10px;
-  letter-spacing: 4px; color: rgba(201,168,76,0.2);
+  letter-spacing: 4px; color: rgba(180,30,30,0.2);
   margin-bottom: 1rem;
 }
 .rival-name {
@@ -361,7 +375,7 @@
 }
 .rep-closing-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(180,30,30,0.03) 0%, transparent 65%);
 }
 .rep-closing blockquote {
   font-family: var(--font-display);
@@ -374,7 +388,7 @@
 .rep-closing blockquote::before {
   content: '❝';
   display: block; font-size: 28px;
-  color: var(--gold-border); margin-bottom: 1rem;
+  color: var(--red-border); margin-bottom: 1rem;
 }
 .rep-closing cite {
   display: block; margin-top: 2rem;
@@ -387,7 +401,7 @@
 @media (max-width: 900px) {
   .stats-section { grid-template-columns: 1fr 1fr; }
   .stat-cell:nth-child(2) { border-right: none; }
-  .stat-cell:nth-child(3) { border-top: 0.5px solid rgba(201,168,76,0.12); }
+  .stat-cell:nth-child(3) { border-top: 0.5px solid rgba(180,30,30,0.12); }
   .threat-section { grid-template-columns: 1fr; gap: 3rem; }
   .timeline-entry { grid-template-columns: 1fr; gap: 0.5rem; }
   .territory-grid { grid-template-columns: 1fr 1fr; }
@@ -402,7 +416,7 @@
   .rivals-section,
   .rep-closing { padding-left: 1.5rem; padding-right: 1.5rem; }
   .stats-section { grid-template-columns: 1fr; }
-  .stat-cell { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.12); }
+  .stat-cell { border-right: none; border-bottom: 0.5px solid rgba(180,30,30,0.12); }
   .territory-grid,
   .rivals-grid { grid-template-columns: 1fr; }
   .threat-row { grid-template-columns: 110px 1fr 36px; }
@@ -530,7 +544,7 @@
 
     <div class="threat-right">
       <div class="threat-level-display">
-        <span class="threat-crown">♛</span>
+        <span class="threat-crown">✠</span>
         <div class="threat-level-text">
           <span class="threat-level-name">CRITICAL</span>
           <span class="threat-level-sub">Threat classification — tier I</span>
