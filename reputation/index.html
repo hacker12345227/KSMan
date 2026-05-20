@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KINGSMAN — Reputation</title>
+<meta name="description" content="Feared by many. Known by all. Seen by none." />
+<link rel="stylesheet" href="../style.css" />
+<style>
+/* ── PAGE HEADER ─────────────────────────────────────────── */
+.rep-header {
+  position: relative;
+  padding: 7rem 3rem 5rem;
+  border-bottom: 0.5px solid var(--gold-border);
+  overflow: hidden;
+}
+.rep-header-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    repeating-linear-gradient(
+      -45deg, transparent, transparent 80px,
+      rgba(201,168,76,0.012) 80px, rgba(201,168,76,0.012) 81px
+    );
+}
+.rep-header-inner { position: relative; z-index: 1; max-width: 700px; }
+.rep-page-label {
+  font-size: 8px; letter-spacing: 7px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.rep-page-label::before {
+  content: ''; display: block;
+  width: 32px; height: 0.5px; background: var(--gold-dim);
+}
+.rep-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 6px; line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.rep-header-sub {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.8;
+  max-width: 480px;
+}
+.rep-header-corner {
+  position: absolute; right: 3rem; bottom: 3rem;
+  font-family: var(--font-display); font-size: 120px;
+  font-weight: 900; color: rgba(201,168,76,0.03);
+  line-height: 1; user-select: none; z-index: 0;
+  letter-spacing: -4px;
+}
+
+/* ── CLASSIFICATION BAR ──────────────────────────────────── */
+.classif-bar {
+  background: rgba(201,168,76,0.04);
+  border-bottom: 0.5px solid var(--gold-border);
+  padding: 0.9rem 3rem;
+  display: flex; align-items: center; gap: 2rem;
+  overflow-x: auto;
+}
+.classif-item {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+.classif-dot {
+  width: 5px; height: 5px;
+  background: var(--gold); border-radius: 50%;
+  animation: goldPulse 2.5s ease infinite;
+}
+.classif-dot.red {
+  background: #c05050;
+  animation: redPulse 1.8s ease infinite;
+}
+@keyframes redPulse {
+  0%,100%{opacity:.4} 50%{opacity:1}
+}
+.classif-text {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+
+/* ── CORE STATS GRID ─────────────────────────────────────── */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 0.5px solid var(--gold-border);
+}
+.stat-cell {
+  padding: 3.5rem 2rem;
+  border-right: 0.5px solid rgba(201,168,76,0.12);
+  text-align: center;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-cell:hover { background: rgba(201,168,76,0.02); }
+.stat-cell::before {
+  content: attr(data-index);
+  position: absolute; top: 1rem; left: 1.2rem;
+  font-size: 9px; letter-spacing: 2px;
+  color: rgba(201,168,76,0.15); font-family: var(--font-display);
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 56px; font-weight: 900;
+  color: var(--gold); line-height: 1;
+  display: block; margin-bottom: 0.6rem;
+}
+.stat-number.redacted {
+  font-size: 36px; letter-spacing: 4px; color: var(--text-muted);
+}
+.stat-label {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  display: block; margin-bottom: 0.5rem;
+}
+.stat-sub {
+  font-size: 11px; color: var(--text-dim);
+  font-style: italic; line-height: 1.5;
+}
+
+/* ── THREAT LEVEL ────────────────────────────────────────── */
+.threat-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem;
+  align-items: center;
+}
+.threat-left .section-label { margin-bottom: 0.5rem; }
+.threat-left .section-title { margin-bottom: 1rem; }
+.threat-body {
+  font-size: 14px; color: var(--text-dim);
+  line-height: 1.9; font-style: italic;
+  margin-bottom: 2rem; max-width: 400px;
+}
+.threat-meters { display: flex; flex-direction: column; gap: 1.2rem; }
+.threat-row {
+  display: grid; grid-template-columns: 140px 1fr 40px;
+  align-items: center; gap: 1rem;
+}
+.threat-name {
+  font-size: 9px; letter-spacing: 3px;
+  color: var(--text-muted); text-transform: uppercase;
+}
+.threat-bar-track {
+  height: 2px; background: rgba(201,168,76,0.1);
+  position: relative;
+}
+.threat-bar-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  transition: width 1.2s cubic-bezier(.22,1,.36,1);
+}
+.threat-bar-fill.danger {
+  background: linear-gradient(90deg, #8b2020, #c05050);
+}
+.threat-val {
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--text-ghost); text-align: right;
+  font-family: var(--font-display);
+}
+
+.threat-right {
+  border: 0.5px solid var(--gold-border);
+  padding: 2.5rem;
+  position: relative;
+}
+.threat-right::before {
+  content: 'THREAT ASSESSMENT';
+  position: absolute; top: -6px; left: 1.5rem;
+  background: var(--bg); padding: 0 8px;
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+}
+.threat-level-display {
+  display: flex; align-items: center;
+  gap: 1.5rem; margin-bottom: 2rem;
+}
+.threat-crown {
+  font-size: 48px; color: var(--gold);
+  line-height: 1;
+}
+.threat-level-text { flex: 1; }
+.threat-level-name {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--text); letter-spacing: 3px;
+  display: block;
+}
+.threat-level-sub {
+  font-size: 9px; letter-spacing: 4px;
+  color: var(--gold-dim); text-transform: uppercase;
+}
+.threat-tags {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+}
+.threat-tag {
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--text-ghost); text-transform: uppercase;
+  border: 0.5px solid rgba(201,168,76,0.15);
+  padding: 4px 10px;
+}
+.threat-tag.active {
+  color: var(--gold); border-color: var(--gold-border);
+}
+.threat-tag.danger-tag {
+  color: #c05050; border-color: rgba(192,80,80,0.3);
+}
+
+/* ── TIMELINE ────────────────────────────────────────────── */
+.timeline-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.timeline { margin-top: 2.5rem; position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0.5px; background: linear-gradient(to bottom, var(--gold-border), transparent);
+}
+.timeline-entry {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2.5rem; padding: 2rem 0 2rem 0;
+  border-bottom: 0.5px solid rgba(201,168,76,0.06);
+  position: relative; margin-left: 0;
+}
+.timeline-entry::before {
+  content: '';
+  position: absolute; left: -3px; top: 2.6rem;
+  width: 7px; height: 7px;
+  background: var(--gold); border-radius: 50%;
+  box-shadow: 0 0 10px rgba(201,168,76,0.4);
+}
+.timeline-entry:last-child { border-bottom: none; }
+.timeline-date-col { padding-left: 1.5rem; }
+.timeline-date {
+  font-family: var(--font-display); font-size: 12px;
+  font-weight: 700; color: var(--gold-dim);
+  letter-spacing: 3px; display: block; margin-bottom: 4px;
+}
+.timeline-phase {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+.timeline-content-col { padding-right: 3rem; }
+.timeline-title {
+  font-family: var(--font-display); font-size: 20px;
+  font-weight: 700; color: var(--text);
+  margin-bottom: 0.6rem; letter-spacing: 1px;
+}
+.timeline-desc {
+  font-size: 13px; color: var(--text-dim);
+  line-height: 1.8; font-style: italic;
+  margin-bottom: 0.8rem;
+}
+.timeline-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.timeline-tag {
+  font-size: 7px; letter-spacing: 3px;
+  color: var(--text-ghost); text-transform: uppercase;
+  border: 0.5px solid rgba(201,168,76,0.12);
+  padding: 3px 8px;
+}
+
+/* ── TERRITORY STRIP ─────────────────────────────────────── */
+.territory-strip {
+  background: var(--bg-lift);
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.territory-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(201,168,76,0.1);
+  margin-top: 2.5rem;
+}
+.territory-cell {
+  background: var(--bg);
+  padding: 2rem 1.8rem;
+  transition: background 0.25s;
+  position: relative; overflow: hidden;
+}
+.territory-cell:hover { background: var(--bg-raise); }
+.territory-cell::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 2px; height: 0;
+  background: var(--gold);
+  transition: height 0.35s ease;
+}
+.territory-cell:hover::after { height: 100%; }
+.territory-name {
+  font-family: var(--font-display); font-size: 18px;
+  font-weight: 700; color: var(--text);
+  letter-spacing: 2px; margin-bottom: 4px;
+}
+.territory-status {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--gold-dim); text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 0.8rem;
+}
+.territory-status-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold);
+}
+.territory-status-dot.contested { background: #c05050; }
+.territory-desc {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.7;
+}
+
+/* ── RIVAL CREWS ─────────────────────────────────────────── */
+.rivals-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.rivals-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: rgba(201,168,76,0.1);
+  margin-top: 2.5rem;
+}
+.rival-cell {
+  background: var(--bg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: background 0.25s;
+}
+.rival-cell:hover { background: var(--bg-lift); }
+.rival-id {
+  font-family: var(--font-display); font-size: 10px;
+  letter-spacing: 4px; color: rgba(201,168,76,0.2);
+  margin-bottom: 1rem;
+}
+.rival-name {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 700; color: var(--text-muted);
+  letter-spacing: 3px; margin-bottom: 6px;
+  text-decoration: line-through;
+  text-decoration-color: rgba(192,80,80,0.4);
+}
+.rival-status {
+  font-size: 8px; letter-spacing: 4px;
+  color: #c05050; text-transform: uppercase;
+  display: block; margin-bottom: 0.8rem;
+}
+.rival-desc {
+  font-size: 11px; color: var(--text-dim);
+  font-style: italic; line-height: 1.6;
+}
+
+/* ── CLOSING STATEMENT ────────────────────────────────────── */
+.rep-closing {
+  padding: 6rem 3rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.rep-closing-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+}
+.rep-closing blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3.5vw, 34px);
+  font-weight: 400; font-style: italic;
+  color: var(--text-muted); max-width: 680px;
+  margin: 0 auto; line-height: 1.5;
+  position: relative;
+}
+.rep-closing blockquote::before {
+  content: '❝';
+  display: block; font-size: 28px;
+  color: var(--gold-border); margin-bottom: 1rem;
+}
+.rep-closing cite {
+  display: block; margin-top: 2rem;
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-style: normal; font-family: var(--font-serif);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .stats-section { grid-template-columns: 1fr 1fr; }
+  .stat-cell:nth-child(2) { border-right: none; }
+  .stat-cell:nth-child(3) { border-top: 0.5px solid rgba(201,168,76,0.12); }
+  .threat-section { grid-template-columns: 1fr; gap: 3rem; }
+  .timeline-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+  .territory-grid { grid-template-columns: 1fr 1fr; }
+  .rivals-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .rep-header { padding: 5rem 1.5rem 3rem; }
+  .classif-bar { padding: 0.9rem 1.5rem; }
+  .threat-section,
+  .timeline-section,
+  .territory-strip,
+  .rivals-section,
+  .rep-closing { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .stats-section { grid-template-columns: 1fr; }
+  .stat-cell { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.12); }
+  .territory-grid,
+  .rivals-grid { grid-template-columns: 1fr; }
+  .threat-row { grid-template-columns: 110px 1fr 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ks-nav">
+  <a href="/" class="ks-logo">KINGSMAN<span>Est. — Classified</span></a>
+  <div class="ks-nav-links">
+    <a href="/">Home</a>
+    <a href="/reputation" class="active">Reputation</a>
+    <a href="/media">Media</a>
+    <a href="/territory">Territory</a>
+    <a href="/manifest">Manifest</a>
+    <a href="/news">News</a>
+    <a href="/contact">Contact</a>
+  </div>
+</nav>
+
+<main class="ks-page">
+
+  <!-- PAGE HEADER -->
+  <header class="rep-header">
+    <div class="rep-header-bg"></div>
+    <div class="rep-header-inner">
+      <div class="rep-page-label">Kingsman &nbsp;·&nbsp; Dossier</div>
+      <h1>REPUTATION</h1>
+      <p class="rep-header-sub">
+        Feared by many. Known by all. Seen by none.<br>
+        This is not a record of actions. It is a record of consequences.
+      </p>
+    </div>
+    <div class="rep-header-corner">REP</div>
+  </header>
+
+  <!-- CLASSIFICATION BAR -->
+  <div class="classif-bar">
+    <div class="classif-item">
+      <div class="classif-dot red"></div>
+      <span class="classif-text">High police attention</span>
+    </div>
+    <div class="classif-item">
+      <div class="classif-dot"></div>
+      <span class="classif-text">Active operations</span>
+    </div>
+    <div class="classif-item">
+      <div class="classif-dot"></div>
+      <span class="classif-text">Leadership — unknown</span>
+    </div>
+    <div class="classif-item">
+      <div class="classif-dot"></div>
+      <span class="classif-text">Members — classified</span>
+    </div>
+    <div class="classif-item">
+      <div class="classif-dot red"></div>
+      <span class="classif-text">Expanding presence</span>
+    </div>
+  </div>
+
+  <!-- CORE STATS -->
+  <div class="stats-section">
+    <div class="stat-cell" data-index="01">
+      <span class="stat-number">12</span>
+      <span class="stat-label">Territories controlled</span>
+      <span class="stat-sub">Across the full city perimeter. Borders expanding.</span>
+    </div>
+    <div class="stat-cell" data-index="02">
+      <span class="stat-number">4</span>
+      <span class="stat-label">Rival crews dismantled</span>
+      <span class="stat-sub">Without negotiation. Without warning.</span>
+    </div>
+    <div class="stat-cell" data-index="03">
+      <span class="stat-number">0</span>
+      <span class="stat-label">Arrests on record</span>
+      <span class="stat-sub">Ghosts leave no traces. We leave no names.</span>
+    </div>
+    <div class="stat-cell" data-index="04">
+      <span class="stat-number redacted">???</span>
+      <span class="stat-label">Known members</span>
+      <span class="stat-sub">Classification: maximum. Access: denied.</span>
+    </div>
+  </div>
+
+  <!-- THREAT LEVEL -->
+  <section class="threat-section">
+    <div class="threat-left">
+      <div class="section-label">Assessment</div>
+      <div class="section-title">Threat profile.</div>
+      <div class="gold-line"></div>
+      <p class="threat-body">
+        No organisation in the city carries this weight without earning it.
+        Every number below reflects a decision made — and a consequence delivered.
+      </p>
+      <div class="threat-meters">
+        <div class="threat-row">
+          <span class="threat-name">City influence</span>
+          <div class="threat-bar-track"><div class="threat-bar-fill" style="width:88%"></div></div>
+          <span class="threat-val">88</span>
+        </div>
+        <div class="threat-row">
+          <span class="threat-name">Police priority</span>
+          <div class="threat-bar-track"><div class="threat-bar-fill danger" style="width:95%"></div></div>
+          <span class="threat-val">95</span>
+        </div>
+        <div class="threat-row">
+          <span class="threat-name">Street fear</span>
+          <div class="threat-bar-track"><div class="threat-bar-fill" style="width:100%"></div></div>
+          <span class="threat-val">MAX</span>
+        </div>
+        <div class="threat-row">
+          <span class="threat-name">Rival response</span>
+          <div class="threat-bar-track"><div class="threat-bar-fill danger" style="width:72%"></div></div>
+          <span class="threat-val">72</span>
+        </div>
+        <div class="threat-row">
+          <span class="threat-name">Operational stealth</span>
+          <div class="threat-bar-track"><div class="threat-bar-fill" style="width:96%"></div></div>
+          <span class="threat-val">96</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="threat-right">
+      <div class="threat-level-display">
+        <span class="threat-crown">♛</span>
+        <div class="threat-level-text">
+          <span class="threat-level-name">CRITICAL</span>
+          <span class="threat-level-sub">Threat classification — tier I</span>
+        </div>
+      </div>
+      <div class="threat-tags">
+        <span class="threat-tag active">Unknown leadership</span>
+        <span class="threat-tag active">Untraceable</span>
+        <span class="threat-tag danger-tag">Armed operations</span>
+        <span class="threat-tag active">Encrypted comms</span>
+        <span class="threat-tag danger-tag">High police priority</span>
+        <span class="threat-tag active">City-wide reach</span>
+        <span class="threat-tag active">No public presence</span>
+        <span class="threat-tag danger-tag">Expanding territory</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div class="section-label">Chronicle</div>
+    <div class="section-title">How we got here.</div>
+    <div class="gold-line"></div>
+
+    <div class="timeline">
+
+      <div class="timeline-entry">
+        <div class="timeline-date-col">
+          <span class="timeline-date">PHASE I</span>
+          <span class="timeline-phase">Founding</span>
+        </div>
+        <div class="timeline-content-col">
+          <div class="timeline-title">The Crown Is Claimed</div>
+          <p class="timeline-desc">
+            No announcement. No declaration. Kingsman simply appeared —
+            in corners of the city that others had already given up on.
+            Those who noticed, said nothing. Those who spoke, were not heard again.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Founding</span>
+            <span class="timeline-tag">First territory</span>
+            <span class="timeline-tag">Classified</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-entry">
+        <div class="timeline-date-col">
+          <span class="timeline-date">PHASE II</span>
+          <span class="timeline-phase">Consolidation</span>
+        </div>
+        <div class="timeline-content-col">
+          <div class="timeline-title">Rivals Learn Their Place</div>
+          <p class="timeline-desc">
+            Four organisations that chose confrontation over retreat have since
+            ceased operations. No war was declared. No press release was written.
+            The city simply adjusted.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">4 crews dissolved</span>
+            <span class="timeline-tag">No arrests</span>
+            <span class="timeline-tag">Zero exposure</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-entry">
+        <div class="timeline-date-col">
+          <span class="timeline-date">PHASE III</span>
+          <span class="timeline-phase">Expansion</span>
+        </div>
+        <div class="timeline-content-col">
+          <div class="timeline-title">The Map Changes</div>
+          <p class="timeline-desc">
+            Twelve territories now carry the weight of a crown that nobody
+            has seen. Streets that once belonged to others now operate under
+            a different silence. The city adapts. We expand.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">12 territories</span>
+            <span class="timeline-tag">Active</span>
+            <span class="timeline-tag">Ongoing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-entry">
+        <div class="timeline-date-col">
+          <span class="timeline-date">PHASE IV</span>
+          <span class="timeline-phase">Current</span>
+        </div>
+        <div class="timeline-content-col">
+          <div class="timeline-title">Presence Without Proof</div>
+          <p class="timeline-desc">
+            Police attention is at its highest. Rival intelligence is scrambling.
+            The city watches. Kingsman remains exactly what it has always been —
+            unseen, unnamed, and unmoved.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Active operations</span>
+            <span class="timeline-tag">High surveillance</span>
+            <span class="timeline-tag">No exposure</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TERRITORIES -->
+  <section class="territory-strip">
+    <div class="section-label">Controlled zones</div>
+    <div class="section-title">Territory.</div>
+    <div class="gold-line"></div>
+
+    <div class="territory-grid">
+      <div class="territory-cell">
+        <div class="territory-name">ZONE NORTH</div>
+        <div class="territory-status">
+          <div class="territory-status-dot"></div>
+          Fully controlled
+        </div>
+        <div class="territory-desc">
+          Industrial outskirts. Supply routes secured. No rival presence tolerated.
+        </div>
+      </div>
+      <div class="territory-cell">
+        <div class="territory-name">DOWNTOWN CORE</div>
+        <div class="territory-status">
+          <div class="territory-status-dot"></div>
+          Fully controlled
+        </div>
+        <div class="territory-desc">
+          High visibility, high value. Monitored 24 hours. No confrontation without clearance.
+        </div>
+      </div>
+      <div class="territory-cell">
+        <div class="territory-name">EAST DOCKS</div>
+        <div class="territory-status">
+          <div class="territory-status-dot"></div>
+          Fully controlled
+        </div>
+        <div class="territory-desc">
+          Entry point for operations from outside. Access restricted. Surveillance constant.
+        </div>
+      </div>
+      <div class="territory-cell">
+        <div class="territory-name">SOUTHSIDE</div>
+        <div class="territory-status">
+          <div class="territory-status-dot"></div>
+          Fully controlled
+        </div>
+        <div class="territory-desc">
+          Former disputed zone. Dispute resolved. New order in place.
+        </div>
+      </div>
+      <div class="territory-cell">
+        <div class="territory-name">WAREHOUSE DIST.</div>
+        <div class="territory-status">
+          <div class="territory-status-dot contested"></div>
+          Under pressure
+        </div>
+        <div class="territory-desc">
+          External interest noted. Interest will be addressed. Soon.
+        </div>
+      </div>
+      <div class="territory-cell">
+        <div class="territory-name">UPTOWN</div>
+        <div class="territory-status">
+          <div class="territory-status-dot"></div>
+          Fully controlled
+        </div>
+        <div class="territory-desc">
+          Premium district. Presence is subtle. Impact is not.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIVAL CREWS -->
+  <section class="rivals-section">
+    <div class="section-label">Dismantled</div>
+    <div class="section-title">Rivals. Former.</div>
+    <div class="gold-line"></div>
+
+    <div class="rivals-grid">
+      <div class="rival-cell">
+        <div class="rival-id">001</div>
+        <div class="rival-name">[REDACTED]</div>
+        <span class="rival-status">Dissolved</span>
+        <p class="rival-desc">
+          Attempted to expand into controlled territory. The attempt did not last long.
+        </p>
+      </div>
+      <div class="rival-cell">
+        <div class="rival-id">002</div>
+        <div class="rival-name">[REDACTED]</div>
+        <span class="rival-status">Dissolved</span>
+        <p class="rival-desc">
+          Negotiation was offered once. It was declined. No second offer was made.
+        </p>
+      </div>
+      <div class="rival-cell">
+        <div class="rival-id">003</div>
+        <div class="rival-name">[REDACTED]</div>
+        <span class="rival-status">Dissolved</span>
+        <p class="rival-desc">
+          Believed numbers meant safety. Numbers mean nothing without loyalty.
+        </p>
+      </div>
+      <div class="rival-cell">
+        <div class="rival-id">004</div>
+        <div class="rival-name">[REDACTED]</div>
+        <span class="rival-status">Dissolved</span>
+        <p class="rival-desc">
+          The last to learn. The lesson was the same as the others.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING QUOTE -->
+  <section class="rep-closing">
+    <div class="rep-closing-bg"></div>
+    <blockquote>
+      We do not ask to be feared.
+      We do not ask to be respected.
+      We simply remain — until everything else adjusts.
+      <cite>— Kingsman, internal record — not for distribution</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="ks-footer">
+  <span class="ks-footer-logo">KINGSMAN</span>
+  <span class="ks-footer-sub">No faces. No names. Just power.</span>
+</footer>
+
+<script>
+// Animate threat bars on scroll
+const bars = document.querySelectorAll('.threat-bar-fill');
+bars.forEach(bar => { bar.dataset.width = bar.style.width; bar.style.width = '0'; });
+
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.threat-bar-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width; }, 200);
+      });
+      barObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const threatSection = document.querySelector('.threat-section');
+if (threatSection) barObserver.observe(threatSection);
+
+// Scroll-triggered fade for sections
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll(
+  '.threat-section, .timeline-section, .territory-strip, .rivals-section, .rep-closing'
+).forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+  observer.observe(el);
+});
+
+// Timeline entries stagger
+const timelineObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateX(0)';
+      }, i * 120);
+      timelineObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.timeline-entry').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateX(-16px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  timelineObserver.observe(el);
+});
+</script>
+</body>
+</html>
