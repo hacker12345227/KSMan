@@ -1,1024 +1,1056 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KINGSMAN — Manifest</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
-  <style>
-    /* ─── RESET & BASE ─────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --gold: #c9a84c;
-      --gold-dim: #b89640;
-      --gold-dark: #8a7040;
-      --gold-deeper: #5a4a2a;
-      --gold-abyss: #3a2e18;
-      --gold-ghost: rgba(201,168,76,0.06);
-      --gold-subtle: rgba(201,168,76,0.15);
-      --gold-border: rgba(201,168,76,0.26);
-      --gold-border-strong: rgba(201,168,76,0.55);
-
-      --bg: #0a0a0a;
-      --bg-lift: #0d0d0d;
-      --bg-raise: #0f0f0f;
-      --bg-high: #131313;
-
-      --text:       #f0e6c8;
-      --text-muted: #c8a85c;
-      --text-dim:   #a08848;
-      --text-ghost: #78683a;
-
-      --danger: rgba(139,0,0,0.15);
-      --danger-border: rgba(139,0,0,0.4);
-      --danger-text: #c05050;
-
-      --font-serif: 'Cormorant Garamond', serif;
-      --font-display: 'Playfair Display', serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-serif);
-      font-size: 16px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      cursor: default;
-      overflow-x: hidden;
-    }
-
-    /* ─── SCROLLBAR ────────────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
-
-    /* ─── SELECTION ────────────────────────────────────────────────────── */
-    ::selection { background: var(--gold-subtle); color: var(--gold); }
-
-    /* ─── NAV ──────────────────────────────────────────────────────────── */
-    .ks-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 3rem;
-      background: rgba(10,10,10,0.9);
-      border-bottom: 0.5px solid var(--gold-border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .ks-logo {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      text-decoration: none;
-      line-height: 1;
-    }
-    .ks-logo span {
-      display: block;
-      font-size: 8px;
-      letter-spacing: 7px;
-      font-weight: 300;
-      color: var(--text-ghost);
-      margin-top: 3px;
-      font-family: var(--font-serif);
-    }
-
-    .ks-nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.2rem;
-    }
-    .ks-nav-links a {
-      color: var(--text-ghost);
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: color 0.25s;
-      font-family: var(--font-serif);
-    }
-    .ks-nav-links a:hover,
-    .ks-nav-links a.active { color: var(--gold); }
-
-    /* ─── PAGE WRAPPER ─────────────────────────────────────────────────── */
-    .ks-page { padding-top: 64px; min-height: 100vh; }
-
-    /* ─── SECTION ──────────────────────────────────────────────────────── */
-    .section {
-      padding: 4rem 3rem;
-      border-bottom: 0.5px solid rgba(201,168,76,0.08);
-    }
-    .section-label {
-      font-size: 9px;
-      letter-spacing: 6px;
-      color: var(--text-ghost);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-      line-height: 1.1;
-    }
-    .gold-line {
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-      margin-bottom: 2.5rem;
-    }
-
-    /* ─── BADGE ────────────────────────────────────────────────────────── */
-    .badge {
-      display: inline-block;
-      font-size: 8px;
-      letter-spacing: 3px;
-      color: var(--gold);
-      border: 0.5px solid var(--gold-border);
-      padding: 3px 10px;
-      text-transform: uppercase;
-      font-family: var(--font-serif);
-    }
-
-    /* ─── RULE ─────────────────────────────────────────────────────────── */
-    .rule {
-      width: 100%;
-      height: 0.5px;
-      background: var(--gold-border);
-      margin: 2rem 0;
-    }
-
-    /* ─── FOOTER ───────────────────────────────────────────────────────── */
-    .ks-footer {
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 0.5px solid rgba(201,168,76,0.08);
-    }
-    .ks-footer-logo {
-      font-family: var(--font-display);
-      font-size: 13px;
-      color: var(--text-ghost);
-      letter-spacing: 5px;
-    }
-    .ks-footer-sub {
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      font-style: italic;
-    }
-
-    /* ─── ANIMATIONS ───────────────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes goldPulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
-    }
-    @keyframes glitch {
-      0%, 100% { clip-path: inset(0 0 98% 0); transform: translate(0); }
-      20% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 1px); }
-      40% { clip-path: inset(70% 0 10% 0); transform: translate(3px, -1px); }
-      60% { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 2px); }
-      80% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
-    }
-
-    .anim-fade-up { animation: fadeUp 0.8s cubic-bezier(.22,1,.36,1) both; }
-    .anim-fade-in { animation: fadeIn 1s ease both; }
-    .delay-1 { animation-delay: 0.15s; }
-    .delay-2 { animation-delay: 0.3s; }
-    .delay-3 { animation-delay: 0.45s; }
-    .delay-4 { animation-delay: 0.6s; }
-    .delay-5 { animation-delay: 0.75s; }
-    .delay-6 { animation-delay: 0.9s; }
-    .delay-7 { animation-delay: 1.05s; }
-    .delay-8 { animation-delay: 1.2s; }
-
-    /* ─── MANIFEST HERO ─────────────────────────────────────────────────── */
-    .manifest-hero {
-      position: relative;
-      min-height: 60vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 3rem 5rem;
-      overflow: hidden;
-    }
-
-    .manifest-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%),
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 3px,
-          rgba(201,168,76,0.012) 3px,
-          rgba(201,168,76,0.012) 4px
-        );
-      pointer-events: none;
-    }
-
-    /* Scanline effect */
-    .manifest-hero::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 120px;
-      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.03), transparent);
-      animation: scanline 8s linear infinite;
-      pointer-events: none;
-    }
-
-    .manifest-roman {
-      font-family: var(--font-serif);
-      font-size: 9px;
-      letter-spacing: 8px;
-      color: var(--text-ghost);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .manifest-crown {
-      font-size: 28px;
-      color: var(--gold);
-      opacity: 0.7;
-      margin-bottom: 1rem;
-      display: block;
-      animation: goldPulse 4s ease-in-out infinite;
-    }
-
-    .manifest-hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(52px, 8vw, 96px);
-      font-weight: 900;
-      color: var(--text);
-      letter-spacing: 12px;
-      text-transform: uppercase;
-      line-height: 1;
-      position: relative;
-    }
-
-    .manifest-hero-title::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0; left: 0;
-      color: var(--gold);
-      opacity: 0;
-      animation: glitch 6s ease-in-out infinite;
-      animation-delay: 3s;
-    }
-
-    .manifest-hero-sub {
-      font-family: var(--font-serif);
-      font-size: 13px;
-      letter-spacing: 6px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 1rem;
-      font-style: italic;
-    }
-
-    .manifest-divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 2.5rem auto;
-      width: fit-content;
-    }
-    .manifest-divider-line {
-      width: 80px;
-      height: 0.5px;
-      background: var(--gold-border-strong);
-    }
-    .manifest-divider-diamond {
-      width: 5px;
-      height: 5px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-
-    .manifest-opening {
-      font-family: var(--font-display);
-      font-size: clamp(15px, 2.2vw, 19px);
-      font-style: italic;
-      color: var(--text-muted);
-      max-width: 640px;
-      line-height: 1.8;
-      text-align: center;
-    }
-
-    /* ─── TENET SECTION ─────────────────────────────────────────────────── */
-    .tenets-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--gold-border);
-      margin-top: 3rem;
-    }
-
-    .tenet-cell {
-      background: var(--bg);
-      padding: 3rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s;
-    }
-    .tenet-cell:hover {
-      background: var(--bg-high);
-    }
-
-    .tenet-cell::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 2px;
-      height: 0;
-      background: var(--gold);
-      transition: height 0.5s cubic-bezier(.22,1,.36,1);
-    }
-    .tenet-cell:hover::before { height: 100%; }
-
-    .tenet-number {
-      font-family: var(--font-display);
-      font-size: 48px;
-      font-weight: 900;
-      color: var(--gold-ghost);
-      line-height: 1;
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      transition: color 0.4s;
-    }
-    .tenet-cell:hover .tenet-number {
-      color: rgba(201,168,76,0.12);
-    }
-
-    .tenet-icon {
-      font-size: 22px;
-      margin-bottom: 1rem;
-      opacity: 0.6;
-      display: block;
-    }
-
-    .tenet-word {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    .tenet-nl {
-      font-size: 9px;
-      letter-spacing: 5px;
-      color: var(--text-ghost);
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-      font-family: var(--font-serif);
-    }
-
-    .tenet-desc {
-      font-family: var(--font-serif);
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.8;
-      font-style: italic;
-    }
-
-    /* ─── CODE SECTION ──────────────────────────────────────────────────── */
-    .code-section {
-      padding: 5rem 3rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .code-section::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      border: 0.5px solid rgba(201,168,76,0.04);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .code-section::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
-      border: 0.5px solid rgba(201,168,76,0.06);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .code-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .code-statements {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .code-statement {
-      display: flex;
-      align-items: flex-start;
-      gap: 2rem;
-      padding: 2.2rem 0;
-      border-bottom: 0.5px solid rgba(201,168,76,0.07);
-      position: relative;
-      cursor: default;
-      transition: padding-left 0.4s cubic-bezier(.22,1,.36,1);
-    }
-    .code-statement:hover {
-      padding-left: 1rem;
-    }
-
-    .code-index {
-      font-family: var(--font-serif);
-      font-size: 9px;
-      letter-spacing: 4px;
-      color: var(--text-ghost);
-      min-width: 28px;
-      padding-top: 5px;
-      font-style: italic;
-    }
-
-    .code-content { flex: 1; }
-
-    .code-title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: 2px;
-      margin-bottom: 0.4rem;
-      transition: color 0.3s;
-    }
-    .code-statement:hover .code-title { color: var(--gold); }
-
-    .code-body {
-      font-family: var(--font-serif);
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.9;
-      max-width: 560px;
-      font-style: italic;
-    }
-
-    .code-marker {
-      width: 1px;
-      align-self: stretch;
-      background: rgba(201,168,76,0.0);
-      transition: background 0.4s;
-      flex-shrink: 0;
-    }
-    .code-statement:hover .code-marker {
-      background: var(--gold);
-    }
-
-    /* ─── QUOTE BLOCKS ─────────────────────────────────────────────────── */
-    .quotes-section {
-      padding: 5rem 3rem;
-      background: var(--bg-lift);
-    }
-
-    .quotes-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--gold-border);
-      margin-top: 3rem;
-    }
-
-    .quote-block {
-      background: var(--bg-lift);
-      padding: 3.5rem 3rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s;
-    }
-    .quote-block:hover { background: var(--bg-high); }
-
-    .quote-block::before {
-      content: '"';
-      position: absolute;
-      top: -10px;
-      left: 2rem;
-      font-family: var(--font-display);
-      font-size: 120px;
-      color: rgba(201,168,76,0.04);
-      line-height: 1;
-      pointer-events: none;
-      transition: color 0.4s;
-    }
-    .quote-block:hover::before {
-      color: rgba(201,168,76,0.07);
-    }
-
-    .quote-text {
-      font-family: var(--font-display);
-      font-size: 17px;
-      font-style: italic;
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .quote-attribution {
-      font-size: 8px;
-      letter-spacing: 4px;
-      color: var(--text-ghost);
-      text-transform: uppercase;
-      font-family: var(--font-serif);
-    }
-
-    /* ─── WARNING BANNER ───────────────────────────────────────────────── */
-    .warning-banner {
-      margin: 0 3rem 3rem;
-      border: 0.5px solid var(--danger-border);
-      background: var(--danger);
-      padding: 1.8rem 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .warning-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--danger-text);
-      opacity: 0.5;
-    }
-
-    .warning-icon {
-      font-size: 18px;
-      opacity: 0.7;
-      flex-shrink: 0;
-      animation: goldPulse 2.5s ease-in-out infinite;
-    }
-
-    .warning-text {
-      font-family: var(--font-serif);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--danger-text);
-      text-transform: uppercase;
-      line-height: 1.8;
-    }
-    .warning-text strong {
-      display: block;
-      font-size: 9px;
-      letter-spacing: 5px;
-      opacity: 0.6;
-      margin-bottom: 0.3rem;
-    }
-
-    /* ─── SEAL SECTION ──────────────────────────────────────────────────── */
-    .seal-section {
-      padding: 6rem 3rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
-
-    .seal-outer {
-      width: 180px;
-      height: 180px;
-      border: 0.5px solid var(--gold-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-bottom: 3rem;
-    }
-
-    .seal-outer::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 0.5px solid rgba(201,168,76,0.15);
-      border-radius: 50%;
-    }
-    .seal-outer::after {
-      content: '';
-      position: absolute;
-      inset: 16px;
-      border: 0.5px dashed rgba(201,168,76,0.1);
-      border-radius: 50%;
-    }
-
-    .seal-inner {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .seal-ks {
-      font-family: var(--font-display);
-      font-size: 36px;
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: 6px;
-      line-height: 1;
-      opacity: 0.85;
-    }
-
-    .seal-year {
-      font-size: 8px;
-      letter-spacing: 5px;
-      color: var(--text-ghost);
-      font-family: var(--font-serif);
-      margin-top: 4px;
-    }
-
-    .seal-closing {
-      font-family: var(--font-display);
-      font-size: clamp(18px, 3vw, 28px);
-      font-style: italic;
-      color: var(--text-muted);
-      max-width: 500px;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
-
-    .seal-sub {
-      font-size: 9px;
-      letter-spacing: 5px;
-      color: var(--text-ghost);
-      text-transform: uppercase;
-      font-family: var(--font-serif);
-    }
-
-    /* ─── FOOTER ───────────────────────────────────────────────────────── */
-    .ks-footer {
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 0.5px solid rgba(201,168,76,0.08);
-    }
-    .ks-footer-logo {
-      font-family: var(--font-display);
-      font-size: 13px;
-      color: var(--text-ghost);
-      letter-spacing: 5px;
-    }
-    .ks-footer-sub {
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      font-style: italic;
-    }
-
-    /* ─── RESPONSIVE ───────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .ks-nav { padding: 1rem 1.5rem; }
-      .ks-nav-links { gap: 1.2rem; }
-      .ks-nav-links a { font-size: 8px; letter-spacing: 2px; }
-      .section { padding: 3rem 1.5rem; }
-      .code-section { padding: 3rem 1.5rem; }
-      .quotes-section { padding: 3rem 1.5rem; }
-      .seal-section { padding: 4rem 1.5rem; }
-      .warning-banner { margin: 0 1.5rem 2rem; padding: 1.4rem 1.5rem; gap: 1rem; }
-      .tenets-grid { grid-template-columns: 1fr; }
-      .quotes-grid { grid-template-columns: 1fr; }
-      .tenet-cell { padding: 2rem 1.5rem; }
-      .quote-block { padding: 2.5rem 1.5rem; }
-      .code-statement { gap: 1rem; }
-      .ks-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KINGSMAN — Manifest</title>
+<meta name="description" content="Respect isn't requested. It's taken." />
+<link rel="icon" href="../favicon.ico">
+<style>
+
+/* ── DESIGN TOKENS ───────────────────────────────────────── */
+:root {
+  --gold:         #c9a84c;
+  --gold-dim:     rgba(201,168,76,0.5);
+  --gold-border:  rgba(201,168,76,0.2);
+  --bg:           #080a07;
+  --bg-lift:      #0d0f0c;
+  --bg-raise:     #111310;
+  --text:         #e8e2d5;
+  --text-muted:   #b8ae9e;
+  --text-dim:     rgba(232,226,213,0.45);
+  --text-ghost:   rgba(232,226,213,0.2);
+  --font-display: 'Impact', 'Haettenschweiler', 'Franklin Gothic Bold', sans-serif;
+  --font-serif:   'Georgia', 'Times New Roman', serif;
+  --font-body:    'Georgia', serif;
+}
+
+@keyframes goldPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+@keyframes redPulse  { 0%,100%{opacity:.4} 50%{opacity:1} }
+@keyframes scanLine  { 0%{top:0%} 100%{top:100%} }
+@keyframes fadeUp    { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn    { from{opacity:0} to{opacity:1} }
+@keyframes glitch1   {
+  0%,100%{ clip-path:inset(0 0 95% 0); transform:translateX(0); }
+  20%    { clip-path:inset(30% 0 60% 0); transform:translateX(-3px); }
+  40%    { clip-path:inset(60% 0 20% 0); transform:translateX(3px); }
+  60%    { clip-path:inset(10% 0 80% 0); transform:translateX(-2px); }
+  80%    { clip-path:inset(80% 0 5% 0); transform:translateX(2px); }
+}
+@keyframes glitch2 {
+  0%,100%{ clip-path:inset(0 0 95% 0); transform:translateX(0); }
+  20%    { clip-path:inset(50% 0 30% 0); transform:translateX(3px); }
+  40%    { clip-path:inset(20% 0 70% 0); transform:translateX(-3px); }
+  60%    { clip-path:inset(75% 0 10% 0); transform:translateX(2px); }
+  80%    { clip-path:inset(5% 0 85% 0); transform:translateX(-2px); }
+}
+
+/* ── RESET ───────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── SHARED COMPONENTS ───────────────────────────────────── */
+.section-label {
+  font-size: 8px; letter-spacing: 7px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 24px; height: 0.5px; background: var(--gold-dim);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 4px; line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.gold-line {
+  width: 40px; height: 1px;
+  background: var(--gold);
+  margin-bottom: 2.5rem;
+}
+
+/* ── NAV ─────────────────────────────────────────────────── */
+.ks-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  height: 64px;
+  background: rgba(8,10,7,0.92);
+  border-bottom: 0.5px solid var(--gold-border);
+  backdrop-filter: blur(12px);
+}
+.ks-logo {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 900;
+  color: var(--gold); letter-spacing: 4px;
+  text-decoration: none; line-height: 1;
+  display: flex; flex-direction: column;
+}
+.ks-logo span {
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--text-ghost); font-family: var(--font-serif);
+  font-weight: 400; text-transform: uppercase;
+}
+.ks-nav-links {
+  display: flex; gap: 2.5rem;
+}
+.ks-nav-links a {
+  font-size: 9px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  text-decoration: none; transition: color 0.2s;
+  font-family: var(--font-serif);
+}
+.ks-nav-links a:hover, .ks-nav-links a.active { color: var(--gold); }
+
+/* ── PAGE ────────────────────────────────────────────────── */
+.ks-page { padding-top: 64px; }
+
+/* ── PAGE HEADER ─────────────────────────────────────────── */
+.mani-header {
+  position: relative;
+  padding: 7rem 3rem 5rem;
+  border-bottom: 0.5px solid var(--gold-border);
+  overflow: hidden;
+}
+.mani-header-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.02) 0%, transparent 50%),
+    repeating-linear-gradient(
+      135deg, transparent, transparent 80px,
+      rgba(201,168,76,0.01) 80px, rgba(201,168,76,0.01) 81px
+    );
+}
+.mani-header-inner { position: relative; z-index: 1; max-width: 700px; }
+.mani-page-label {
+  font-size: 8px; letter-spacing: 7px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.mani-page-label::before {
+  content: ''; display: block;
+  width: 32px; height: 0.5px; background: var(--gold-dim);
+}
+.mani-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 6px; line-height: 1;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+/* Glitch effect op de h1 */
+.mani-header h1::before,
+.mani-header h1::after {
+  content: 'MANIFEST';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  font-family: var(--font-display);
+  font-size: inherit; font-weight: 900;
+  letter-spacing: 6px; line-height: 1;
+}
+.mani-header h1::before {
+  color: rgba(201,168,76,0.25);
+  animation: glitch1 8s step-end infinite;
+}
+.mani-header h1::after {
+  color: rgba(192,80,80,0.15);
+  animation: glitch2 8s step-end infinite 0.5s;
+}
+.mani-header-sub {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.8; max-width: 500px;
+}
+.mani-header-corner {
+  position: absolute; right: 3rem; bottom: 3rem;
+  font-family: var(--font-display); font-size: 130px;
+  font-weight: 900; color: rgba(201,168,76,0.025);
+  line-height: 1; user-select: none;
+  letter-spacing: -4px;
+}
+
+/* ── OPENING DOCTRINES BAR ────────────────────────────────── */
+.doctrine-bar {
+  background: rgba(201,168,76,0.03);
+  border-bottom: 0.5px solid var(--gold-border);
+  padding: 0; overflow: hidden;
+  display: flex;
+}
+.doctrine-bar-inner {
+  display: flex; gap: 0;
+  width: 100%;
+}
+.doctrine-pill {
+  flex: 1;
+  padding: 1.2rem 2rem;
+  border-right: 0.5px solid rgba(201,168,76,0.1);
+  display: flex; align-items: center; gap: 10px;
+  transition: background 0.2s;
+}
+.doctrine-pill:last-child { border-right: none; }
+.doctrine-pill:hover { background: rgba(201,168,76,0.04); }
+.doctrine-pill-num {
+  font-family: var(--font-display); font-size: 10px;
+  letter-spacing: 3px; color: rgba(201,168,76,0.2);
+  flex-shrink: 0;
+}
+.doctrine-pill-text {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-family: var(--font-serif);
+}
+
+/* ── KERNWETTEN ───────────────────────────────────────────── */
+.laws-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.laws-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.1);
+  margin-top: 2.5rem;
+}
+.law-card {
+  background: var(--bg);
+  padding: 2.8rem 2.5rem;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+}
+.law-card:hover { background: var(--bg-raise); }
+.law-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.law-card:hover::before { opacity: 1; }
+.law-card-num {
+  font-family: var(--font-display); font-size: 64px;
+  font-weight: 900; line-height: 1;
+  color: rgba(201,168,76,0.06);
+  position: absolute; top: 1rem; right: 1.5rem;
+  user-select: none; pointer-events: none;
+  letter-spacing: -2px;
+}
+.law-card-index {
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 1rem;
+}
+.law-card-title {
+  font-family: var(--font-display); font-size: 22px;
+  font-weight: 700; color: var(--text);
+  letter-spacing: 2px; margin-bottom: 0.8rem; line-height: 1.1;
+}
+.law-card-body {
+  font-size: 13px; color: var(--text-dim);
+  font-style: italic; line-height: 1.8;
+  max-width: 420px;
+}
+.law-card-rule {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 0.5px solid rgba(201,168,76,0.1);
+  font-family: var(--font-display); font-size: 12px;
+  color: var(--gold-dim); letter-spacing: 3px;
+  font-style: normal; font-weight: 400;
+}
+
+/* ── ARTIKEL I — GROOT STATEMENT ─────────────────────────── */
+.article-one {
+  padding: 7rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+.article-one-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.02) 0%, transparent 50%);
+}
+.article-one-label {
+  font-size: 7px; letter-spacing: 7px;
+  color: rgba(201,168,76,0.3); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 2rem;
+}
+.article-one-text {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 58px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 5px; line-height: 1.05;
+  max-width: 900px; margin: 0 auto 2rem;
+  position: relative;
+}
+.article-one-text em {
+  font-style: normal; color: var(--gold);
+}
+.article-one-sub {
+  font-size: 13px; color: var(--text-dim);
+  font-style: italic; max-width: 480px; margin: 0 auto;
+  line-height: 1.8;
+}
+.article-one-divider {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--gold-border), transparent);
+  margin: 2.5rem auto;
+}
+
+/* ── CODE OF CONDUCT ──────────────────────────────────────── */
+.conduct-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+}
+.conduct-left { }
+.conduct-right { padding-top: 5rem; }
+
+.conduct-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0; }
+.conduct-item {
+  display: grid; grid-template-columns: 52px 1fr;
+  gap: 1.5rem; align-items: start;
+  padding: 1.5rem 0;
+  border-bottom: 0.5px solid rgba(201,168,76,0.07);
+  cursor: default; transition: background 0.2s;
+}
+.conduct-item:last-child { border-bottom: none; }
+.conduct-item:hover { background: rgba(201,168,76,0.02); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
+.conduct-item-num {
+  font-family: var(--font-display); font-size: 28px;
+  font-weight: 900; color: rgba(201,168,76,0.15);
+  line-height: 1; padding-top: 3px;
+  letter-spacing: -1px;
+}
+.conduct-item-title {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 700; color: var(--text-muted);
+  letter-spacing: 2px; margin-bottom: 4px;
+}
+.conduct-item-desc {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.7;
+}
+
+/* Verboden lijst */
+.forbidden-box {
+  border: 0.5px solid rgba(192,80,80,0.2);
+  padding: 2.2rem;
+  position: relative;
+}
+.forbidden-box::before {
+  content: 'VERBODEN';
+  position: absolute; top: -6px; left: 1.5rem;
+  background: var(--bg); padding: 0 8px;
+  font-size: 7px; letter-spacing: 5px;
+  color: #c05050; text-transform: uppercase;
+}
+.forbidden-title {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 700; color: var(--text-muted);
+  letter-spacing: 2px; margin-bottom: 1.2rem;
+}
+.forbidden-items { display: flex; flex-direction: column; gap: 0.8rem; }
+.forbidden-item {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+}
+.forbidden-cross {
+  width: 14px; height: 14px; flex-shrink: 0;
+  border: 0.5px solid rgba(192,80,80,0.4); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; color: #c05050; margin-top: 2px;
+}
+.forbidden-text {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.6;
+}
+
+/* Loyaliteits schaal */
+.loyalty-box {
+  margin-top: 2rem;
+  border: 0.5px solid var(--gold-border);
+  padding: 2.2rem;
+  position: relative;
+}
+.loyalty-box::before {
+  content: 'DE SCHAAL';
+  position: absolute; top: -6px; left: 1.5rem;
+  background: var(--bg); padding: 0 8px;
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+}
+.loyalty-title {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 700; color: var(--text-muted);
+  letter-spacing: 2px; margin-bottom: 1.2rem;
+}
+.loyalty-scale { display: flex; flex-direction: column; gap: 0.7rem; }
+.loyalty-row {
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 1rem; align-items: center;
+}
+.loyalty-label {
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+.loyalty-bar-track {
+  height: 1px; background: rgba(201,168,76,0.1);
+  position: relative;
+}
+.loyalty-bar-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(201,168,76,0.3), var(--gold));
+  transition: width 1.4s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── PILLARS ──────────────────────────────────────────────── */
+.pillars-section {
+  background: var(--bg-lift);
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.pillars-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1px; background: rgba(201,168,76,0.1);
+  margin-top: 2.5rem;
+}
+.pillar-cell {
+  background: var(--bg);
+  padding: 2.5rem 1.5rem;
+  text-align: center; position: relative;
+  overflow: hidden; transition: background 0.25s;
+  cursor: default;
+}
+.pillar-cell:hover { background: var(--bg-raise); }
+.pillar-cell::after {
+  content: '';
+  position: absolute; bottom: 0; left: 50%;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  transition: width 0.35s ease;
+}
+.pillar-cell:hover::after { width: 60%; }
+.pillar-icon {
+  font-size: 28px; display: block;
+  margin-bottom: 1.2rem; line-height: 1;
+  color: rgba(201,168,76,0.3);
+  transition: color 0.2s;
+}
+.pillar-cell:hover .pillar-icon { color: var(--gold); }
+.pillar-word {
+  font-family: var(--font-display); font-size: 14px;
+  font-weight: 700; color: var(--text);
+  letter-spacing: 4px; margin-bottom: 6px;
+}
+.pillar-sub {
+  font-size: 9px; color: var(--text-dim);
+  font-style: italic; line-height: 1.5;
+}
+
+/* ── STATEMENTS WALL ─────────────────────────────────────── */
+.statements-section {
+  padding: 5rem 3rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.statements-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.08);
+  margin-top: 2.5rem;
+}
+.statement-card {
+  background: var(--bg);
+  padding: 3rem 2.5rem;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+}
+.statement-card:hover { background: var(--bg-lift); }
+.statement-card-num {
+  font-family: var(--font-display); font-size: 10px;
+  letter-spacing: 4px; color: rgba(201,168,76,0.15);
+  margin-bottom: 1.5rem; display: block;
+}
+.statement-card-quote {
+  font-family: var(--font-display); font-size: 18px;
+  font-weight: 700; color: var(--text-muted);
+  letter-spacing: 1px; line-height: 1.3;
+  margin-bottom: 1.2rem;
+}
+.statement-card-quote em {
+  font-style: normal; color: var(--gold);
+}
+.statement-card-body {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.7;
+}
+.statement-card::after {
+  content: '❝';
+  position: absolute; bottom: 1rem; right: 1.5rem;
+  font-size: 48px; color: rgba(201,168,76,0.05);
+  line-height: 1; pointer-events: none;
+}
+
+/* ── SLOTVERKLARING ────────────────────────────────────────── */
+.mani-closing {
+  padding: 8rem 3rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.mani-closing-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 65%);
+}
+.mani-closing-crown {
+  font-size: 48px; color: rgba(201,168,76,0.25);
+  display: block; margin-bottom: 2rem;
+  animation: goldPulse 4s ease infinite;
+  position: relative;
+}
+.mani-closing blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4vw, 42px);
+  font-weight: 900; font-style: normal;
+  color: var(--text); max-width: 760px;
+  margin: 0 auto; line-height: 1.2;
+  letter-spacing: 3px; position: relative;
+}
+.mani-closing blockquote em {
+  font-style: normal; color: var(--gold);
+}
+.mani-closing-divider {
+  width: 40px; height: 0.5px;
+  background: var(--gold-border);
+  margin: 2.5rem auto;
+}
+.mani-closing-sub {
+  font-size: 13px; color: var(--text-dim);
+  font-style: italic; max-width: 400px; margin: 0 auto;
+  line-height: 1.8; position: relative;
+}
+.mani-closing cite {
+  display: block; margin-top: 2rem;
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-style: normal; font-family: var(--font-serif);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.ks-footer {
+  border-top: 0.5px solid rgba(201,168,76,0.12);
+  padding: 2rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ks-footer-logo {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 900; color: rgba(201,168,76,0.3);
+  letter-spacing: 4px;
+}
+.ks-footer-sub {
+  font-size: 9px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-family: var(--font-serif);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .pillars-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .laws-grid { grid-template-columns: 1fr; }
+  .conduct-section { grid-template-columns: 1fr; gap: 3rem; }
+  .conduct-right { padding-top: 0; }
+  .statements-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .pillars-grid { grid-template-columns: 1fr 1fr; }
+  .doctrine-bar-inner { flex-wrap: wrap; }
+  .doctrine-pill { min-width: 50%; border-bottom: 0.5px solid rgba(201,168,76,0.1); }
+}
+@media (max-width: 600px) {
+  .mani-header { padding: 5rem 1.5rem 3rem; }
+  .mani-header-corner { display: none; }
+  .laws-section, .conduct-section, .pillars-section,
+  .statements-section, .article-one, .mani-closing { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .pillars-grid { grid-template-columns: 1fr; }
+  .ks-nav { padding: 0 1.5rem; }
+  .ks-nav-links { gap: 1.2rem; }
+  .ks-nav-links a { font-size: 7px; letter-spacing: 2px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="ks-nav">
-    <a href="index.html" class="ks-logo">
-      Kingsman
-      <span>Organization</span>
-    </a>
-    <div class="ks-nav-links">
-      <a href="index.html">Home</a>
-      <a href="reputation.html">Reputatie</a>
-      <a href="media.html">Media</a>
-      <a href="territory.html">Territorium</a>
-      <a href="manifest.html" class="active">Manifest</a>
-      <a href="news.html">Nieuws</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav class="ks-nav">
+  <a href="../" class="ks-logo">KINGSMAN<span>Est. — Classified</span></a>
+  <div class="ks-nav-links">
+    <a href="../">Home</a>
+    <a href="../reputatie/">Reputatie</a>
+    <a href="../media/">Media</a>
+    <a href="../territorium/">Territorium</a>
+    <a href="../manifest/" class="active">Manifest</a>
+    <a href="../nieuws/">Nieuws</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</nav>
 
-  <main class="ks-page">
+<main class="ks-page">
 
-    <!-- HERO -->
-    <section class="manifest-hero">
-      <p class="manifest-roman anim-fade-in">Kingsman — De Code</p>
-      <span class="manifest-crown anim-fade-in delay-1">♦</span>
-      <h1 class="manifest-hero-title anim-fade-up delay-2" data-text="MANIFEST">MANIFEST</h1>
-      <p class="manifest-hero-sub anim-fade-up delay-3">Filosofie · Wet · Orde</p>
-      <div class="manifest-divider anim-fade-in delay-4">
-        <div class="manifest-divider-line"></div>
-        <div class="manifest-divider-diamond"></div>
-        <div class="manifest-divider-line"></div>
-      </div>
-      <p class="manifest-opening anim-fade-up delay-5">
-        Wij zijn niet gebouwd op regels. Wij zijn gebouwd op principes.<br>
-        Principes die niet worden opgelegd — maar worden geleefd.
-      </p>
-    </section>
-
-    <!-- TENETS -->
-    <section class="section">
-      <p class="section-label anim-fade-in">Onze grondslagen</p>
-      <h2 class="section-title anim-fade-up delay-1">De Vijf Pijlers</h2>
-      <div class="gold-line anim-fade-in delay-2"></div>
-
-      <div class="tenets-grid">
-
-        <div class="tenet-cell anim-fade-up delay-1">
-          <span class="tenet-number">I</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">Loyalty</div>
-          <div class="tenet-nl">Loyaliteit</div>
-          <p class="tenet-desc">
-            Je bent geen lid van een groep. Je bent onderdeel van iets groters. Loyaliteit is geen keuze — het is je enige optie.
-          </p>
-        </div>
-
-        <div class="tenet-cell anim-fade-up delay-2">
-          <span class="tenet-number">II</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">Silence</div>
-          <div class="tenet-nl">Stilte</div>
-          <p class="tenet-desc">
-            Macht fluistert. Namen worden niet uitgesproken. Gezichten worden niet getoond. Wat niet gezegd wordt, kan niet worden gebruikt.
-          </p>
-        </div>
-
-        <div class="tenet-cell anim-fade-up delay-3">
-          <span class="tenet-number">III</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">Respect</div>
-          <div class="tenet-nl">Respect</div>
-          <p class="tenet-desc">
-            Respect wordt niet gevraagd. Het wordt verdiend door aanwezigheid, en afgedwongen door reputatie. Niet meer. Niet minder.
-          </p>
-        </div>
-
-        <div class="tenet-cell anim-fade-up delay-4">
-          <span class="tenet-number">IV</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">Power</div>
-          <div class="tenet-nl">Macht</div>
-          <p class="tenet-desc">
-            Macht is geen doel — het is een gevolg. Van discipline, keuzes en het weigeren te buigen voor druk van buitenaf.
-          </p>
-        </div>
-
-        <div class="tenet-cell anim-fade-up delay-5">
-          <span class="tenet-number">V</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">No Weakness</div>
-          <div class="tenet-nl">Geen Zwakte</div>
-          <p class="tenet-desc">
-            Emotie is menselijk. Zwakte is een keuze. Kingsman erkent fouten, maar laat ze niet de toekomst bepalen.
-          </p>
-        </div>
-
-        <div class="tenet-cell anim-fade-up delay-6">
-          <span class="tenet-number">∞</span>
-          <span class="tenet-icon">⬛</span>
-          <div class="tenet-word">The Code</div>
-          <div class="tenet-nl">De Code</div>
-          <p class="tenet-desc">
-            Al het bovenstaande is één. Wie de code breekt, breekt de organisatie. En wie de organisatie breekt, wordt herinnerd als een voorbeeld.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- DE CODE — DETAILED STATEMENTS -->
-    <section class="code-section">
-      <div class="code-inner">
-        <p class="section-label anim-fade-in">Geldende wet</p>
-        <h2 class="section-title anim-fade-up delay-1">De Interne Wet</h2>
-        <div class="gold-line anim-fade-in delay-2"></div>
-
-        <div class="code-statements">
-
-          <div class="code-statement anim-fade-up delay-2">
-            <span class="code-index">01</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Organisatie boven alles</div>
-              <p class="code-body">De belangen van Kingsman staan altijd boven persoonlijke ambities. Individuele beslissingen worden genomen met het collectief in gedachten. Wie alleen speelt, staat alleen.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-3">
-            <span class="code-index">02</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Identiteit blijft verborgen</div>
-              <p class="code-body">Namen, gezichten en rollen worden nooit publiekelijk bevestigd. Wat de buitenwereld niet weet, kan hen niet bereiken. Anonimiteit is geen schaamte — het is strategie.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-4">
-            <span class="code-index">03</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Interne conflicten blijven intern</div>
-              <p class="code-body">Meningsverschillen worden opgelost achter gesloten deuren. Geen vuile was naar buiten. Zwakte toon je niet aan vijanden — en zeker niet aan toeschouwers.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-5">
-            <span class="code-index">04</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Woord is wet</div>
-              <p class="code-body">Een belofte gedaan is een belofte gehouden. Wie zijn woord breekt, verliest zijn positie. Vertrouwen wordt jarenlang opgebouwd en in seconden vernietigd. Kies je woorden zorgvuldig.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-6">
-            <span class="code-index">05</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Respect wordt gehandhaafd</div>
-              <p class="code-body">Disrespect blijft niet onbeantwoord — door wie het ook komt. Niet uit wraak, maar als signaal: er zijn gevolgen voor wie de grenzen van Kingsman negeert.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-7">
-            <span class="code-index">06</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">Geduld is een wapen</div>
-              <p class="code-body">Kingsman reageert niet impulsief. Elke actie wordt overwogen. De sterkste zet is soms geen zet — tot het moment daar is. Dan is het definitief.</p>
-            </div>
-          </div>
-
-          <div class="code-statement anim-fade-up delay-8">
-            <span class="code-index">07</span>
-            <div class="code-marker"></div>
-            <div class="code-content">
-              <div class="code-title">De code vervalt nooit</div>
-              <p class="code-body">Deze wet geldt altijd — actief of niet, in tijden van rust of conflict. Kingsman is geen functie. Het is een mentaliteit die niet uitgeschakeld wordt.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- QUOTES -->
-    <section class="quotes-section">
-      <p class="section-label anim-fade-in">Kingsman spreekt</p>
-      <h2 class="section-title anim-fade-up delay-1">Statements</h2>
-      <div class="gold-line anim-fade-in delay-2"></div>
-
-      <div class="quotes-grid">
-
-        <div class="quote-block anim-fade-up delay-2">
-          <p class="quote-text">"Respect isn't requested. It's taken."</p>
-          <span class="quote-attribution">— Kingsman Doctrine</span>
-        </div>
-
-        <div class="quote-block anim-fade-up delay-3">
-          <p class="quote-text">"No faces. No names. Just power."</p>
-          <span class="quote-attribution">— Kingsman Doctrine</span>
-        </div>
-
-        <div class="quote-block anim-fade-up delay-4">
-          <p class="quote-text">"Wij werden niet gevreesd door luid te zijn. Maar door altijd aanwezig te zijn."</p>
-          <span class="quote-attribution">— Interne overdracht</span>
-        </div>
-
-        <div class="quote-block anim-fade-up delay-5">
-          <p class="quote-text">"Loyaliteit is geen emotie. Het is een standaard waaraan alles gemeten wordt."</p>
-          <span class="quote-attribution">— Interne overdracht</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- WARNING -->
-    <div class="warning-banner anim-fade-in">
-      <span class="warning-icon">⚠</span>
-      <p class="warning-text">
-        <strong>Officiële mededeling — Kingsman</strong>
-        Deze code is niet openbaar gepubliceerd als uitnodiging. Het is een verklaring. Wie dit leest als een zwakte, begrijpt niets. Wie dit leest als een waarschuwing — begrijpt precies genoeg.
+  <!-- HEADER -->
+  <header class="mani-header">
+    <div class="mani-header-bg"></div>
+    <div class="mani-header-inner">
+      <div class="mani-page-label">Kingsman &nbsp;·&nbsp; Doctrine</div>
+      <h1>MANIFEST</h1>
+      <p class="mani-header-sub">
+        Dit is geen uitnodiging. Dit is geen waarschuwing.<br>
+        Dit is een verklaring van hoe de wereld werkt.
       </p>
     </div>
+    <div class="mani-header-corner">CODE</div>
+  </header>
 
-    <!-- SEAL / CLOSING -->
-    <section class="seal-section">
-      <div class="seal-outer anim-fade-in delay-1">
-        <div class="seal-inner">
-          <div class="seal-ks">KS</div>
-          <div class="seal-year">Est. — — —</div>
+  <!-- DOCTRINE BAR -->
+  <div class="doctrine-bar">
+    <div class="doctrine-bar-inner">
+      <div class="doctrine-pill">
+        <span class="doctrine-pill-num">I</span>
+        <span class="doctrine-pill-text">Loyaliteit boven alles</span>
+      </div>
+      <div class="doctrine-pill">
+        <span class="doctrine-pill-num">II</span>
+        <span class="doctrine-pill-text">Stilte is kracht</span>
+      </div>
+      <div class="doctrine-pill">
+        <span class="doctrine-pill-num">III</span>
+        <span class="doctrine-pill-text">Respect wordt genomen</span>
+      </div>
+      <div class="doctrine-pill">
+        <span class="doctrine-pill-num">IV</span>
+        <span class="doctrine-pill-text">Geen zwakheid</span>
+      </div>
+      <div class="doctrine-pill">
+        <span class="doctrine-pill-num">V</span>
+        <span class="doctrine-pill-text">Geen gezichten. Geen namen.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTIKEL I — GROOT STATEMENT -->
+  <section class="article-one">
+    <div class="article-one-bg"></div>
+    <div class="article-one-label">Artikel I — Kingsman Grondwet</div>
+    <div class="article-one-text">
+      Respect wordt niet <em>gevraagd.</em><br>Het wordt <em>genomen.</em>
+    </div>
+    <div class="article-one-divider"></div>
+    <p class="article-one-sub">
+      Macht wordt niet gegeven aan degenen die erom smeken. Het vloeit naar degenen die het niet nodig hebben te vragen. Kingsman vraagt niet. Kingsman beweegt.
+    </p>
+  </section>
+
+  <!-- KERNWETTEN -->
+  <section class="laws-section">
+    <div class="section-label">Kingsman &nbsp;·&nbsp; De wetten</div>
+    <div class="section-title">De onveranderlijke regels.</div>
+    <div class="gold-line"></div>
+
+    <div class="laws-grid">
+
+      <div class="law-card">
+        <div class="law-card-num">01</div>
+        <div class="law-card-index">Wet I</div>
+        <div class="law-card-title">Loyaliteit heeft geen prijs</div>
+        <p class="law-card-body">
+          Je bent lid van Kingsman omdat je daarvoor in aanmerking kwam — niet omdat je hebt gesolliciteerd, niet omdat je hebt gebeden, niet omdat je de juiste mensen kende. Dat lidmaatschap is absoluut. Het is niet tijdelijk. Het is niet voorwaardelijk. Verraad bestaat niet in grijstinten.
+        </p>
+        <div class="law-card-rule">Loyalty is earned. Betrayal is answered.</div>
+      </div>
+
+      <div class="law-card">
+        <div class="law-card-num">02</div>
+        <div class="law-card-index">Wet II</div>
+        <div class="law-card-title">Stilte is operationeel</div>
+        <p class="law-card-body">
+          Wat er binnen Kingsman gebeurt, blijft daar. Niet omdat we paranoia prediken — maar omdat discretie de enige reden is dat we nog steeds opereren. Namen worden niet gedeeld. Structuren worden niet beschreven. Bewegingen worden niet aangekondigd. Je bestaan in dit crew is informatie. Behandel het als zodanig.
+        </p>
+        <div class="law-card-rule">What you know, only you know.</div>
+      </div>
+
+      <div class="law-card">
+        <div class="law-card-num">03</div>
+        <div class="law-card-index">Wet III</div>
+        <div class="law-card-title">Zwakheid is een keuze</div>
+        <p class="law-card-body">
+          In deze stad is zwakheid niet iets wat je overkomt — het is iets wat je toestaat. Kingsman tolereert geen leden die aarzelen wanneer er geen ruimte is voor aarzeling. Discipline is geen bijzaak. Het is de reden dat wij nog staan waar anderen gevallen zijn.
+        </p>
+        <div class="law-card-rule">No excuses. No hesitation. No mercy on yourself.</div>
+      </div>
+
+      <div class="law-card">
+        <div class="law-card-num">04</div>
+        <div class="law-card-index">Wet IV</div>
+        <div class="law-card-title">Eén front, één antwoord</div>
+        <p class="law-card-body">
+          Wanneer Kingsman beweegt, bewegen we als één. Interne meningsverschillen worden intern opgelost — nooit voor buitenstaanders. Tegenover de buitenwereld is er maar één gezicht: ons gezamenlijk. Degene die dat front breekt, breekt zichzelf.
+        </p>
+        <div class="law-card-rule">United in silence. Unified in action.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CODE OF CONDUCT + VERBODEN -->
+  <section class="conduct-section">
+    <div class="conduct-left">
+      <div class="section-label">Gedrags code</div>
+      <div class="section-title">Hoe wij opereren.</div>
+      <div class="gold-line"></div>
+
+      <div class="conduct-list">
+
+        <div class="conduct-item">
+          <div class="conduct-item-num">01</div>
+          <div>
+            <div class="conduct-item-title">Geen onnodige confrontatie</div>
+            <div class="conduct-item-desc">Macht laat zich niet zien tenzij het nodig is. Onnodige escalatie is inefficiëntie. Wie schreeuwt, heeft niets te zeggen.</div>
+          </div>
+        </div>
+
+        <div class="conduct-item">
+          <div class="conduct-item-num">02</div>
+          <div>
+            <div class="conduct-item-title">Toestemming vóór actie</div>
+            <div class="conduct-item-desc">Operaties binnen Kingsman-zones worden niet solo uitgevoerd. Coördinatie is de reden dat wij overleven waar anderen vallen.</div>
+          </div>
+        </div>
+
+        <div class="conduct-item">
+          <div class="conduct-item-num">03</div>
+          <div>
+            <div class="conduct-item-title">Geen publieke blootstelling</div>
+            <div class="conduct-item-desc">Kingsman heeft geen gezicht. Leden opereren anoniem. Namen, rangen en structuren zijn intern. Altijd.</div>
+          </div>
+        </div>
+
+        <div class="conduct-item">
+          <div class="conduct-item-num">04</div>
+          <div>
+            <div class="conduct-item-title">Respect voor de structuur</div>
+            <div class="conduct-item-desc">De hiërarchie bestaat niet om ego te voeden — ze bestaat om te functioneren. Respect de structuur of verlaat haar.</div>
+          </div>
+        </div>
+
+        <div class="conduct-item">
+          <div class="conduct-item-num">05</div>
+          <div>
+            <div class="conduct-item-title">Antwoord wanneer geroepen</div>
+            <div class="conduct-item-desc">Geen excuses. Geen vertragingen. Wanneer Kingsman roept, reageer je. Dat is het enige wat er te zeggen valt.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="conduct-right">
+
+      <div class="forbidden-box">
+        <div class="forbidden-title">Wat niet wordt getolereerd</div>
+        <div class="forbidden-items">
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Informatie delen met buitenstaanders — zonder uitzondering, zonder context.</div>
+          </div>
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Onderhandelen met vijanden namens Kingsman zonder mandaat.</div>
+          </div>
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Solo-operaties in betwiste zones zonder coördinatie.</div>
+          </div>
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Publieke claims op lidmaatschap of rang — online of anderszins.</div>
+          </div>
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Dubbele loyaliteit. Je bent bij Kingsman of je bent het niet.</div>
+          </div>
+          <div class="forbidden-item">
+            <div class="forbidden-cross">✕</div>
+            <div class="forbidden-text">Zwakheid tonen aan hen die het willen gebruiken.</div>
+          </div>
         </div>
       </div>
-      <p class="seal-closing anim-fade-up delay-2">
-        "Wij zijn niet de luidste kracht in de stad.<br>Maar wij zijn wel de reden dat het stil is."
-      </p>
-      <span class="seal-sub anim-fade-in delay-3">Kingsman — De organisatie die niet bestaat</span>
-    </section>
 
-  </main>
+      <div class="loyalty-box">
+        <div class="loyalty-title">Wat we verwachten</div>
+        <div class="loyalty-scale">
+          <div class="loyalty-row">
+            <span class="loyalty-label">Discretie</span>
+            <div class="loyalty-bar-track"><div class="loyalty-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="loyalty-row">
+            <span class="loyalty-label">Discipline</span>
+            <div class="loyalty-bar-track"><div class="loyalty-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="loyalty-row">
+            <span class="loyalty-label">Loyaliteit</span>
+            <div class="loyalty-bar-track"><div class="loyalty-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="loyalty-row">
+            <span class="loyalty-label">Aanwezigheid</span>
+            <div class="loyalty-bar-track"><div class="loyalty-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="loyalty-row">
+            <span class="loyalty-label">Resultaat</span>
+            <div class="loyalty-bar-track"><div class="loyalty-bar-fill" style="width:90%"></div></div>
+          </div>
+        </div>
+      </div>
 
-  <!-- FOOTER -->
-  <footer class="ks-footer">
-    <span class="ks-footer-logo">Kingsman</span>
-    <span class="ks-footer-sub">Geen gezichten. Geen namen. Alleen macht.</span>
-  </footer>
+    </div>
+  </section>
 
-  <script>
-    // Intersection Observer for scroll-triggered animations
-    const animEls = document.querySelectorAll('.anim-fade-up, .anim-fade-in');
+  <!-- VIJF PILAREN -->
+  <section class="pillars-section">
+    <div class="section-label">Fundament</div>
+    <div class="section-title">De vijf pilaren.</div>
+    <div class="gold-line"></div>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
+    <div class="pillars-grid">
+      <div class="pillar-cell">
+        <span class="pillar-icon">♛</span>
+        <div class="pillar-word">MACHT</div>
+        <div class="pillar-sub">Niet gevraagd. Niet gegeven. Genomen door degenen die er klaar voor zijn.</div>
+      </div>
+      <div class="pillar-cell">
+        <span class="pillar-icon">◈</span>
+        <div class="pillar-word">STILTE</div>
+        <div class="pillar-sub">De gevaarlijkste mensen schreeuwen niet. Ze bewegen zonder geluid.</div>
+      </div>
+      <div class="pillar-cell">
+        <span class="pillar-icon">⬡</span>
+        <div class="pillar-word">LOYALITEIT</div>
+        <div class="pillar-sub">Absoluut. Onvoorwaardelijk. De enige munt die hier waarde heeft.</div>
+      </div>
+      <div class="pillar-cell">
+        <span class="pillar-icon">◉</span>
+        <div class="pillar-word">RESPECT</div>
+        <div class="pillar-sub">Wordt niet gevraagd. Wordt niet toegekend. Het bestaat omdat wij bestaan.</div>
+      </div>
+      <div class="pillar-cell">
+        <span class="pillar-icon">▲</span>
+        <div class="pillar-word">ORDE</div>
+        <div class="pillar-sub">De stad is chaotisch. Kingsman is dat niet. Structuur is onze kracht.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENTS WALL -->
+  <section class="statements-section">
+    <div class="section-label">Doctrine &nbsp;·&nbsp; Kernuitspraken</div>
+    <div class="section-title">In onze eigen woorden.</div>
+    <div class="gold-line"></div>
+
+    <div class="statements-grid">
+
+      <div class="statement-card">
+        <span class="statement-card-num">STATEMENT — 01</span>
+        <div class="statement-card-quote">
+          De stad was nooit <em>vrij.</em><br>Ze was altijd van iemand.
+        </div>
+        <p class="statement-card-body">
+          De enige vraag was van wie. Het antwoord was altijd hetzelfde — van degenen die bereid waren het te nemen en vasthouden. Wij waren bereid.
+        </p>
+      </div>
+
+      <div class="statement-card">
+        <span class="statement-card-num">STATEMENT — 02</span>
+        <div class="statement-card-quote">
+          Gevreesd door velen.<br>Bekend door <em>allen.</em><br>Gezien door niemand.
+        </div>
+        <p class="statement-card-body">
+          Anonimiteit is geen zwakte. Het is het ultieme wapen. Wat je niet kunt zien, kan je niet stoppen.
+        </p>
+      </div>
+
+      <div class="statement-card">
+        <span class="statement-card-num">STATEMENT — 03</span>
+        <div class="statement-card-quote">
+          Wij onderhandelen niet met<br>mensen die <em>beginners</em> zijn.
+        </div>
+        <p class="statement-card-body">
+          Elke organisatie die ons heeft benaderd met voorwaarden, heeft hetzelfde antwoord gekregen. Geen woorden. Alleen resultaten.
+        </p>
+      </div>
+
+      <div class="statement-card">
+        <span class="statement-card-num">STATEMENT — 04</span>
+        <div class="statement-card-quote">
+          Geen gezichten.<br>Geen namen.<br><em>Alleen macht.</em>
+        </div>
+        <p class="statement-card-body">
+          Identiteit is kwetsbaarheid. Kingsman heeft geen publiek profiel omdat het geen publiek profiel nodig heeft. De reputatie spreekt voor zichzelf.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SLOTVERKLARING -->
+  <section class="mani-closing">
+    <div class="mani-closing-bg"></div>
+    <span class="mani-closing-crown">♛</span>
+    <blockquote>
+      Wij vragen niet om begrepen te worden.<br>
+      Wij vragen niet om gevreesd te worden.<br>
+      Wij <em>bestaan</em> — en de rest volgt vanzelf.
+    </blockquote>
+    <div class="mani-closing-divider"></div>
+    <p class="mani-closing-sub">
+      Dit manifest is geen belofte aan de stad. Het is een beschrijving van de realiteit. De realiteit die wij hebben gecreëerd — en die wij blijven handhaven.
+    </p>
+    <cite>— Kingsman manifest, definitieve versie — niet voor verspreiding</cite>
+  </section>
+
+</main>
+
+<footer class="ks-footer">
+  <span class="ks-footer-logo">KINGSMAN</span>
+  <span class="ks-footer-sub">No faces. No names. Just power.</span>
+</footer>
+
+<script>
+// Loyalty bars animeren bij scroll
+const loyaltyBars = document.querySelectorAll('.loyalty-bar-fill');
+loyaltyBars.forEach(bar => {
+  bar.dataset.width = bar.style.width;
+  bar.style.width = '0';
+  bar.style.transition = 'none';
+});
+
+const loyaltyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.loyalty-bar-fill').forEach((bar, i) => {
+        setTimeout(() => {
+          bar.style.transition = 'width 1.4s cubic-bezier(.22,1,.36,1)';
+          bar.style.width = bar.dataset.width;
+        }, i * 120 + 200);
       });
-    }, { threshold: 0.12 });
-
-    animEls.forEach(el => {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
-    });
-
-    // Glitch title on idle
-    const heroTitle = document.querySelector('.manifest-hero-title');
-    if (heroTitle) {
-      setInterval(() => {
-        heroTitle.classList.add('glitching');
-        setTimeout(() => heroTitle.classList.remove('glitching'), 600);
-      }, 7000);
+      loyaltyObserver.unobserve(entry.target);
     }
-  </script>
+  });
+}, { threshold: 0.3 });
 
+const loyaltyBox = document.querySelector('.loyalty-box');
+if (loyaltyBox) loyaltyObserver.observe(loyaltyBox);
+
+// Scroll fade-in voor secties
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.06 });
+
+document.querySelectorAll(
+  '.laws-section, .conduct-section, .pillars-section, .statements-section, .mani-closing, .article-one'
+).forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+  observer.observe(el);
+});
+
+// Law cards stagger
+const lawObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.law-card').forEach((card, i) => {
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, i * 110);
+      });
+      lawObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.laws-grid').forEach(grid => {
+  grid.querySelectorAll('.law-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(16px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.25s';
+  });
+  lawObserver.observe(grid);
+});
+
+// Pillar cells stagger
+const pillarObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.pillar-cell').forEach((cell, i) => {
+        setTimeout(() => {
+          cell.style.opacity = '1';
+          cell.style.transform = 'translateY(0)';
+        }, i * 80);
+      });
+      pillarObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.pillars-grid').forEach(grid => {
+  grid.querySelectorAll('.pillar-cell').forEach(cell => {
+    cell.style.opacity = '0';
+    cell.style.transform = 'translateY(12px)';
+    cell.style.transition = 'opacity 0.5s ease, transform 0.5s ease, background 0.25s';
+  });
+  pillarObserver.observe(grid);
+});
+
+// Conduct items stagger
+const conductObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.conduct-item').forEach((item, i) => {
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        }, i * 100);
+      });
+      conductObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.conduct-list').forEach(list => {
+  list.querySelectorAll('.conduct-item').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(-12px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  });
+  conductObserver.observe(list);
+});
+</script>
 </body>
 </html>
