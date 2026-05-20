@@ -21,14 +21,8 @@
   background:
     radial-gradient(ellipse at 30% 60%, rgba(201,168,76,0.05) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.02) 0%, transparent 50%),
-    repeating-linear-gradient(
-      90deg, transparent, transparent 60px,
-      rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px
-    ),
-    repeating-linear-gradient(
-      0deg, transparent, transparent 60px,
-      rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px
-    );
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px),
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.01) 60px, rgba(201,168,76,0.01) 61px);
 }
 .terr-header-inner { position: relative; z-index: 1; max-width: 700px; }
 .terr-page-label {
@@ -50,19 +44,16 @@
 }
 .terr-header-sub {
   font-size: 14px; color: var(--text-dim);
-  font-style: italic; line-height: 1.8;
-  max-width: 500px;
+  font-style: italic; line-height: 1.8; max-width: 500px;
 }
 .terr-header-coords {
   position: absolute; right: 3rem; top: 50%;
   transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 6px;
-  z-index: 1;
+  display: flex; flex-direction: column; gap: 6px; z-index: 1;
 }
 .terr-coord {
   font-family: var(--font-display); font-size: 10px;
-  letter-spacing: 3px; color: rgba(201,168,76,0.15);
-  font-weight: 700;
+  letter-spacing: 3px; color: rgba(201,168,76,0.15); font-weight: 700;
 }
 
 /* ── STATUS BALK ─────────────────────────────────────────── */
@@ -76,15 +67,11 @@
   display: flex; align-items: center; gap: 1rem;
 }
 .status-cell:last-child { border-right: none; }
-.status-indicator {
-  width: 6px; height: 6px; border-radius: 50%;
-  flex-shrink: 0;
-}
+.status-indicator { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .status-indicator.groen { background: var(--gold); animation: goldPulse 2.5s ease infinite; }
 .status-indicator.rood  { background: #c05050; animation: redPulse 1.8s ease infinite; }
 .status-indicator.grijs { background: rgba(201,168,76,0.25); }
 @keyframes redPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
-.status-text { flex: 1; }
 .status-label {
   font-size: 8px; letter-spacing: 4px;
   color: var(--text-ghost); text-transform: uppercase;
@@ -97,278 +84,261 @@
 .status-val.rood { color: #c05050; }
 
 /* ── KAART SECTIE ────────────────────────────────────────── */
-.map-section {
-  padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
-}
+.map-section { padding: 5rem 3rem; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+
 .map-wrapper {
   margin-top: 2.5rem;
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 1px;
-  background: rgba(201,168,76,0.1);
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 1px; background: rgba(201,168,76,0.1);
 }
+
+/* ── GTA MAP CONTAINER ────────────────────────────────────── */
 .map-visual {
-  background: var(--bg-raise);
   position: relative; overflow: hidden;
-  min-height: 520px;
+  min-height: 580px; background: #0d0f0a;
+  cursor: crosshair;
 }
-/* Stadskaart grid simulatie */
-.map-grid-bg {
+.map-img {
   position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%;
+  opacity: 0.45;
+  filter: sepia(0.3) hue-rotate(10deg) saturate(0.7) brightness(0.6);
+  transition: opacity 0.3s;
+  display: block;
+}
+.map-img.loaded { opacity: 0.45; }
+
+/* Goud overlay op de kaart */
+.map-gold-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.06) 0%, transparent 65%);
+  pointer-events: none; z-index: 1;
+}
+
+/* Scanline */
+.map-scan-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent);
+  animation: mapScan 5s linear infinite; z-index: 2; pointer-events: none;
+}
+@keyframes mapScan {
+  0%   { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* Grid overlay op kaart */
+.map-grid-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background-image:
     linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 50px 50px;
 }
-.map-grid-bg::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(rgba(201,168,76,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.08) 1px, transparent 1px);
-  background-size: 200px 200px;
-}
-/* Zone blokken op de kaart */
-.map-zone {
-  position: absolute;
-  border: 0.5px solid;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+
+/* ── ZONE PINS ────────────────────────────────────────────── */
+/* Posities gebaseerd op echte GTA 5 kaart locaties
+   Kaart referentie: noord = boven, zeegebied = links-onder
+   Los Santos = midden-rechts-onder kwadrant */
+.map-zone-pin {
+  position: absolute; z-index: 5;
+  transform: translate(-50%, -50%);
   cursor: pointer;
-  transition: all 0.25s;
-  text-align: center; padding: 8px;
 }
-.map-zone.controlled {
-  border-color: rgba(201,168,76,0.35);
-  background: rgba(201,168,76,0.07);
+.zone-pin-ring {
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(201,168,76,0.2);
+  animation: pinPulse 2.5s ease infinite;
 }
-.map-zone.controlled:hover {
-  background: rgba(201,168,76,0.14);
-  border-color: var(--gold);
-  z-index: 5;
+@keyframes pinPulse {
+  0%,100% { transform: scale(1); opacity: 0.4; }
+  50%     { transform: scale(1.3); opacity: 0; }
 }
-.map-zone.contested {
+.zone-pin-ring.danger { border-color: rgba(192,80,80,0.3); }
+
+.zone-pin-core {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201,168,76,0.6);
+  position: relative; z-index: 1;
+  transition: transform 0.2s;
+}
+.zone-pin-core.danger {
+  background: #c05050;
+  box-shadow: 0 0 8px rgba(192,80,80,0.6);
+}
+.zone-pin-core.neutral {
+  background: rgba(255,255,255,0.2);
+  box-shadow: none;
+}
+.map-zone-pin:hover .zone-pin-core { transform: scale(1.4); }
+
+.zone-pin-label {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,10,10,0.92);
+  border: 0.5px solid var(--gold-border);
+  padding: 4px 10px; white-space: nowrap;
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--text-muted); text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0; transition: opacity 0.2s;
+}
+.zone-pin-label.danger { border-color: rgba(192,80,80,0.3); color: #c05050; }
+.map-zone-pin:hover .zone-pin-label { opacity: 1; }
+
+/* Zone territory polygons */
+.zone-territory {
+  position: absolute; z-index: 2;
+  border: 1px solid;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+.zone-territory.controlled {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.06);
+}
+.zone-territory.contested {
   border-color: rgba(192,80,80,0.4);
-  background: rgba(192,80,80,0.06);
+  background: rgba(192,80,80,0.07);
 }
-.map-zone.contested:hover {
-  background: rgba(192,80,80,0.12);
-  z-index: 5;
-}
-.map-zone.neutral {
+.zone-territory.neutral {
   border-color: rgba(255,255,255,0.06);
   background: rgba(255,255,255,0.02);
 }
-.map-zone-name {
-  font-family: var(--font-display); font-size: 9px;
-  font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; line-height: 1.2;
-}
-.map-zone.controlled .map-zone-name { color: var(--gold-dim); }
-.map-zone.contested  .map-zone-name { color: #c05050; }
-.map-zone.neutral    .map-zone-name { color: rgba(255,255,255,0.15); }
-.map-zone-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  margin-top: 5px;
-}
-.map-zone.controlled .map-zone-dot { background: var(--gold); }
-.map-zone.contested  .map-zone-dot { background: #c05050; }
-.map-zone.neutral    .map-zone-dot { background: rgba(255,255,255,0.1); }
 
-/* Crown center */
-.map-crown {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 28px; color: rgba(201,168,76,0.12);
-  animation: goldPulse 3s ease infinite;
-  pointer-events: none; z-index: 1;
-}
-/* Scan lijn */
-.map-scan::after {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
-  animation: scanline 5s linear infinite;
-  pointer-events: none;
-}
-@keyframes scanline {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(520px); }
-}
-
-/* Legenda */
+/* Kaart legenda */
 .map-legend {
-  position: absolute; bottom: 1.5rem; left: 1.5rem;
-  display: flex; flex-direction: column; gap: 6px;
-  z-index: 3;
+  position: absolute; bottom: 1.2rem; left: 1.2rem;
+  display: flex; flex-direction: column; gap: 5px;
+  z-index: 6;
+  background: rgba(10,10,10,0.7);
+  border: 0.5px solid rgba(201,168,76,0.12);
+  padding: 10px 14px;
 }
-.map-legend-item {
-  display: flex; align-items: center; gap: 8px;
+.map-legend-title {
+  font-size: 7px; letter-spacing: 4px;
+  color: var(--gold-dim); text-transform: uppercase;
+  margin-bottom: 4px;
 }
-.map-legend-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-}
+.map-legend-item { display: flex; align-items: center; gap: 7px; }
+.map-legend-dot { width: 6px; height: 6px; border-radius: 50%; }
 .map-legend-dot.c { background: var(--gold); }
 .map-legend-dot.b { background: #c05050; }
-.map-legend-dot.n { background: rgba(255,255,255,0.15); }
-.map-legend-text {
-  font-size: 7px; letter-spacing: 3px;
-  color: var(--text-ghost); text-transform: uppercase;
+.map-legend-dot.n { background: rgba(255,255,255,0.2); }
+.map-legend-text { font-size: 7px; letter-spacing: 3px; color: var(--text-ghost); text-transform: uppercase; }
+
+/* Kaart label */
+.map-city-label {
+  position: absolute; z-index: 4; pointer-events: none;
+  font-family: var(--font-display); text-transform: uppercase;
+  letter-spacing: 3px; font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 
-/* Kaart zijpaneel */
-.map-panel {
-  background: var(--bg-lift);
-  display: flex; flex-direction: column;
-}
+/* ── KAART ZIJPANEEL ─────────────────────────────────────── */
+.map-panel { background: var(--bg-lift); display: flex; flex-direction: column; }
 .map-panel-header {
   padding: 1.5rem;
   border-bottom: 0.5px solid rgba(201,168,76,0.1);
 }
 .map-panel-title {
   font-size: 8px; letter-spacing: 5px;
-  color: var(--gold-dim); text-transform: uppercase;
-  margin-bottom: 4px;
+  color: var(--gold-dim); text-transform: uppercase; margin-bottom: 4px;
 }
-.map-panel-sub {
-  font-size: 11px; color: var(--text-dim);
-  font-style: italic;
-}
+.map-panel-sub { font-size: 11px; color: var(--text-dim); font-style: italic; }
 .zone-list { flex: 1; overflow-y: auto; }
 .zone-entry {
-  padding: 1.2rem 1.5rem;
+  padding: 1.1rem 1.5rem;
   border-bottom: 0.5px solid rgba(201,168,76,0.07);
   cursor: pointer; transition: background 0.2s;
   display: flex; align-items: flex-start; gap: 1rem;
 }
 .zone-entry:hover { background: rgba(201,168,76,0.04); }
-.zone-entry-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  flex-shrink: 0; margin-top: 6px;
-}
+.zone-entry-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
 .zone-entry-dot.c { background: var(--gold); }
 .zone-entry-dot.b { background: #c05050; animation: redPulse 1.8s ease infinite; }
-.zone-entry-dot.n { background: rgba(255,255,255,0.1); }
-.zone-entry-info { flex: 1; }
+.zone-entry-dot.n { background: rgba(255,255,255,0.15); }
 .zone-entry-name {
-  font-family: var(--font-display); font-size: 14px;
-  font-weight: 700; color: var(--text-muted);
-  letter-spacing: 1px; margin-bottom: 3px;
+  font-family: var(--font-display); font-size: 13px;
+  font-weight: 700; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 2px;
 }
-.zone-entry-status {
-  font-size: 7px; letter-spacing: 3px;
-  text-transform: uppercase; margin-bottom: 4px;
-}
+.zone-entry-status { font-size: 7px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 3px; }
 .zone-entry-status.c { color: var(--gold-dim); }
 .zone-entry-status.b { color: #c05050; }
 .zone-entry-status.n { color: rgba(255,255,255,0.2); }
-.zone-entry-desc {
-  font-size: 11px; color: var(--text-dim);
-  font-style: italic; line-height: 1.5;
-}
+.zone-entry-desc { font-size: 11px; color: var(--text-dim); font-style: italic; line-height: 1.4; }
 
-/* ── ZONE DETAIL GRID ────────────────────────────────────── */
-.zones-section {
-  padding: 5rem 3rem;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
-}
+/* ── ZONE CARDS ──────────────────────────────────────────── */
+.zones-section { padding: 5rem 3rem; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
 .zones-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: rgba(201,168,76,0.1);
-  margin-top: 2.5rem;
+  gap: 1px; background: rgba(201,168,76,0.1); margin-top: 2.5rem;
 }
 .zone-card {
-  background: var(--bg);
-  padding: 2.2rem 2rem;
-  position: relative; overflow: hidden;
-  transition: background 0.25s;
+  background: var(--bg); padding: 2.2rem 2rem;
+  position: relative; overflow: hidden; transition: background 0.25s;
 }
 .zone-card:hover { background: var(--bg-raise); }
-.zone-card-bar {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-}
+.zone-card-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
 .zone-card-bar.controlled { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .zone-card-bar.contested  { background: linear-gradient(90deg, transparent, #c05050, transparent); }
-.zone-card-bar.neutral    { background: transparent; }
 .zone-card-num {
   font-family: var(--font-display); font-size: 11px;
-  letter-spacing: 4px; color: rgba(201,168,76,0.15);
-  margin-bottom: 1rem;
+  letter-spacing: 4px; color: rgba(201,168,76,0.15); margin-bottom: 1rem;
 }
 .zone-card-name {
   font-family: var(--font-display); font-size: 20px;
-  font-weight: 700; color: var(--text);
-  letter-spacing: 2px; margin-bottom: 6px;
+  font-weight: 700; color: var(--text); letter-spacing: 2px; margin-bottom: 6px;
 }
 .zone-card-status {
-  font-size: 7px; letter-spacing: 5px;
-  text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 1rem;
+  font-size: 7px; letter-spacing: 5px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px; margin-bottom: 1rem;
 }
 .zone-card-status.controlled { color: var(--gold-dim); }
 .zone-card-status.contested  { color: #c05050; }
-.zone-card-status.neutral    { color: rgba(255,255,255,0.2); }
-.zone-card-status-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-}
+.zone-card-status-dot { width: 4px; height: 4px; border-radius: 50%; }
 .controlled .zone-card-status-dot { background: var(--gold); }
 .contested  .zone-card-status-dot { background: #c05050; }
 .zone-card-desc {
   font-size: 13px; color: var(--text-dim);
-  font-style: italic; line-height: 1.7;
-  margin-bottom: 1.2rem;
+  font-style: italic; line-height: 1.7; margin-bottom: 1.2rem;
 }
 .zone-card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .zone-tag {
-  font-size: 7px; letter-spacing: 3px;
-  text-transform: uppercase;
-  border: 0.5px solid rgba(201,168,76,0.12);
-  color: var(--text-ghost); padding: 3px 8px;
+  font-size: 7px; letter-spacing: 3px; text-transform: uppercase;
+  border: 0.5px solid rgba(201,168,76,0.12); color: var(--text-ghost); padding: 3px 8px;
 }
 
-/* ── DREIGING SECTIE ─────────────────────────────────────── */
+/* ── GEVAARZONE ──────────────────────────────────────────── */
 .danger-section {
-  background: var(--bg-lift);
-  padding: 4rem 3rem;
+  background: var(--bg-lift); padding: 4rem 3rem;
   border-bottom: 0.5px solid rgba(201,168,76,0.08);
 }
 .danger-inner {
-  border: 0.5px solid rgba(192,80,80,0.25);
-  padding: 2.5rem;
-  position: relative;
-  display: grid; grid-template-columns: auto 1fr;
-  gap: 2.5rem; align-items: center;
+  border: 0.5px solid rgba(192,80,80,0.25); padding: 2.5rem;
+  position: relative; display: grid;
+  grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center;
 }
 .danger-inner::before {
   content: 'GEVAARZONE';
   position: absolute; top: -6px; left: 1.5rem;
   background: var(--bg-lift); padding: 0 8px;
-  font-size: 7px; letter-spacing: 5px;
-  color: #c05050; text-transform: uppercase;
+  font-size: 7px; letter-spacing: 5px; color: #c05050; text-transform: uppercase;
 }
-.danger-icon {
-  font-size: 40px; color: rgba(192,80,80,0.4);
-  line-height: 1;
-}
+.danger-icon { font-size: 40px; color: rgba(192,80,80,0.4); line-height: 1; }
 .danger-text-title {
   font-family: var(--font-display); font-size: 22px;
-  font-weight: 700; color: var(--text);
-  margin-bottom: 6px; letter-spacing: 1px;
+  font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: 1px;
 }
-.danger-text-body {
-  font-size: 13px; color: var(--text-dim);
-  font-style: italic; line-height: 1.7;
-}
+.danger-text-body { font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.7; }
 
 /* ── STATEMENT ───────────────────────────────────────────── */
 .terr-statement {
   padding: 6rem 3rem; text-align: center;
   position: relative; overflow: hidden;
-  border-bottom: 0.5px solid rgba(201,168,76,0.08);
 }
 .terr-statement-bg {
   position: absolute; inset: 0;
@@ -379,13 +349,11 @@
   font-size: clamp(18px, 3vw, 30px);
   font-weight: 400; font-style: italic;
   color: var(--text-muted); max-width: 680px;
-  margin: 0 auto; line-height: 1.55;
-  position: relative;
+  margin: 0 auto; line-height: 1.55; position: relative;
 }
 .terr-statement blockquote::before {
   content: '❝'; display: block;
-  font-size: 28px; color: var(--gold-border);
-  margin-bottom: 1rem;
+  font-size: 28px; color: var(--gold-border); margin-bottom: 1rem;
 }
 .terr-statement cite {
   display: block; margin-top: 1.5rem;
@@ -397,8 +365,7 @@
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .map-wrapper { grid-template-columns: 1fr; }
-  .map-visual { min-height: 400px; }
-  .map-panel { max-height: 400px; }
+  .map-panel { max-height: 380px; }
   .zones-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
@@ -407,14 +374,12 @@
   .status-cell:nth-child(3) { border-top: 0.5px solid rgba(201,168,76,0.12); }
   .zones-grid { grid-template-columns: 1fr; }
   .danger-inner { grid-template-columns: 1fr; gap: 1rem; }
+  .map-visual { min-height: 400px; }
 }
 @media (max-width: 600px) {
   .terr-header { padding: 5rem 1.5rem 3rem; }
   .terr-header-coords { display: none; }
-  .map-section,
-  .zones-section,
-  .danger-section,
-  .terr-statement { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .map-section, .zones-section, .danger-section, .terr-statement { padding-left: 1.5rem; padding-right: 1.5rem; }
   .status-bar { grid-template-columns: 1fr; }
   .status-cell { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.1); }
 }
@@ -450,8 +415,8 @@
       </p>
     </div>
     <div class="terr-header-coords">
-      <span class="terr-coord">N 51°28′</span>
-      <span class="terr-coord">E 05°26′</span>
+      <span class="terr-coord">LOS SANTOS</span>
+      <span class="terr-coord">SAN ANDREAS</span>
       <span class="terr-coord">ALT — ███</span>
       <span class="terr-coord">ZONE — 12</span>
     </div>
@@ -461,28 +426,28 @@
   <div class="status-bar">
     <div class="status-cell">
       <div class="status-indicator groen"></div>
-      <div class="status-text">
+      <div>
         <span class="status-label">Gecontroleerde zones</span>
         <span class="status-val">12</span>
       </div>
     </div>
     <div class="status-cell">
       <div class="status-indicator rood"></div>
-      <div class="status-text">
+      <div>
         <span class="status-label">Betwiste zones</span>
         <span class="status-val rood">1</span>
       </div>
     </div>
     <div class="status-cell">
       <div class="status-indicator grijs"></div>
-      <div class="status-text">
+      <div>
         <span class="status-label">Neutrale zones</span>
         <span class="status-val" style="color:var(--text-muted);">3</span>
       </div>
     </div>
     <div class="status-cell">
       <div class="status-indicator groen"></div>
-      <div class="status-text">
+      <div>
         <span class="status-label">Stadsdekkend bereik</span>
         <span class="status-val">∞</span>
       </div>
@@ -491,72 +456,152 @@
 
   <!-- KAART -->
   <section class="map-section">
-    <div class="section-label">Overzicht</div>
+    <div class="section-label">Los Santos — San Andreas</div>
     <div class="section-title">Territoriumkaart.</div>
     <div class="gold-line"></div>
 
     <div class="map-wrapper">
 
-      <!-- Visuele kaart -->
-      <div class="map-visual map-scan">
-        <div class="map-grid-bg"></div>
-        <div class="map-crown">♛</div>
+      <!-- GTA 5 Kaart visueel -->
+      <div class="map-visual" id="mapVisual">
 
-        <!-- Zone blokken — gesimuleerde stadskaart -->
-        <div class="map-zone controlled" style="top:8%;left:38%;width:24%;height:18%;">
-          <span class="map-zone-name">Binnenstad</span>
-          <div class="map-zone-dot"></div>
+        <!-- Echte GTA 5 satellietkaart -->
+        <img
+          class="map-img"
+          id="gtaMapImg"
+          src="https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV-HD-MAP-satellite.jpg"
+          alt="GTA 5 Los Santos kaart"
+          crossorigin="anonymous"
+        />
+
+        <!-- Overlays -->
+        <div class="map-gold-overlay"></div>
+        <div class="map-grid-overlay"></div>
+        <div class="map-scan-line"></div>
+
+        <!-- Stadsgebied labels -->
+        <div class="map-city-label" style="top:52%;left:55%;font-size:10px;color:rgba(201,168,76,0.2);">LOS SANTOS</div>
+        <div class="map-city-label" style="top:18%;left:40%;font-size:8px;color:rgba(201,168,76,0.12);">BLAINE COUNTY</div>
+        <div class="map-city-label" style="top:72%;left:30%;font-size:8px;color:rgba(201,168,76,0.12);">PALOMINO</div>
+
+        <!-- Territory polygonen -->
+        <!-- Vinewood / Downtown LS -->
+        <div class="zone-territory controlled" style="top:44%;left:52%;width:18%;height:14%;border-radius:2px;"></div>
+        <!-- East LS -->
+        <div class="zone-territory controlled" style="top:48%;left:68%;width:14%;height:12%;border-radius:2px;"></div>
+        <!-- South LS -->
+        <div class="zone-territory controlled" style="top:60%;left:54%;width:16%;height:11%;border-radius:2px;"></div>
+        <!-- Davis -->
+        <div class="zone-territory controlled" style="top:63%;left:50%;width:10%;height:9%;border-radius:2px;"></div>
+        <!-- Port / Docks -->
+        <div class="zone-territory controlled" style="top:64%;left:68%;width:15%;height:12%;border-radius:2px;"></div>
+        <!-- Sandy Shores -->
+        <div class="zone-territory controlled" style="top:28%;left:68%;width:20%;height:12%;border-radius:2px;"></div>
+        <!-- Mirror Park -->
+        <div class="zone-territory controlled" style="top:42%;left:70%;width:12%;height:9%;border-radius:2px;"></div>
+        <!-- Paleto Bay -->
+        <div class="zone-territory controlled" style="top:6%;left:22%;width:18%;height:10%;border-radius:2px;"></div>
+        <!-- Rockford Hills -->
+        <div class="zone-territory controlled" style="top:42%;left:46%;width:8%;height:10%;border-radius:2px;"></div>
+        <!-- Del Perro -->
+        <div class="zone-territory controlled" style="top:54%;left:42%;width:12%;height:9%;border-radius:2px;"></div>
+        <!-- La Mesa -->
+        <div class="zone-territory controlled" style="top:52%;left:70%;width:10%;height:8%;border-radius:2px;"></div>
+        <!-- Cypress Flats — BETWIST -->
+        <div class="zone-territory contested" style="top:60%;left:70%;width:12%;height:10%;border-radius:2px;"></div>
+
+        <!-- ZONE PINS — gebaseerd op echte GTA 5 locaties -->
+
+        <!-- Downtown / Vinewood -->
+        <div class="map-zone-pin" style="top:50%;left:60%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Vinewood — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:5%;left:5%;width:28%;height:15%;">
-          <span class="map-zone-name">Zone Noord</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- East Los Santos -->
+        <div class="map-zone-pin" style="top:53%;left:74%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">East LS — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:5%;left:68%;width:26%;height:15%;">
-          <span class="map-zone-name">Oost Docks</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- South LS / Davis -->
+        <div class="map-zone-pin" style="top:66%;left:57%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Davis — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:28%;left:5%;width:22%;height:18%;">
-          <span class="map-zone-name">Westside</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Port / Haven -->
+        <div class="map-zone-pin" style="top:69%;left:75%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Terminal — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:28%;left:72%;width:22%;height:18%;">
-          <span class="map-zone-name">Uptown</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Sandy Shores -->
+        <div class="map-zone-pin" style="top:33%;left:77%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Sandy Shores — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:30%;left:32%;width:34%;height:20%;">
-          <span class="map-zone-name">Centrum</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Rockford Hills -->
+        <div class="map-zone-pin" style="top:46%;left:50%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Rockford Hills — Gecontroleerd</div>
         </div>
-        <div class="map-zone contested" style="top:52%;left:5%;width:26%;height:18%;">
-          <span class="map-zone-name">Warehouse Dist.</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Del Perro -->
+        <div class="map-zone-pin" style="top:58%;left:47%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Del Perro — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:54%;left:36%;width:24%;height:16%;">
-          <span class="map-zone-name">Southside</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Paleto Bay -->
+        <div class="map-zone-pin" style="top:10%;left:30%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Paleto Bay — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:52%;left:65%;width:28%;height:18%;">
-          <span class="map-zone-name">Haven Zuid</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Mirror Park -->
+        <div class="map-zone-pin" style="top:46%;left:75%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">Mirror Park — Gecontroleerd</div>
         </div>
-        <div class="map-zone neutral" style="top:74%;left:5%;width:20%;height:18%;">
-          <span class="map-zone-name">Buitenwijk W</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- La Mesa -->
+        <div class="map-zone-pin" style="top:55%;left:74%;">
+          <div class="zone-pin-ring"></div>
+          <div class="zone-pin-core"></div>
+          <div class="zone-pin-label">La Mesa — Gecontroleerd</div>
         </div>
-        <div class="map-zone controlled" style="top:73%;left:30%;width:36%;height:20%;">
-          <span class="map-zone-name">Industriezone</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Cypress Flats — BETWIST -->
+        <div class="map-zone-pin" style="top:63%;left:75%;">
+          <div class="zone-pin-ring danger"></div>
+          <div class="zone-pin-core danger"></div>
+          <div class="zone-pin-label danger">Cypress Flats — BETWIST</div>
         </div>
-        <div class="map-zone neutral" style="top:74%;left:71%;width:22%;height:18%;">
-          <span class="map-zone-name">Buitenwijk O</span>
-          <div class="map-zone-dot"></div>
+
+        <!-- Grapeseed — neutraal -->
+        <div class="map-zone-pin" style="top:35%;left:83%;">
+          <div class="zone-pin-ring" style="border-color:rgba(255,255,255,0.1);"></div>
+          <div class="zone-pin-core neutral"></div>
+          <div class="zone-pin-label" style="border-color:rgba(255,255,255,0.1);color:var(--text-ghost);">Grapeseed — Neutraal</div>
         </div>
-        <div class="map-zone controlled" style="top:28%;left:34%;width:15%;height:0%;">
-          <!-- Verborgen extra zone -->
-        </div>
+
+        <!-- Crown center glow -->
+        <div style="position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);font-size:24px;color:rgba(201,168,76,0.1);animation:goldPulse 3s ease infinite;pointer-events:none;z-index:3;">♛</div>
 
         <!-- Legenda -->
         <div class="map-legend">
+          <div class="map-legend-title">Status</div>
           <div class="map-legend-item">
             <div class="map-legend-dot c"></div>
             <span class="map-legend-text">Gecontroleerd</span>
@@ -570,7 +615,8 @@
             <span class="map-legend-text">Neutraal</span>
           </div>
         </div>
-      </div>
+
+      </div><!-- end map-visual -->
 
       <!-- Zijpaneel -->
       <div class="map-panel">
@@ -579,70 +625,18 @@
           <div class="map-panel-sub">Live status — geclassificeerd</div>
         </div>
         <div class="zone-list">
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Binnenstad</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Hoge zichtbaarheid. Constante bewaking.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Zone Noord</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Industriële uitvalswegen. Aanvoerroutes beveiligd.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Oost Docks</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Inkomende operaties. Toegang beperkt.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Centrum</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Hart van de stad. Aanwezigheid onzichtbaar maar totaal.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot b"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Warehouse Dist.</div>
-              <div class="zone-entry-status b">Betwist — actief</div>
-              <div class="zone-entry-desc">Externe interesse opgemerkt. Wordt aangepakt.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Southside</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Voormalig betwist. Geschil opgelost.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot c"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Industriezone</div>
-              <div class="zone-entry-status c">Volledig gecontroleerd</div>
-              <div class="zone-entry-desc">Operationele kern. Toegang: uitsluitend intern.</div>
-            </div>
-          </div>
-          <div class="zone-entry">
-            <div class="zone-entry-dot n"></div>
-            <div class="zone-entry-info">
-              <div class="zone-entry-name">Buitenwijk West</div>
-              <div class="zone-entry-status n">Neutraal — observatie</div>
-              <div class="zone-entry-desc">Onder surveillance. Nog niet geclaimd.</div>
-            </div>
-          </div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Vinewood</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Hoge zichtbaarheid. Constante aanwezigheid.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Rockford Hills</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Premiumwijk. Subtiel maar totaal in handen.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">East Los Santos</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Straten onder controle. Geen beweging zonder toestemming.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Davis</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Voormalig onrustig gebied. Rust hersteld. Onze rust.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Del Perro</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Kustlijn beveiligd. Toegang via zee gemonitord.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Terminal / Haven</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Inkomend punt voor externe operaties. Streng bewaakt.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Mirror Park</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Woongebied. Aanwezigheid onzichtbaar maar totaal.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">La Mesa</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Industriële kern. Uitsluitend interne toegang.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Sandy Shores</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Blaine County buitenpost. Routes beveiligd.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot c"></div><div><div class="zone-entry-name">Paleto Bay</div><div class="zone-entry-status c">Volledig gecontroleerd</div><div class="zone-entry-desc">Noordelijke uitval. Stil. Effectief.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot b"></div><div><div class="zone-entry-name">Cypress Flats</div><div class="zone-entry-status b">Betwist — actief</div><div class="zone-entry-desc">Externe interesse genoteerd. Wordt binnenkort aangepakt.</div></div></div>
+          <div class="zone-entry"><div class="zone-entry-dot n"></div><div><div class="zone-entry-name">Grapeseed</div><div class="zone-entry-status n">Neutraal — observatie</div><div class="zone-entry-desc">Nog niet geclaimd. Onder surveillance.</div></div></div>
         </div>
       </div>
 
@@ -660,72 +654,36 @@
       <div class="zone-card">
         <div class="zone-card-bar controlled"></div>
         <div class="zone-card-num">Z-01</div>
-        <div class="zone-card-name">Binnenstad</div>
-        <div class="zone-card-status controlled">
-          <div class="zone-card-status-dot"></div>
-          Volledig gecontroleerd
-        </div>
-        <p class="zone-card-desc">
-          Hoge zichtbaarheid, hoge waarde. Aanwezigheid subtiel maar totaal.
-          24 uur bewaking. Geen confrontatie zonder toestemming.
-        </p>
-        <div class="zone-card-tags">
-          <span class="zone-tag">Kernzone</span>
-          <span class="zone-tag">Hoge waarde</span>
-          <span class="zone-tag">Bewaking 24/7</span>
-        </div>
+        <div class="zone-card-name">Vinewood</div>
+        <div class="zone-card-status controlled"><div class="zone-card-status-dot"></div>Volledig gecontroleerd</div>
+        <p class="zone-card-desc">Hart van de stad. Hoge zichtbaarheid, hoge waarde. 24 uur aanwezigheid. Geen confrontatie zonder toestemming.</p>
+        <div class="zone-card-tags"><span class="zone-tag">Kernzone</span><span class="zone-tag">Hoge waarde</span><span class="zone-tag">24/7</span></div>
       </div>
 
       <div class="zone-card">
         <div class="zone-card-bar controlled"></div>
         <div class="zone-card-num">Z-02</div>
-        <div class="zone-card-name">Zone Noord</div>
-        <div class="zone-card-status controlled">
-          <div class="zone-card-status-dot"></div>
-          Volledig gecontroleerd
-        </div>
-        <p class="zone-card-desc">
-          Industriële buitenwijk. Aanvoerroutes beveiligd.
-          Geen rivaliserend aanwezigheid getolereerd. Stil, maar zwaar bewaakt.
-        </p>
-        <div class="zone-card-tags">
-          <span class="zone-tag">Aanvoerroute</span>
-          <span class="zone-tag">Industrieel</span>
-          <span class="zone-tag">Gesloten</span>
-        </div>
+        <div class="zone-card-name">East LS</div>
+        <div class="zone-card-status controlled"><div class="zone-card-status-dot"></div>Volledig gecontroleerd</div>
+        <p class="zone-card-desc">Straten in bezit. Geen onbekende gezichten. Geen beweging zonder kennis van ons.</p>
+        <div class="zone-card-tags"><span class="zone-tag">Straatniveau</span><span class="zone-tag">Gesloten</span></div>
       </div>
 
       <div class="zone-card">
         <div class="zone-card-bar controlled"></div>
         <div class="zone-card-num">Z-03</div>
-        <div class="zone-card-name">Oost Docks</div>
-        <div class="zone-card-status controlled">
-          <div class="zone-card-status-dot"></div>
-          Volledig gecontroleerd
-        </div>
-        <p class="zone-card-desc">
-          Inkomend punt voor operaties van buitenaf.
-          Toegang beperkt. Constante surveillance. Ongeautoriseerd betreden heeft gevolgen.
-        </p>
-        <div class="zone-card-tags">
-          <span class="zone-tag">Havenpunt</span>
-          <span class="zone-tag">Beperkte toegang</span>
-          <span class="zone-tag">Actief</span>
-        </div>
+        <div class="zone-card-name">Terminal</div>
+        <div class="zone-card-status controlled"><div class="zone-card-status-dot"></div>Volledig gecontroleerd</div>
+        <p class="zone-card-desc">Inkomend punt voor operaties van buitenaf. Toegang beperkt. Ongeautoriseerd betreden heeft gevolgen.</p>
+        <div class="zone-card-tags"><span class="zone-tag">Havenpunt</span><span class="zone-tag">Beperkte toegang</span></div>
       </div>
 
       <div class="zone-card">
         <div class="zone-card-bar contested"></div>
         <div class="zone-card-num">Z-07</div>
-        <div class="zone-card-name">Warehouse Dist.</div>
-        <div class="zone-card-status contested">
-          <div class="zone-card-status-dot"></div>
-          Betwist — onder druk
-        </div>
-        <p class="zone-card-desc">
-          Externe interesse genoteerd. Die interesse wordt binnenkort
-          op dezelfde manier beantwoord als alle vorige pogingen.
-        </p>
+        <div class="zone-card-name">Cypress Flats</div>
+        <div class="zone-card-status contested"><div class="zone-card-status-dot"></div>Betwist — onder druk</div>
+        <p class="zone-card-desc">Externe interesse genoteerd. Die interesse zal op dezelfde manier worden beantwoord als alle vorige pogingen.</p>
         <div class="zone-card-tags">
           <span class="zone-tag" style="color:#c05050;border-color:rgba(192,80,80,0.2);">Actief conflict</span>
           <span class="zone-tag" style="color:#c05050;border-color:rgba(192,80,80,0.2);">Onder druk</span>
@@ -735,56 +693,31 @@
       <div class="zone-card">
         <div class="zone-card-bar controlled"></div>
         <div class="zone-card-num">Z-08</div>
-        <div class="zone-card-name">Southside</div>
-        <div class="zone-card-status controlled">
-          <div class="zone-card-status-dot"></div>
-          Volledig gecontroleerd
-        </div>
-        <p class="zone-card-desc">
-          Voormalig betwist gebied. Het geschil is opgelost.
-          Een nieuwe orde is van kracht. Geen verdere discussie.
-        </p>
-        <div class="zone-card-tags">
-          <span class="zone-tag">Voormalig conflict</span>
-          <span class="zone-tag">Stabiel</span>
-          <span class="zone-tag">Geclaimd</span>
-        </div>
+        <div class="zone-card-name">Davis</div>
+        <div class="zone-card-status controlled"><div class="zone-card-status-dot"></div>Volledig gecontroleerd</div>
+        <p class="zone-card-desc">Voormalig betwist gebied. Het geschil is opgelost. Een nieuwe orde is van kracht.</p>
+        <div class="zone-card-tags"><span class="zone-tag">Voormalig conflict</span><span class="zone-tag">Stabiel</span></div>
       </div>
 
       <div class="zone-card">
-        <div class="zone-card-bar neutral"></div>
-        <div class="zone-card-num">Z-11</div>
-        <div class="zone-card-name">Buitenwijk West</div>
-        <div class="zone-card-status neutral" style="color:rgba(255,255,255,0.25);">
-          <div class="zone-card-status-dot" style="background:rgba(255,255,255,0.15);"></div>
-          Neutraal — observatie
-        </div>
-        <p class="zone-card-desc">
-          Nog niet formeel geclaimd. Staat onder surveillance.
-          Beslissing over inname wordt op het juiste moment genomen.
-        </p>
-        <div class="zone-card-tags">
-          <span class="zone-tag">Neutraal</span>
-          <span class="zone-tag">Observatie</span>
-          <span class="zone-tag">In overweging</span>
-        </div>
+        <div class="zone-card-bar controlled"></div>
+        <div class="zone-card-num">Z-09</div>
+        <div class="zone-card-name">Sandy Shores</div>
+        <div class="zone-card-status controlled"><div class="zone-card-status-dot"></div>Volledig gecontroleerd</div>
+        <p class="zone-card-desc">Blaine County buitenpost. Ver van de stad, dicht bij alles wat telt. Routes beveiligd, aanwezigheid stil.</p>
+        <div class="zone-card-tags"><span class="zone-tag">Buitenpost</span><span class="zone-tag">Blaine County</span></div>
       </div>
 
     </div>
   </section>
 
-  <!-- GEVAARZONE WAARSCHUWING -->
+  <!-- GEVAARZONE -->
   <section class="danger-section">
     <div class="danger-inner">
       <div class="danger-icon">⚠</div>
       <div>
         <div class="danger-text-title">Ongeautoriseerde toegang heeft gevolgen</div>
-        <p class="danger-text-body">
-          Kingsman-zones zijn geen publieke ruimte. Betreden zonder toestemming,
-          opereren binnen onze grenzen zonder kennis, of het schenden van onze gebieden
-          zal worden behandeld als wat het is — een directe uitdaging.
-          Uitdagingen worden niet genegeerd. Ze worden beantwoord.
-        </p>
+        <p class="danger-text-body">Kingsman-zones zijn geen publieke ruimte. Betreden zonder toestemming of opereren binnen onze grenzen zal worden behandeld als wat het is — een directe uitdaging. Uitdagingen worden niet genegeerd. Ze worden beantwoord.</p>
       </div>
     </div>
   </section>
@@ -794,28 +727,25 @@
     <div class="terr-statement-bg"></div>
     <blockquote>
       The city was never free. It was always owned.<br>
-      The only question was — by who.
+      The only question was — by whom.
       <cite>— Kingsman territorial directive, article I</cite>
     </blockquote>
   </section>
 
 </main>
 
-<!-- FOOTER -->
 <footer class="ks-footer">
   <span class="ks-footer-logo">KINGSMAN</span>
   <span class="ks-footer-sub">No faces. No names. Just power.</span>
 </footer>
 
 <script>
-// Kaart zones hover tooltip effect
-document.querySelectorAll('.map-zone').forEach(zone => {
-  zone.addEventListener('mouseenter', () => {
-    zone.style.zIndex = '10';
-  });
-  zone.addEventListener('mouseleave', () => {
-    zone.style.zIndex = '';
-  });
+// Fallback als GTA kaart niet laadt — toon grid achtergrond
+const img = document.getElementById('gtaMapImg');
+img.addEventListener('error', () => {
+  img.style.display = 'none';
+  document.getElementById('mapVisual').style.background =
+    '#0a0c08 repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(201,168,76,0.02) 40px,rgba(201,168,76,0.02) 41px)';
 });
 
 // Scroll fade-in
@@ -828,9 +758,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.08 });
 
-document.querySelectorAll(
-  '.map-section, .zones-section, .danger-section, .terr-statement'
-).forEach(el => {
+document.querySelectorAll('.map-section, .zones-section, .danger-section, .terr-statement').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
@@ -842,10 +770,7 @@ const cardObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.zone-card').forEach((card, i) => {
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, i * 100);
+        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, i * 100);
       });
       cardObserver.unobserve(entry.target);
     }
@@ -861,6 +786,5 @@ document.querySelectorAll('.zones-grid').forEach(grid => {
   cardObserver.observe(grid);
 });
 </script>
-
 </body>
 </html>
