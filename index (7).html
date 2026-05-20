@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINGSMAN — No faces. No names. Just power.</title>
+  <meta name="description" content="Kingsman. Unknown leadership. Unmistakable presence." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* Grid texture */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      animation: fadeIn 2s ease both;
+    }
+
+    /* Diagonal vignette lines */
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 120px,
+          rgba(201,168,76,0.018) 120px,
+          rgba(201,168,76,0.018) 121px
+        );
+    }
+
+    /* Radial glow from center */
+    .hero-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Scanline sweep */
+    .hero-scan {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-scan::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+      animation: scanline 6s linear infinite;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-crown {
+      font-size: 42px;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      animation: crownDrop 1s cubic-bezier(.22,1,.36,1) both;
+      display: block;
+      line-height: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: 8px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+      margin-bottom: 1.2rem;
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.2s;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 10vw, 96px);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 8px;
+      line-height: 1;
+      margin-bottom: 0;
+      animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) both;
+      animation-delay: 0.1s;
+    }
+
+    .hero-divider {
+      width: 64px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+      animation: fadeIn 1s ease both;
+      animation-delay: 0.5s;
+    }
+
+    .hero-quote {
+      font-size: 13px;
+      letter-spacing: 5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+      font-weight: 300;
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.55s;
+    }
+
+    /* Stats bar */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 4rem;
+      border: 0.5px solid var(--gold-border);
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.7s;
+    }
+    .hero-stat {
+      padding: 1.2rem 2.4rem;
+      text-align: center;
+      border-right: 0.5px solid var(--gold-border);
+      flex: 1;
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      margin-top: 5px;
+      display: block;
+    }
+
+    /* Badges row */
+    .hero-badges {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.85s;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn 1.5s ease both;
+      animation-delay: 1.2s;
+    }
+    .hero-scroll span {
+      font-size: 7px;
+      letter-spacing: 4px;
+      color: var(--gold-abyss);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 0.5px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-border), transparent);
+      animation: goldPulse 2s ease infinite;
+    }
+
+    /* ── MANIFESTO STRIP ────────────────────────────────────────── */
+    .manifesto-strip {
+      border-top: 0.5px solid var(--gold-border);
+      border-bottom: 0.5px solid var(--gold-border);
+      background: var(--bg-lift);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 1rem 0;
+    }
+    .manifesto-ticker {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      font-family: var(--font-serif);
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION: INTRO ─────────────────────────────────────────── */
+    .intro-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .intro-left {
+      padding: 5rem 3rem;
+      border-right: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .intro-right {
+      padding: 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .intro-num {
+      font-family: var(--font-display);
+      font-size: 120px;
+      font-weight: 900;
+      color: rgba(201,168,76,0.05);
+      line-height: 1;
+      margin-bottom: -0.3em;
+      user-select: none;
+    }
+    .intro-heading {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .intro-body {
+      font-size: 15px;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.9;
+      max-width: 420px;
+    }
+
+    /* pillars */
+    .pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 0;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .pillar:last-child { border-bottom: none; }
+    .pillar-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .pillar-text {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .pillar-sub {
+      font-size: 11px;
+      color: var(--text-ghost);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* ── SECTION: REPUTATION PREVIEW ───────────────────────────── */
+    .rep-section {
+      background: var(--bg-lift);
+      padding: 5rem 3rem;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .rep-numbers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 0.5px solid var(--gold-border);
+      margin-top: 2.5rem;
+    }
+    .rep-num-cell {
+      padding: 2rem 1.5rem;
+      border-right: 0.5px solid var(--gold-border);
+      text-align: center;
+    }
+    .rep-num-cell:last-child { border-right: none; }
+    .rep-big {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+    .rep-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      margin-top: 6px;
+      display: block;
+    }
+    .rep-cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--gold-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      border-bottom: 0.5px solid var(--gold-border);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .rep-cta:hover { color: var(--gold); }
+
+    /* ── SECTION: STATEMENT ─────────────────────────────────────── */
+    .statement-section {
+      padding: 6rem 3rem;
+      text-align: center;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .statement-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .statement-quote {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+      position: relative;
+    }
+    .statement-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 32px;
+      color: var(--gold-border);
+      margin-bottom: 1rem;
+    }
+    .statement-attr {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 9px;
+      letter-spacing: 5px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+      font-style: normal;
+      font-family: var(--font-serif);
+    }
+
+    /* ── SECTION: MEDIA PREVIEW ─────────────────────────────────── */
+    .media-section {
+      padding: 5rem 3rem;
+      border-bottom: 0.5px solid rgba(201,168,76,0.08);
+    }
+    .media-preview-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 200px 200px;
+      gap: 1px;
+      background: var(--gold-border);
+      margin-top: 2.5rem;
+    }
+    .media-cell {
+      background: var(--bg-raise);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .media-cell:hover { background: var(--bg-high); }
+    .media-cell.span-col { grid-row: span 2; }
+    .media-cell-icon {
+      font-size: 28px;
+      color: rgba(201,168,76,0.2);
+      line-height: 1;
+    }
+    .media-cell-tag {
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+    }
+    .media-all-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--gold-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      border-bottom: 0.5px solid var(--gold-border);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .media-all-link:hover { color: var(--gold); }
+
+    /* ── SECTION: WARNING TICKER ────────────────────────────────── */
+    .warning-section {
+      background: rgba(201,168,76,0.04);
+      border-top: 0.5px solid var(--gold-border);
+      border-bottom: 0.5px solid var(--gold-border);
+      padding: 2.5rem 3rem;
+      text-align: center;
+    }
+    .warning-text {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+    .warning-sub {
+      margin-top: 0.5rem;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--text-ghost);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .intro-section { grid-template-columns: 1fr; }
+      .intro-left { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+      .rep-numbers { grid-template-columns: 1fr 1fr; }
+      .rep-num-cell:nth-child(2) { border-right: none; }
+      .media-preview-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 160px); }
+      .media-cell.span-col { grid-row: span 1; }
+      .hero-stats { flex-direction: column; gap: 0; }
+      .hero-stat { border-right: none; border-bottom: 0.5px solid var(--gold-border); }
+      .hero-stat:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="ks-nav">
+    <a href="/" class="ks-logo">KINGSMAN<span>Est. — Classified</span></a>
+    <div class="ks-nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="/reputation">Reputation</a>
+      <a href="/media">Media</a>
+      <a href="/territory">Territory</a>
+      <a href="/manifest">Manifest</a>
+      <a href="/news">News</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="ks-page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-lines"></div>
+      <div class="hero-glow"></div>
+      <div class="hero-scan"></div>
+
+      <div class="hero-content">
+        <span class="hero-crown">♛</span>
+        <p class="hero-eyebrow">Est. — Classified &nbsp;·&nbsp; Active Operations</p>
+        <h1 class="hero-title">KINGSMAN</h1>
+        <div class="hero-divider"></div>
+        <p class="hero-quote">No faces. No names. Just power.</p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num">12</span>
+            <span class="hero-stat-label">Territories</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">4</span>
+            <span class="hero-stat-label">Crews dismantled</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">???</span>
+            <span class="hero-stat-label">Known members</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">0</span>
+            <span class="hero-stat-label">Arrests</span>
+          </div>
+        </div>
+
+        <div class="hero-badges">
+          <span class="badge">Active operations</span>
+          <span class="badge">Unknown leadership</span>
+          <span class="badge badge-danger">High police attention</span>
+          <span class="badge">Expanding presence</span>
+        </div>
+      </div>
+
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- MANIFESTO TICKER -->
+    <div class="manifesto-strip">
+      <div class="manifesto-ticker">
+        &nbsp;&nbsp;&nbsp;&nbsp;No faces. No names. Just power.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Loyalty is proven, not earned.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Silence is strength.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Respect is not requested. It is taken.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        The city bends. We do not.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        No faces. No names. Just power.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Loyalty is proven, not earned.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Silence is strength.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        Respect is not requested. It is taken.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+        The city bends. We do not.
+        &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+
+    <!-- INTRO / WHO -->
+    <section class="intro-section">
+      <div class="intro-left">
+        <div class="intro-num">01</div>
+        <h2 class="intro-heading">We do not<br>knock on doors.</h2>
+        <p class="intro-body">
+          We do not make threats. We do not negotiate from weakness.
+          We simply remind you — we are already inside.<br><br>
+          Kingsman is not a name. It is a presence.
+          Felt before it is seen. Gone before it is confirmed.
+        </p>
+      </div>
+      <div class="intro-right">
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-dot"></div>
+            <div>
+              <div class="pillar-text">Loyalty</div>
+              <div class="pillar-sub">You stand with the family, or you disappear from it.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-dot"></div>
+            <div>
+              <div class="pillar-text">Silence</div>
+              <div class="pillar-sub">Words create witnesses. We leave none.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-dot"></div>
+            <div>
+              <div class="pillar-text">Power</div>
+              <div class="pillar-sub">The city does not grant it. We claim it.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-dot"></div>
+            <div>
+              <div class="pillar-text">No weakness</div>
+              <div class="pillar-sub">Vulnerability is an invitation. We do not extend invitations.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPUTATION NUMBERS -->
+    <section class="rep-section">
+      <div class="section-label">Status</div>
+      <div class="section-title">Reputation by numbers.</div>
+      <div class="gold-line"></div>
+
+      <div class="rep-numbers">
+        <div class="rep-num-cell">
+          <span class="rep-big">12</span>
+          <span class="rep-label">Territories controlled</span>
+        </div>
+        <div class="rep-num-cell">
+          <span class="rep-big">4</span>
+          <span class="rep-label">Rival crews dismantled</span>
+        </div>
+        <div class="rep-num-cell">
+          <span class="rep-big">★★★</span>
+          <span class="rep-label">Police attention</span>
+        </div>
+        <div class="rep-num-cell">
+          <span class="rep-big">∞</span>
+          <span class="rep-label">City reach</span>
+        </div>
+      </div>
+
+      <a href="/reputation" class="rep-cta">Full reputation report →</a>
+    </section>
+
+    <!-- STATEMENT / QUOTE -->
+    <section class="statement-section">
+      <div class="statement-bg"></div>
+      <blockquote class="statement-quote">
+        The crown is never displayed. Only felt.
+        Those who know, know.
+        The rest will learn.
+        <span class="statement-attr">— Kingsman manifest, article V</span>
+      </blockquote>
+    </section>
+
+    <!-- MEDIA PREVIEW -->
+    <section class="media-section">
+      <div class="section-label">Archive</div>
+      <div class="section-title">Media</div>
+      <div class="gold-line"></div>
+
+      <div class="media-preview-grid">
+        <a href="/media" class="media-cell span-col">
+          <span class="media-cell-icon">▶</span>
+          <span class="media-cell-tag">Night convoy — classified route</span>
+        </a>
+        <a href="/media" class="media-cell">
+          <span class="media-cell-icon">◈</span>
+          <span class="media-cell-tag">Masked meeting</span>
+        </a>
+        <a href="/media" class="media-cell">
+          <span class="media-cell-icon">◈</span>
+          <span class="media-cell-tag">Luxury fleet</span>
+        </a>
+        <a href="/media" class="media-cell">
+          <span class="media-cell-icon">◈</span>
+          <span class="media-cell-tag">Rooftop — undisclosed</span>
+        </a>
+        <a href="/media" class="media-cell">
+          <span class="media-cell-icon">◈</span>
+          <span class="media-cell-tag">Aerial operation</span>
+        </a>
+      </div>
+
+      <a href="/media" class="media-all-link">View full archive →</a>
+    </section>
+
+    <!-- WARNING -->
+    <section class="warning-section">
+      <p class="warning-text">"Kingsman has expanded operations."</p>
+      <p class="warning-sub">Trespassing has consequences &nbsp;·&nbsp; The city is changing &nbsp;·&nbsp; <a href="/news" style="color:inherit;text-decoration:none;border-bottom:0.5px solid var(--gold-border);">Read all statements →</a></p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="ks-footer">
+    <span class="ks-footer-logo">KINGSMAN</span>
+    <span class="ks-footer-sub">No faces. No names. Just power.</span>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.intro-section, .rep-section, .statement-section, .media-section, .warning-section').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+      observer.observe(el);
+    });
+
+    // Nav highlight on scroll (future pages can also call this)
+    document.querySelectorAll('.ks-nav-links a').forEach(a => {
+      if (a.getAttribute('href') === window.location.pathname) {
+        a.classList.add('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
