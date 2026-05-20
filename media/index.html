@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KINGSMAN — Media</title>
+<meta name="description" content="Geen gezichten. Geen namen. Alleen bewijs van aanwezigheid." />
+<link rel="stylesheet" href="../style.css" />
+<style>
+
+/* ── PAGINA HEADER ───────────────────────────────────────── */
+.media-header {
+  position: relative;
+  padding: 7rem 3rem 5rem;
+  border-bottom: 0.5px solid var(--gold-border);
+  overflow: hidden;
+}
+.media-header-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    repeating-linear-gradient(
+      45deg, transparent, transparent 80px,
+      rgba(201,168,76,0.012) 80px, rgba(201,168,76,0.012) 81px
+    );
+}
+.media-header-inner { position: relative; z-index: 1; max-width: 700px; }
+.media-page-label {
+  font-size: 8px; letter-spacing: 7px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-family: var(--font-serif); margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.media-page-label::before {
+  content: ''; display: block;
+  width: 32px; height: 0.5px; background: var(--gold-dim);
+}
+.media-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 900; color: var(--text);
+  letter-spacing: 6px; line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.media-header-sub {
+  font-size: 14px; color: var(--text-dim);
+  font-style: italic; line-height: 1.8;
+  max-width: 500px;
+}
+.media-header-corner {
+  position: absolute; right: 3rem; bottom: 3rem;
+  font-family: var(--font-display); font-size: 120px;
+  font-weight: 900; color: rgba(201,168,76,0.03);
+  line-height: 1; user-select: none;
+  letter-spacing: -4px;
+}
+
+/* ── WAARSCHUWINGSBALK ───────────────────────────────────── */
+.media-warning-bar {
+  background: rgba(201,168,76,0.03);
+  border-bottom: 0.5px solid var(--gold-border);
+  padding: 0.8rem 3rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.media-warning-bar span {
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+}
+.media-warning-bar strong {
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ── FILTER TABS ─────────────────────────────────────────── */
+.filter-bar {
+  padding: 2rem 3rem;
+  display: flex; align-items: center; gap: 0;
+  border-bottom: 0.5px solid rgba(201,168,76,0.1);
+  overflow-x: auto;
+}
+.filter-tab {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  padding: 0.7rem 1.6rem;
+  border: 0.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: none;
+  font-family: var(--font-serif);
+}
+.filter-tab:hover { color: var(--text-muted); }
+.filter-tab.actief {
+  color: var(--gold);
+  border-color: var(--gold-border);
+  background: rgba(201,168,76,0.04);
+}
+
+/* ── UITGELICHTE MEDIA (groot) ───────────────────────────── */
+.featured-section {
+  padding: 3rem 3rem 0;
+}
+.featured-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 340px;
+  gap: 1px;
+  background: rgba(201,168,76,0.1);
+}
+.featured-cell {
+  background: var(--bg-raise);
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+.featured-cell:hover { background: var(--bg-high); }
+.featured-cell::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  pointer-events: none;
+}
+.featured-cell-visual {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.featured-icon {
+  font-size: 48px; color: rgba(201,168,76,0.08);
+  transition: color 0.3s;
+}
+.featured-cell:hover .featured-icon { color: rgba(201,168,76,0.15); }
+.featured-overlay {
+  position: relative; z-index: 1;
+}
+.featured-type {
+  font-size: 7px; letter-spacing: 5px;
+  color: var(--gold-dim); text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.featured-type::before {
+  content: ''; display: block;
+  width: 20px; height: 0.5px; background: var(--gold-dim);
+}
+.featured-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  color: var(--text); letter-spacing: 1px;
+  line-height: 1.2;
+}
+.featured-sub {
+  font-size: 11px; color: var(--text-dim);
+  font-style: italic; margin-top: 6px;
+}
+
+/* ── MEDIA GRID ──────────────────────────────────────────── */
+.grid-section {
+  padding: 1px 3rem 3rem;
+}
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(201,168,76,0.1);
+  margin-top: 1px;
+}
+.media-item {
+  background: var(--bg-raise);
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: background 0.25s;
+  text-decoration: none;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  height: 220px;
+  padding: 1.5rem;
+}
+.media-item:hover { background: var(--bg-high); }
+.media-item::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+  pointer-events: none;
+}
+.media-item-visual {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.media-item-icon {
+  font-size: 32px; color: rgba(201,168,76,0.07);
+  transition: color 0.3s;
+}
+.media-item:hover .media-item-icon { color: rgba(201,168,76,0.14); }
+.media-item-overlay { position: relative; z-index: 1; }
+.media-item-cat {
+  font-size: 7px; letter-spacing: 4px;
+  color: var(--gold-dim); text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.media-item-title {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--text); letter-spacing: 0.5px;
+  line-height: 1.25;
+}
+.media-item-meta {
+  font-size: 10px; color: var(--text-dim);
+  font-style: italic; margin-top: 4px;
+}
+
+/* ── GECENSUREERDE ITEMS ─────────────────────────────────── */
+.media-item.gecensureerd {
+  cursor: not-allowed;
+}
+.media-item.gecensureerd .media-item-title {
+  color: var(--text-ghost);
+  filter: blur(3px);
+  user-select: none;
+}
+.media-item.gecensureerd .media-item-cat { color: #c05050; }
+.media-censuur-label {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8px; letter-spacing: 5px;
+  color: rgba(192,80,80,0.6); text-transform: uppercase;
+  z-index: 2; border: 0.5px solid rgba(192,80,80,0.2);
+  padding: 5px 12px; white-space: nowrap;
+}
+
+/* ── CONVOY SECTIE ───────────────────────────────────────── */
+.convoy-section {
+  background: var(--bg-lift);
+  padding: 5rem 3rem;
+  border-top: 0.5px solid rgba(201,168,76,0.08);
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+}
+.convoy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.1);
+  margin-top: 2.5rem;
+}
+.convoy-cell {
+  background: var(--bg);
+  padding: 2rem 1.5rem;
+  transition: background 0.25s;
+  position: relative; overflow: hidden;
+}
+.convoy-cell:hover { background: var(--bg-raise); }
+.convoy-cell::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  transform: scaleX(0);
+  transition: transform 0.35s ease;
+}
+.convoy-cell:hover::after { transform: scaleX(1); }
+.convoy-num {
+  font-family: var(--font-display); font-size: 40px;
+  font-weight: 900; color: var(--gold); line-height: 1;
+  display: block; margin-bottom: 6px;
+}
+.convoy-label {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--text-ghost); text-transform: uppercase;
+  display: block; margin-bottom: 0.8rem;
+}
+.convoy-desc {
+  font-size: 12px; color: var(--text-dim);
+  font-style: italic; line-height: 1.6;
+}
+
+/* ── STATEMENT BALK ──────────────────────────────────────── */
+.media-statement {
+  padding: 5rem 3rem;
+  text-align: center;
+  border-bottom: 0.5px solid rgba(201,168,76,0.08);
+  position: relative; overflow: hidden;
+}
+.media-statement-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 65%);
+}
+.media-statement blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3vw, 30px);
+  font-weight: 400; font-style: italic;
+  color: var(--text-muted); max-width: 680px;
+  margin: 0 auto; line-height: 1.55;
+  position: relative;
+}
+.media-statement blockquote::before {
+  content: '❝';
+  display: block; font-size: 28px;
+  color: var(--gold-border); margin-bottom: 1rem;
+}
+.media-statement cite {
+  display: block; margin-top: 1.5rem;
+  font-size: 8px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-style: normal; font-family: var(--font-serif);
+}
+
+/* ── ARCHIEF TICKER ──────────────────────────────────────── */
+.archief-strip {
+  border-top: 0.5px solid var(--gold-border);
+  border-bottom: 0.5px solid var(--gold-border);
+  background: var(--bg-lift);
+  overflow: hidden; white-space: nowrap;
+  padding: 0.8rem 0;
+}
+.archief-ticker {
+  display: inline-block;
+  animation: ticker 35s linear infinite;
+  font-size: 9px; letter-spacing: 5px;
+  color: var(--text-ghost); text-transform: uppercase;
+  font-family: var(--font-serif);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .media-grid { grid-template-columns: repeat(2, 1fr); }
+  .convoy-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .featured-grid { grid-template-columns: 1fr; grid-template-rows: 260px 200px; }
+  .media-grid { grid-template-columns: 1fr 1fr; }
+  .convoy-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .media-header { padding: 5rem 1.5rem 3rem; }
+  .featured-section,
+  .grid-section,
+  .convoy-section,
+  .media-statement { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .filter-bar { padding: 1.2rem 1.5rem; }
+  .media-warning-bar { padding: 0.8rem 1.5rem; }
+  .media-grid { grid-template-columns: 1fr; }
+  .convoy-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ks-nav">
+  <a href="../" class="ks-logo">KINGSMAN<span>Est. — Classified</span></a>
+  <div class="ks-nav-links">
+    <a href="../">Home</a>
+    <a href="../reputation/">Reputatie</a>
+    <a href="../media/" class="active">Media</a>
+    <a href="../territory/">Territorium</a>
+    <a href="../manifest/">Manifest</a>
+    <a href="../news/">Nieuws</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="ks-page">
+
+  <!-- HEADER -->
+  <header class="media-header">
+    <div class="media-header-bg"></div>
+    <div class="media-header-inner">
+      <div class="media-page-label">Kingsman &nbsp;·&nbsp; Archief</div>
+      <h1>MEDIA</h1>
+      <p class="media-header-sub">
+        No faces. No names. Only proof of existence.<br>
+        Wat je hier ziet, is wat wij hebben toegestaan dat je ziet.
+      </p>
+    </div>
+    <div class="media-header-corner">MED</div>
+  </header>
+
+  <!-- WAARSCHUWING -->
+  <div class="media-warning-bar">
+    <span>Archief</span>
+    <strong>·</strong>
+    <strong>Alle beelden zijn geclassificeerd — verspreiding niet toegestaan</strong>
+    <strong>·</strong>
+    <span>Identiteiten verborgen</span>
+    <strong>·</strong>
+    <span>Locaties niet bevestigd</span>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-bar">
+    <button class="filter-tab actief">Alles</button>
+    <button class="filter-tab">Konvooien</button>
+    <button class="filter-tab">Operaties</button>
+    <button class="filter-tab">Voertuigen</button>
+    <button class="filter-tab">Nachtshots</button>
+    <button class="filter-tab">Meetings</button>
+    <button class="filter-tab">Luchtbeelden</button>
+  </div>
+
+  <!-- UITGELICHT -->
+  <section class="featured-section">
+    <div class="featured-grid">
+
+      <a href="#" class="featured-cell">
+        <div class="featured-cell-visual">
+          <span class="featured-icon">▶</span>
+        </div>
+        <div class="featured-overlay">
+          <div class="featured-type">Nachtoperatie</div>
+          <div class="featured-title">Nachtkonvooi — geclassificeerde route</div>
+          <div class="featured-sub">Meervoudige voertuigen. Coördinatie bevestigd. Route onbekend.</div>
+        </div>
+      </a>
+
+      <a href="#" class="featured-cell">
+        <div class="featured-cell-visual">
+          <span class="featured-icon">◈</span>
+        </div>
+        <div class="featured-overlay">
+          <div class="featured-type">Ontmoeting</div>
+          <div class="featured-title">Gemaskerde bijeenkomst — locatie onbekend</div>
+          <div class="featured-sub">Geen gezichten. Geen namen. Alleen beslissingen.</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MEDIA GRID -->
+  <section class="grid-section">
+    <div class="media-grid">
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🚗</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Voertuigen</div>
+          <div class="media-item-title">Luxe vloot — parkeerplaats onbekend</div>
+          <div class="media-item-meta">Meerdere voertuigen. Eigenaar onbevestigd.</div>
+        </div>
+      </a>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🏙️</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Locatie</div>
+          <div class="media-item-title">Daktopterras — stad onbevestigd</div>
+          <div class="media-item-meta">Nachtzicht. Bovenaanzicht. Niemand zichtbaar.</div>
+        </div>
+      </a>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🚁</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Luchtbeelden</div>
+          <div class="media-item-title">Luchtoperatie — hoogte onbekend</div>
+          <div class="media-item-meta">Bovenaanzicht. Vluchtroute geclassificeerd.</div>
+        </div>
+      </a>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🌃</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Nachtshots</div>
+          <div class="media-item-title">Havengebied — nacht</div>
+          <div class="media-item-meta">Aankomst bevestigd. Inhoud onbekend.</div>
+        </div>
+      </a>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🚘</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Konvooien</div>
+          <div class="media-item-title">Stadsrit — formatie</div>
+          <div class="media-item-meta">Drie voertuigen. Gecoördineerde beweging.</div>
+        </div>
+      </a>
+
+      <div class="media-item gecensureerd">
+        <div class="media-item-visual"><span class="media-item-icon">◈</span></div>
+        <div class="media-censuur-label">Toegang geweigerd</div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Gecensureerd</div>
+          <div class="media-item-title">Operatie — details geclassificeerd</div>
+          <div class="media-item-meta">Toegang niet verleend.</div>
+        </div>
+      </div>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🏭</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Locatie</div>
+          <div class="media-item-title">Industrieel complex — zone noord</div>
+          <div class="media-item-meta">Buitenpost. Bewaking aanwezig.</div>
+        </div>
+      </a>
+
+      <a href="#" class="media-item">
+        <div class="media-item-visual"><span class="media-item-icon">🌙</span></div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Nachtshots</div>
+          <div class="media-item-title">Binnenstad — na middernacht</div>
+          <div class="media-item-meta">Straten leeg. Aanwezigheid onzichtbaar.</div>
+        </div>
+      </a>
+
+      <div class="media-item gecensureerd">
+        <div class="media-item-visual"><span class="media-item-icon">◈</span></div>
+        <div class="media-censuur-label">Toegang geweigerd</div>
+        <div class="media-item-overlay">
+          <div class="media-item-cat">Gecensureerd</div>
+          <div class="media-item-title">Ontmoeting — deelnemers onbekend</div>
+          <div class="media-item-meta">Toegang niet verleend.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ARCHIEF TICKER -->
+  <div class="archief-strip">
+    <div class="archief-ticker">
+      &nbsp;&nbsp;&nbsp;&nbsp;Archief bevat geclassificeerd materiaal
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Geen gezichten bevestigd
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Locaties onbekend
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Verspreiding niet toegestaan
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Aanwezigheid bewezen. Identiteit niet.
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Archief bevat geclassificeerd materiaal
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Geen gezichten bevestigd
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Locaties onbekend
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Verspreiding niet toegestaan
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+      Aanwezigheid bewezen. Identiteit niet.
+      &nbsp;&nbsp;&nbsp;&nbsp;♛&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <!-- CONVOY STATS -->
+  <section class="convoy-section">
+    <div class="section-label">Vastgelegd</div>
+    <div class="section-title">Operaties in beeld.</div>
+    <div class="gold-line"></div>
+
+    <div class="convoy-grid">
+      <div class="convoy-cell">
+        <span class="convoy-num">23</span>
+        <span class="convoy-label">Konvooien vastgelegd</span>
+        <div class="convoy-desc">Nachtelijke bewegingen door de stad. Routes nooit herhaald.</div>
+      </div>
+      <div class="convoy-cell">
+        <span class="convoy-num">0</span>
+        <span class="convoy-label">Gezichten zichtbaar</span>
+        <div class="convoy-desc">Geen enkel gezicht bevestigd in het archief. Nooit.</div>
+      </div>
+      <div class="convoy-cell">
+        <span class="convoy-num">7+</span>
+        <span class="convoy-label">Luchtopnamen</span>
+        <div class="convoy-desc">Bovenaanzicht bevestigt aanwezigheid. Identiteit blijft onbekend.</div>
+      </div>
+      <div class="convoy-cell">
+        <span class="convoy-num">???</span>
+        <span class="convoy-label">Gecensureerde items</span>
+        <div class="convoy-desc">Aantal onbekend. Inhoud geclassificeerd. Toegang: geweigerd.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="media-statement">
+    <div class="media-statement-bg"></div>
+    <blockquote>
+      Wij laten zien wat wij willen dat je ziet.
+      Niets meer. Niets minder.
+      Het enige wat telt — wij waren er.
+      <cite>— Kingsman archief, toegang beperkt</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="ks-footer">
+  <span class="ks-footer-logo">KINGSMAN</span>
+  <span class="ks-footer-sub">No faces. No names. Just power.</span>
+</footer>
+
+<script>
+// Filter tabs
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('actief'));
+    tab.classList.add('actief');
+  });
+});
+
+// Scroll fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll(
+  '.featured-section, .grid-section, .convoy-section, .media-statement'
+).forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+  observer.observe(el);
+});
+
+// Media items stagger
+const itemObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const items = entry.target.querySelectorAll('.media-item, .featured-cell');
+      items.forEach((item, i) => {
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        }, i * 80);
+      });
+      itemObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.media-grid, .featured-grid').forEach(grid => {
+  grid.querySelectorAll('.media-item, .featured-cell').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(16px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.25s';
+  });
+  itemObserver.observe(grid);
+});
+</script>
+
+</body>
+</html>
