@@ -182,13 +182,15 @@ body {
 }
 .ks-footer-owner {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   text-align: center;
 }
+
 .ks-footer-owner a {
-  color: inherit;
+  color: var(--text-ghost); /* zelfde rode kleur */
   text-decoration: none;
+  margin-top: 2px;
 }
 
 .ks-footer-owner a:hover {
