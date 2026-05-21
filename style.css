@@ -186,6 +186,14 @@ body {
   align-items: center;
   text-align: center;
 }
+.ks-footer-owner a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ks-footer-owner a:hover {
+  text-decoration: underline;
+}
 .ks-footer-sub {
   font-size: 9px;
   letter-spacing: 3px;
