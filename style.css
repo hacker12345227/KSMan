@@ -180,6 +180,12 @@ body {
   color: var(--text-ghost);
   letter-spacing: 5px;
 }
+.ks-footer-owner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .ks-footer-sub {
   font-size: 9px;
   letter-spacing: 3px;
