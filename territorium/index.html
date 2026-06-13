@@ -394,16 +394,19 @@
 
 /* ── RED VARIABLE OVERRIDES ──────────────────────────────── */
 :root {
-  --red:        #c91e1e;
-  --red-dark:   #8b1010;
-  --red-dim:    #a01818;
-  --red-border: rgba(180,30,30,0.25);
-  --red-abyss:  rgba(180,30,30,0.12);
-  --gold:        var(--red);
-  --gold-dark:   var(--red-dark);
-  --gold-dim:    var(--red-dim);
-  --gold-border: var(--red-border);
-  --gold-abyss:  var(--red-abyss);
+  /* Gouden kleuren */
+  --gold:        #D4AF37;
+  --gold-dark:   #B8860B;
+  --gold-dim:    #C9A227;
+  --gold-border: rgba(212,175,55,0.25);
+  --gold-abyss:  rgba(212,175,55,0.12);
+
+  /* Compatibiliteit: alles wat --red gebruikt wordt ook goud */
+  --red:         var(--gold);
+  --red-dark:    var(--gold-dark);
+  --red-dim:     var(--gold-dim);
+  --red-border:  var(--gold-border);
+  --red-abyss:   var(--gold-abyss);
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
